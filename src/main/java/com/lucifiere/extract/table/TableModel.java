@@ -2,12 +2,16 @@ package com.lucifiere.extract.table;
 
 import com.lucifiere.extract.Model;
 
+import java.util.Set;
+
 public class TableModel implements Model {
 
-    private String tableName;
+    private String name;
 
     private String bizPrefix;
 
-    private
+    private Set<TableField> fields;
+
+
 
 }

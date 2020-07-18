@@ -1,12 +1,9 @@
 package com.lucifiere.common;
 
-import com.google.common.base.Preconditions;
+import com.lucifiere.utils.EnumUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 public enum FiledType {
 
@@ -51,21 +48,16 @@ public enum FiledType {
         return jdbcType;
     }
 
-    private static <T> FiledType getByTypeOrThrow(T type, Function<FiledType, T> category) {
-        Preconditions.checkNotNull(type, "类型值不能为空！");
-        return Stream.of(FiledType.values()).filter(t -> Objects.equals(type, category.apply(t))).findAny().orElseThrow(() -> new IllegalArgumentException("不支持的字段类型！"));
-    }
-
     public static FiledType getByJdbcType(String type) {
-        return getByTypeOrThrow(type, FiledType::getJdbcType);
+        return EnumUtils.getByValOrThrow(type, FiledType::getJdbcType, FiledType.values());
     }
 
     public static FiledType getBySqlType(String type) {
-        return getByTypeOrThrow(type, FiledType::getSqlType);
+        return EnumUtils.getByValOrThrow(type, FiledType::getSqlType, FiledType.values());
     }
 
     public static FiledType getJavaType(Class<?> type) {
-        return getByTypeOrThrow(type, FiledType::getJavaType);
+        return EnumUtils.getByValOrThrow(type, FiledType::getJavaType, FiledType.values());
     }
 
 }

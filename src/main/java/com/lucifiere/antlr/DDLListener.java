@@ -2,8 +2,6 @@ package com.lucifiere.antlr;
 
 public class DDLListener extends MySqlParserBaseListener {
 
-    private
-
     @Override
     public void enterTableName(MySqlParser.TableNameContext ctx) {
         super.enterTableName(ctx);
