@@ -1,9 +1,8 @@
-package com.lucifiere.extract.ddl;
+package com.lucifiere.extract.table;
 
 import com.google.common.base.Joiner;
 import com.lucifiere.common.GlobalContext;
 import com.lucifiere.extract.AbstractExtractor;
-import com.lucifiere.extract.Model;
 import com.lucifiere.io.NioTextLoader;
 import com.lucifiere.io.TextLoader;
 
@@ -22,7 +21,7 @@ public class DdlExtractor extends AbstractExtractor {
 
     public Model extract() {
         var ddlPath = Joiner.on("/").join(context.workspacePath(), context.inputPath(), context.ddlName());
-        textLoader.loadText(ddlPath);
+        String ddlStr = textLoader.loadText(ddlPath);
         return null;
     }
 
