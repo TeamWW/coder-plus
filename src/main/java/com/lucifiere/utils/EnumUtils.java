@@ -16,7 +16,6 @@ public class EnumUtils {
      * @param <T>       外部值类型
      * @return 外部值对应的目标枚举
      */
-    @SafeVarargs
     public static <T, E extends Enum<?>> E getByValOrThrow(T val, Function<E, T> extractor, E... enums) {
         Preconditions.checkNotNull(val, "查询值不能为空！");
         return Stream.of(enums).filter(t -> Objects.equals(val, extractor.apply(t))).findAny().orElseThrow(() -> new IllegalArgumentException("不支持的类型！"));
