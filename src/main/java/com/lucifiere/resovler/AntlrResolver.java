@@ -1,11 +1,13 @@
 package com.lucifiere.resovler;
 
+import cn.hutool.core.util.StrUtil;
 import com.lucifiere.antlr.MySqlParser;
 import com.lucifiere.antlr.MySqlParserBaseListener;
 import com.lucifiere.common.FiledType;
 import com.lucifiere.extract.Model;
 import com.lucifiere.extract.table.TableField;
 import com.lucifiere.extract.table.TableModel;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.Optional;
 
@@ -28,16 +30,20 @@ public class AntlrResolver extends MySqlParserBaseListener {
         this.tableModel = tableModel;
     }
 
+    public TableModel getTableModel() {
+        return tableModel;
+    }
+
     @Override
     public void enterTableName(MySqlParser.TableNameContext ctx) {
-        tableModel.setName(ctx.getText());
+        tableModel.setName(extractContent(ctx));
     }
 
     @Override
     public void enterColumnDeclaration(MySqlParser.ColumnDeclarationContext ctx) {
         var currentFiled = getCursor();
         var nameNode = ctx.getChild(MySqlParser.UidContext.class, 0);
-        currentFiled.setName(nameNode.getText());
+        currentFiled.setName(extractContent(nameNode));
     }
 
     @Override
@@ -50,14 +56,18 @@ public class AntlrResolver extends MySqlParserBaseListener {
     public void enterColumnDefinition(MySqlParser.ColumnDefinitionContext ctx) {
         var currentFiled = getCursor();
         var dataTypeNode = ctx.getChild(MySqlParser.DataTypeContext.class, 0);
-        currentFiled.setType(FiledType.getBySqlType(dataTypeNode.getText()));
-        var commentNode = ctx.getChild(MySqlParser.TableOptionCommentContext.class, 0);
-        currentFiled.setComment(commentNode.getText());
+        var dataTypeNameNode = dataTypeNode.getChild(0);
+        Optional.ofNullable(dataTypeNameNode).ifPresent(node -> currentFiled.setType(FiledType.getBySqlType(extractContent(node))));
+        var commentNode = ctx.getChild(MySqlParser.CommentColumnConstraintContext.class, 0);
+        Optional.ofNullable(commentNode).ifPresent(node -> currentFiled.setComment(extractContent(node.getChild(1))));
     }
 
     @Override
     public void exitColumnDefinition(MySqlParser.ColumnDefinitionContext ctx) {
-        super.exitColumnDefinition(ctx);
+    }
+
+    private String extractContent(ParseTree treeNode) {
+        return treeNode == null ? null : treeNode.getText().toLowerCase();
     }
 
     @Override

@@ -58,7 +58,7 @@ CREATE TABLE `coupon_couponinfo` (
         var model = new TableModel();
         AntlrResolver listener = new AntlrResolver(model);
         walker.walk(listener, ctDdlTree);
-        System.out.println(JSONUtil.toJsonStr(model));
+        System.out.println(JSONUtil.toJsonStr(listener.getTableModel()));
     }
 
 }
