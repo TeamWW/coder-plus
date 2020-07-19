@@ -5,7 +5,7 @@ import com.lucifiere.extract.Model;
 
 import java.util.Set;
 
-public class TableModel implements Model {
+public class TableModel extends Model {
 
     private String name;
 
@@ -36,5 +36,5 @@ public class TableModel implements Model {
     public Set<TableField> getFields() {
         return fields;
     }
-    
+
 }

@@ -56,7 +56,7 @@ public enum FiledType {
         return EnumUtils.getByValOrThrow(type, FiledType::getSqlType, FiledType.values());
     }
 
-    public static FiledType getJavaType(Class<?> type) {
+    public static FiledType getByJavaType(Class<?> type) {
         return EnumUtils.getByValOrThrow(type, FiledType::getJavaType, FiledType.values());
     }
 

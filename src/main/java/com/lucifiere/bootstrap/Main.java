@@ -1,6 +1,9 @@
 package com.lucifiere.bootstrap;
 
+import cn.hutool.json.JSONUtil;
 import com.lucifiere.antlr.*;
+import com.lucifiere.extract.table.TableModel;
+import com.lucifiere.resovler.AntlrResolver;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -52,9 +55,10 @@ CREATE TABLE `coupon_couponinfo` (
         MySqlParser parser = new MySqlParser(tokens);
         MySqlParser.CreateTableContext ctDdlTree = parser.createTable();
         ParseTreeWalker walker = new ParseTreeWalker();
-        DDLListener listener = new DDLListener();
+        var model = new TableModel();
+        AntlrResolver listener = new AntlrResolver(model);
         walker.walk(listener, ctDdlTree);
-        System.out.println(ctDdlTree.toStringTree());
+        System.out.println(JSONUtil.toJsonStr(model));
     }
 
 }
