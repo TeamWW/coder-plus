@@ -2,7 +2,6 @@ package com.lucifiere.utils;
 
 import cn.hutool.core.util.StrUtil;
 
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -17,10 +16,7 @@ public class EnumUtils {
      */
     @SafeVarargs
     public static <E extends Enum<?>> E getByValOrThrow(String val, Function<E, String> extractor, E... enums) {
-        if (val == null) {
-            return null;
-        }
-        return Stream.of(enums).filter(t -> StrUtil.equalsAnyIgnoreCase(val, extractor.apply(t))).findAny().orElseThrow(() -> new IllegalArgumentException("不支持的类型！"));
+        return Stream.of(enums).filter(t -> StrUtil.equalsAnyIgnoreCase(val, extractor.apply(t))).findAny().orElse(null);
     }
 
 }

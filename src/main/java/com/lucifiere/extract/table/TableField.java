@@ -34,4 +34,12 @@ public class TableField {
         this.comment = comment;
     }
 
+    @Override
+    public String toString() {
+        return "TableField{" +
+                "name=" + name + 
+                ",type=" + type +
+                ",comment=" + comment +
+                '}';
+    }
 }

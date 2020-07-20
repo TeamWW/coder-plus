@@ -1,9 +1,11 @@
 package com.lucifiere.extract.table;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import com.lucifiere.extract.Model;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TableModel extends Model {
 
@@ -37,4 +39,8 @@ public class TableModel extends Model {
         return fields;
     }
 
+    @Override
+    public String toString() {
+        return Joiner.on("\n").join(fields.stream().map(it->it.toString()).collect(Collectors.toList()));
+    }
 }

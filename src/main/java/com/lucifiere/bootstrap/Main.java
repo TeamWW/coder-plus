@@ -49,16 +49,22 @@ CREATE TABLE `coupon_couponinfo` (
                   `prefix` varchar(20) character set utf8 collate utf8_bin default null comment '预制券码前缀',
                   `detail_source_code` varchar(30) character set utf8 collate utf8_bin default null comment 'source_code粒度太粗，再细一点的在这里'
                 ) engine=innodb auto_increment=21438132 default charset=utf8 comment='券码表';""";
-        CharStream input = CharStreams.fromString(sql.toUpperCase());
-        MySqlLexer lexer = new MySqlLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        MySqlParser parser = new MySqlParser(tokens);
+        // 将代码文本导入Antlr自建流中
+        var input = CharStreams.fromString(sql.toUpperCase());
+        // 词法解析
+        var lexer = new MySqlLexer(input);
+        var tokens = new CommonTokenStream(lexer);
+        // 语法解析
+        var parser = new MySqlParser(tokens);
+        // 指定根语法节点
         MySqlParser.CreateTableContext ctDdlTree = parser.createTable();
-        ParseTreeWalker walker = new ParseTreeWalker();
+        // 创建一个树遍历器
+        var walker = new ParseTreeWalker();
         var model = new TableModel();
-        AntlrResolver listener = new AntlrResolver(model);
+        var listener = new AntlrResolver(model);
+        // 注册回调，开始遍历树
         walker.walk(listener, ctDdlTree);
-        System.out.println(JSONUtil.toJsonStr(listener.getTableModel()));
+        System.out.println(listener.getTableModel().toString());
     }
 
 }
