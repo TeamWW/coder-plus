@@ -37,7 +37,7 @@ public class TableField {
     @Override
     public String toString() {
         return "TableField{" +
-                "name=" + name + 
+                "name=" + name +
                 ",type=" + type +
                 ",comment=" + comment +
                 '}';

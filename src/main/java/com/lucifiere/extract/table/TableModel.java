@@ -41,6 +41,6 @@ public class TableModel extends Model {
 
     @Override
     public String toString() {
-        return Joiner.on("\n").join(fields.stream().map(it->it.toString()).collect(Collectors.toList()));
+        return Joiner.on("\n").join(fields.stream().map(TableField::toString).collect(Collectors.toList()));
     }
 }
