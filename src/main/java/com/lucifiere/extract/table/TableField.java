@@ -2,6 +2,12 @@ package com.lucifiere.extract.table;
 
 import com.lucifiere.common.FiledType;
 
+/**
+ * 表字段
+ *
+ * @author XD.Wang
+ * Date 2020-7-25.
+ */
 public class TableField {
 
     private String name;

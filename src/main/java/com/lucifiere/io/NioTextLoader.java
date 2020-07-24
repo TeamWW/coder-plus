@@ -1,6 +1,8 @@
 package com.lucifiere.io;
 
 /**
+ * 基于NIO的简易文本工具
+ *
  * @author created by XD.Wang
  * Date 2020/7/12.
  */

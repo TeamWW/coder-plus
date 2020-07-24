@@ -1,6 +1,5 @@
 package com.lucifiere.resovler;
 
-import cn.hutool.core.util.StrUtil;
 import com.lucifiere.antlr.MySqlParser;
 import com.lucifiere.antlr.MySqlParserBaseListener;
 import com.lucifiere.common.FiledType;
@@ -11,6 +10,12 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.Optional;
 
+/**
+ * 基于ANTLR的属性值解析工具
+ *
+ * @author XD.Wang
+ * Date 2020-7-25.
+ */
 public class AntlrResolver extends MySqlParserBaseListener {
 
     private final TableModel tableModel;

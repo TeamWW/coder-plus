@@ -9,8 +9,10 @@ import com.lucifiere.io.NioTextLoader;
 import com.lucifiere.io.TextLoader;
 
 /**
- * @author created by XD.Wang
- * Date 2020/7/12.
+ * 表数据提取器
+ *
+ * @author XD.Wang
+ * Date 2020-7-25.
  */
 public class TableExtractor extends AbstractExtractor {
 

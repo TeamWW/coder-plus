@@ -6,6 +6,12 @@ import com.lucifiere.utils.EnumUtils;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * 字段类型
+ *
+ * @author XD.Wang
+ * Date 2020-7-25.
+ */
 public enum FiledType {
 
     NUM_TINYINT(Short.class.getSimpleName(), "TINYINT", "TINYINT"),

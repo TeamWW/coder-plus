@@ -1,0 +1,21 @@
+组件类：
+Resolver - 从外部数据源（tx from disk、tx from terminal、JDBC等）提取原始
+↓
+Extractor - 将原始数据包装成模型数据（如表模型数据）
+↓
+Model - 数据模型，可解耦数据获取逻辑和数据渲染逻辑
++
+Template - 符合StringTemplates语法的模板文件
+↓
+Render - 将数据模型基于Template模板渲染成某种视图
+↓
+View - 特定视图（如代码文件、Excel等）
+↓
+Exporter - 输出器，将View按照自己的类型输出到端（terminal、disk、net等）
+
+工具类：
+Bootstrap类：串联所有逻辑
+GlobalContext：静态环境参数
+
+可选解决的事情：
+按照demo学习Antlr，完成AntlrResolver的开发

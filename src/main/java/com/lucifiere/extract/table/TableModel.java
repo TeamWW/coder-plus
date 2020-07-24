@@ -7,6 +7,12 @@ import com.lucifiere.extract.Model;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * 存放表模型数据
+ *
+ * @author XD.Wang
+ * Date 2020-7-25.
+ */
 public class TableModel extends Model {
 
     private String name;

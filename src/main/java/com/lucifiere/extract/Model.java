@@ -5,6 +5,12 @@ import com.google.common.collect.Maps;
 
 import java.util.LinkedHashMap;
 
+/**
+ * 存放自定义属性值
+ * <p>
+ * Created By XD.Wang
+ * Date：2020-24
+ */
 public abstract class Model {
 
     protected LinkedHashMap<String, String> attrs = Maps.newLinkedHashMap();
