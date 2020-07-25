@@ -6,6 +6,7 @@ import com.lucifiere.extract.AbstractExtractor;
 import com.lucifiere.extract.Model;
 import com.lucifiere.io.TextLoader;
 import com.lucifiere.resovler.Resolver;
+import com.lucifiere.resovler.antlr.AntlrResolverReq;
 
 /**
  * 表数据提取器
@@ -27,13 +28,8 @@ public class TableExtractor extends AbstractExtractor {
 
     public Model extract() {
         var ddlPath = Joiner.on("/").join(context.workspacePath(), context.inputPath(), context.ddlName());
-        String ddlStr = textLoader.loadText(ddlPath);
-        Model model = resolver.resolve();
-        return null;
-    }
-
-    private void extractTableModel() {
-
+        var ddlStr = textLoader.loadText(ddlPath);
+        return resolver.resolve(new AntlrResolverReq(ddlStr));
     }
 
 }

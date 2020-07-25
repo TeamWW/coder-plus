@@ -28,17 +28,17 @@ public record GlobalContext(
 
     public GlobalContext {
         // 自定义配置
-        this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow(() -> new RuntimeException("工作目录配置有误！"));
+        this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow();
         // 可默认的配置
         this.inputPath = Optional.ofNullable(inputPath).orElse("input");
         this.outputPath = Optional.ofNullable(outputPath).orElse("output");
         this.ddlName = Optional.ofNullable(outputPath).orElse("ddl.sql");
         this.textLoader = Optional.ofNullable(textLoader).orElse(new NioTextLoader());
         // 可扩展的配置
-        this.resolver = Optional.ofNullable(resolver).orElseThrow(() -> new RuntimeException("组件配置有误！！"));
-        this.extractor = Optional.ofNullable(extractor).orElseThrow(() -> new RuntimeException("组件配置有误！！"));
-        this.render = Optional.ofNullable(render).orElseThrow(() -> new RuntimeException("组件配置有误！！"));
-        this.exporter = Optional.ofNullable(exporter).orElseThrow(() -> new RuntimeException("组件配置有误！！"));
+        this.resolver = Optional.ofNullable(resolver).orElseThrow();
+        this.extractor = Optional.ofNullable(extractor).orElseThrow();
+        this.render = Optional.ofNullable(render).orElseThrow();
+        this.exporter = Optional.ofNullable(exporter).orElseThrow();
     }
 
     /**
