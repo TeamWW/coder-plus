@@ -10,7 +10,7 @@ import java.util.List;
  * @author XD.Wang
  * Date 2020/7/25.
  */
-public class HandlerChainFactory {
+public class RendersChainFactory {
 
     private static final List<RenderWrapper> DEFAULT_RENDER_CHAIN = Lists.newArrayList();
 
