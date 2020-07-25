@@ -1,4 +1,4 @@
-package com.lucifiere.resovler;
+package com.lucifiere.resovler.antlr;
 
 import com.lucifiere.antlr.MySqlParser;
 import com.lucifiere.antlr.MySqlParserBaseListener;
@@ -6,6 +6,7 @@ import com.lucifiere.common.FiledType;
 import com.lucifiere.extract.Model;
 import com.lucifiere.extract.table.TableField;
 import com.lucifiere.extract.table.TableModel;
+import com.lucifiere.resovler.ResolverReq;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.Optional;
@@ -76,8 +77,11 @@ public class AntlrResolver extends MySqlParserBaseListener {
     }
 
     @Override
-    public Model resolve() {
-        return null;
+    public Model resolve(ResolverReq resolverReq) {
+        if (resolverReq instanceof AntlrResolverReq req) {
+
+        }
+        throw new UnsupportedOperationException("类型匹配有误！");
     }
 
 }

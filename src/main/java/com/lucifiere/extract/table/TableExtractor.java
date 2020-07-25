@@ -4,9 +4,8 @@ import com.google.common.base.Joiner;
 import com.lucifiere.common.GlobalContext;
 import com.lucifiere.extract.AbstractExtractor;
 import com.lucifiere.extract.Model;
-import com.lucifiere.resovler.Resolver;
-import com.lucifiere.io.NioTextLoader;
 import com.lucifiere.io.TextLoader;
+import com.lucifiere.resovler.Resolver;
 
 /**
  * 表数据提取器
@@ -16,22 +15,24 @@ import com.lucifiere.io.TextLoader;
  */
 public class TableExtractor extends AbstractExtractor {
 
-    private TextLoader textLoader;
+    private final TextLoader textLoader;
 
-    private Resolver resolver;
+    private final Resolver resolver;
 
     public TableExtractor(GlobalContext globalContext) {
         super(globalContext);
-        this.textLoader = new NioTextLoader();
+        this.textLoader = globalContext.textLoader();
+        this.resolver = globalContext.resolver();
     }
 
     public Model extract() {
         var ddlPath = Joiner.on("/").join(context.workspacePath(), context.inputPath(), context.ddlName());
         String ddlStr = textLoader.loadText(ddlPath);
+        Model model = resolver.resolve();
         return null;
     }
 
-    private void extractTableModel(){
+    private void extractTableModel() {
 
     }
 

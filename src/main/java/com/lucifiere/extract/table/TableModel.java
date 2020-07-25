@@ -49,4 +49,5 @@ public class TableModel extends Model {
     public String toString() {
         return Joiner.on("\n").join(fields.stream().map(TableField::toString).collect(Collectors.toList()));
     }
+
 }

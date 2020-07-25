@@ -1,10 +1,8 @@
 package com.lucifiere.bootstrap;
 
-import cn.hutool.json.JSONUtil;
 import com.lucifiere.antlr.*;
 import com.lucifiere.extract.table.TableModel;
-import com.lucifiere.resovler.AntlrResolver;
-import org.antlr.v4.runtime.CharStream;
+import com.lucifiere.resovler.antlr.AntlrResolver;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
