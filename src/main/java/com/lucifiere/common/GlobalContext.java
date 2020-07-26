@@ -1,13 +1,15 @@
 package com.lucifiere.common;
 
+import cn.hutool.core.util.ReflectUtil;
 import com.lucifiere.exporter.Exporter;
 import com.lucifiere.extract.Extractor;
-import com.lucifiere.io.NioTextLoader;
-import com.lucifiere.io.TextLoader;
+import com.lucifiere.io.NioTextFileAccessor;
+import com.lucifiere.io.TextFileAccessor;
 import com.lucifiere.render.Render;
 import com.lucifiere.resovler.Resolver;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * 全局配置
@@ -20,7 +22,7 @@ public record GlobalContext(
         String inputPath,
         String outputPath,
         String ddlName,
-        TextLoader textLoader,
+        TextFileAccessor textFileAccessor,
         Resolver resolver,
         Extractor extractor,
         Render render,
@@ -33,7 +35,7 @@ public record GlobalContext(
         this.inputPath = Optional.ofNullable(inputPath).orElse("input");
         this.outputPath = Optional.ofNullable(outputPath).orElse("output");
         this.ddlName = Optional.ofNullable(outputPath).orElse("ddl.sql");
-        this.textLoader = Optional.ofNullable(textLoader).orElse(new NioTextLoader());
+        this.textFileAccessor = Optional.ofNullable(textFileAccessor).orElse(new NioTextFileAccessor());
         // 可扩展的配置
         this.resolver = Optional.ofNullable(resolver).orElseThrow();
         this.extractor = Optional.ofNullable(extractor).orElseThrow();
@@ -53,7 +55,7 @@ public record GlobalContext(
         private String inputPath;
         private String outputPath;
         private String ddlName;
-        private TextLoader textLoader;
+        private TextFileAccessor textFileAccessor;
         private Resolver resolver;
         private Extractor extractor;
         private Render render;
@@ -79,8 +81,8 @@ public record GlobalContext(
             return this;
         }
 
-        public Creator setTextLoader(TextLoader textLoader) {
-            this.textLoader = textLoader;
+        public Creator setTextFileAccessor(TextFileAccessor textFileAccessor) {
+            this.textFileAccessor = textFileAccessor;
             return this;
         }
 
@@ -104,8 +106,14 @@ public record GlobalContext(
             return this;
         }
 
-        public GlobalContext create() {
-            return new GlobalContext(workspacePath, inputPath, outputPath, ddlName, textLoader, resolver, extractor, render, exporter);
+        public GlobalContext init() {
+            GlobalContext globalContext = new GlobalContext(workspacePath, inputPath, outputPath, ddlName, textFileAccessor, resolver, extractor, render, exporter);
+            Stream.of(textFileAccessor, render, resolver, exporter, extractor).forEach(component -> {
+                if (component instanceof GlobalContextAware globalContextAware) {
+                    ReflectUtil.invoke(globalContextAware, "setGlobalContext", globalContext);
+                }
+            });
+            return globalContext;
         }
     }
 
