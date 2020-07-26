@@ -1,7 +1,6 @@
 package com.lucifiere.extract.table;
 
 import com.google.common.base.Joiner;
-import com.lucifiere.common.GlobalContext;
 import com.lucifiere.extract.AbstractExtractor;
 import com.lucifiere.extract.Model;
 import com.lucifiere.io.TextFileAccessor;
@@ -20,13 +19,13 @@ public class TableExtractor extends AbstractExtractor {
 
     private final Resolver resolver;
 
-    public TableExtractor(GlobalContext globalContext) {
+    public TableExtractor() {
         this.textFileAccessor = globalContext.textFileAccessor();
         this.resolver = globalContext.resolver();
     }
 
     public Model extract() {
-        var ddlPath = Joiner.on("/").join(context.workspacePath(), context.inputPath(), context.ddlName());
+        var ddlPath = Joiner.on("/").join(globalContext.workspacePath(), globalContext.inputPath(), globalContext.ddlName());
         var ddlStr = textFileAccessor.loadText(ddlPath);
         return resolver.resolve(new AntlrResolverReq(ddlStr));
     }

@@ -11,11 +11,11 @@ import com.lucifiere.common.GlobalContextAware;
  */
 public abstract class AbstractExtractor implements Extractor, GlobalContextAware {
 
-    protected GlobalContext context;
+    protected GlobalContext globalContext;
 
     @Override
     public void setGlobalContext(GlobalContext globalContext) {
-        this.context = globalContext;
+        this.globalContext = globalContext;
     }
 
 }
