@@ -15,7 +15,7 @@ Exporter - 输出器，将View按照自己的类型输出到端（terminal、dis
 
 工具类：
 Bootstrap类：串联所有逻辑
-GlobalContext：静态环境参数
+GlobalContext：全局静态环境
 
 可选解决的事情：
 按照demo学习Antlr，完成AntlrResolver的开发
