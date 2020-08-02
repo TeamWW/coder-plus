@@ -1,5 +1,7 @@
 package com.lucifiere.render.executor;
 
+import com.lucifiere.extract.Model;
+
 /**
  * 节点执行上下文
  *
@@ -7,4 +9,14 @@ package com.lucifiere.render.executor;
  * Date 2020/7/25.
  */
 public class HandlerRequest {
+
+    private Model model;
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
 }

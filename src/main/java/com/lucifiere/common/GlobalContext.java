@@ -1,15 +1,12 @@
 package com.lucifiere.common;
 
-import cn.hutool.core.util.ReflectUtil;
 import com.lucifiere.exporter.Exporter;
 import com.lucifiere.extract.Extractor;
 import com.lucifiere.io.NioTextFileAccessor;
 import com.lucifiere.io.TextFileAccessor;
-import com.lucifiere.render.Render;
 import com.lucifiere.resovler.Resolver;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * 全局配置
@@ -25,7 +22,6 @@ public record GlobalContext(
         TextFileAccessor textFileAccessor,
         Resolver resolver,
         Extractor extractor,
-        Render render,
         Exporter exporter) {
 
     public GlobalContext {
@@ -39,7 +35,6 @@ public record GlobalContext(
         // 可扩展的配置
         this.resolver = Optional.ofNullable(resolver).orElseThrow();
         this.extractor = Optional.ofNullable(extractor).orElseThrow();
-        this.render = Optional.ofNullable(render).orElseThrow();
         this.exporter = Optional.ofNullable(exporter).orElseThrow();
     }
 
@@ -58,7 +53,6 @@ public record GlobalContext(
         private TextFileAccessor textFileAccessor;
         private Resolver resolver;
         private Extractor extractor;
-        private Render render;
         private Exporter exporter;
 
         public Creator setWorkspacePath(String workspacePath) {
@@ -96,24 +90,13 @@ public record GlobalContext(
             return this;
         }
 
-        public Creator setRender(Render render) {
-            this.render = render;
-            return this;
-        }
-
         public Creator setExporter(Exporter exporter) {
             this.exporter = exporter;
             return this;
         }
 
         public GlobalContext init() {
-            GlobalContext globalContext = new GlobalContext(workspacePath, inputPath, outputPath, ddlName, textFileAccessor, resolver, extractor, render, exporter);
-            Stream.of(textFileAccessor, render, resolver, exporter, extractor).forEach(component -> {
-                if (component instanceof GlobalContextAware globalContextAware) {
-                    ReflectUtil.invoke(globalContextAware, "setGlobalContext", globalContext);
-                }
-            });
-            return globalContext;
+            return new GlobalContext(workspacePath, inputPath, outputPath, ddlName, textFileAccessor, resolver, extractor, exporter);
         }
     }
 

@@ -1,5 +1,9 @@
 package com.lucifiere.render.executor;
 
+import com.lucifiere.render.View;
+
+import java.util.List;
+
 /**
  * 节点执行结果收集
  *
@@ -13,6 +17,11 @@ public class HandlerResponse {
      */
     private boolean success;
 
+    /**
+     * 解析出来的视图
+     */
+    private List<View> views;
+
     public boolean isSuccess() {
         return success;
     }
@@ -21,4 +30,11 @@ public class HandlerResponse {
         this.success = success;
     }
 
+    public List<View> getViews() {
+        return views;
+    }
+
+    public void setViews(List<View> views) {
+        this.views = views;
+    }
 }
