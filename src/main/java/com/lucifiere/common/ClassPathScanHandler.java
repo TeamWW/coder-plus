@@ -2,10 +2,6 @@ package com.lucifiere.common;
 
 import cn.hutool.log.StaticLog;
 import org.apache.commons.lang3.StringUtils;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.scanners.TypeAnnotationsScanner;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,24 +38,11 @@ public class ClassPathScanHandler {
      * 过滤规则列表 如果是null或者空，即全部符合不过滤.
      */
     private List<String> classFilters = null;
-    /**
-     * the reflections.
-     */
-    private Reflections reflections = null;
 
     /**
      * 必须设定路径！
      */
     private ClassPathScanHandler() {
-    }
-
-    /**
-     * 指定路径去扫描
-     *
-     * @param packages 包路径.
-     */
-    public ClassPathScanHandler(String... packages) {
-        this.reflections = new Reflections(new ConfigurationBuilder().forPackages(packages).addScanners(new TypeAnnotationsScanner(), new SubTypesScanner()));
     }
 
     /**
@@ -70,13 +53,10 @@ public class ClassPathScanHandler {
      * @param classFilters 自定义过滤规则，如果是null或者空，即全部符合不过滤
      */
     public ClassPathScanHandler(Boolean excludeInner, Boolean checkInOrEx,
-                                List<String> classFilters, String... packages) {
+                                List<String> classFilters) {
         this.excludeInner = excludeInner;
         this.checkInOrEx = checkInOrEx;
         this.classFilters = classFilters;
-        this.reflections = new Reflections(new ConfigurationBuilder().forPackages(packages)
-                .addScanners(new TypeAnnotationsScanner(), new SubTypesScanner())
-        );
     }
 
     /**
@@ -232,7 +212,7 @@ public class ClassPathScanHandler {
     }
 
     /**
-     * 根据过滤规则判断类名.
+     * 类名过滤.
      *
      * @param className the class name.
      * @return whether to be filtered.
@@ -256,70 +236,16 @@ public class ClassPathScanHandler {
     }
 
     /**
-     * check the className whether match the inner class's rule.
+     * 内部类处理
      *
-     * @param className    the inner class name.
-     * @param filterString the filter string.
+     * @param className    名称
+     * @param filterString 过滤规则
      * @return true or false.
      */
     private boolean matchInnerClassname(String className, String filterString) {
         String reg = "^" + filterString.replace("*", ".*") + "$";
         Pattern p = Pattern.compile(reg);
         return p.matcher(className).find();
-    }
-
-    /**
-     * Gets excludeInner
-     *
-     * @return the excludeInner
-     */
-    public boolean isExcludeInner() {
-        return excludeInner;
-    }
-
-    /**
-     * Sets excludeInner
-     *
-     * @param excludeInner the excludeInner
-     */
-    public void setExcludeInner(boolean excludeInner) {
-        this.excludeInner = excludeInner;
-    }
-
-    /**
-     * Gets checkInOrEx
-     *
-     * @return the checkInOrEx
-     */
-    public boolean isCheckInOrEx() {
-        return checkInOrEx;
-    }
-
-    /**
-     * Sets checkInOrEx
-     *
-     * @param checkInOrEx the checkInOrEx
-     */
-    public void setCheckInOrEx(boolean checkInOrEx) {
-        this.checkInOrEx = checkInOrEx;
-    }
-
-    /**
-     * Gets classFilters
-     *
-     * @return the classFilters
-     */
-    public List<String> getClassFilters() {
-        return classFilters;
-    }
-
-    /**
-     * Sets classFilters
-     *
-     * @param classFilters the classFilters
-     */
-    public void setClassFilters(List<String> classFilters) {
-        this.classFilters = classFilters;
     }
 
 }
