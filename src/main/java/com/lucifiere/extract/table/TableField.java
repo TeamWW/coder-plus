@@ -2,6 +2,8 @@ package com.lucifiere.extract.table;
 
 import com.lucifiere.common.FiledType;
 
+import java.util.Objects;
+
 /**
  * 表字段
  *
@@ -47,5 +49,20 @@ public class TableField {
                 ",type=" + type +
                 ",comment=" + comment +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TableField that = (TableField) o;
+        return Objects.equals(name, that.name) &&
+                type == that.type &&
+                Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type, comment);
     }
 }

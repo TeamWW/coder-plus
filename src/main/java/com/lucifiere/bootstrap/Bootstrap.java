@@ -41,9 +41,8 @@ public abstract class Bootstrap {
     /**
      * 串联组件（基于接口）
      */
-    public void execute() {
-        GlobalContext context = createGlobalContext();
-        Preconditions.checkNotNull(context, "上下文信息不能为空！");
+    public void execute(Supplier<GlobalContext> contextSupplier) {
+        GlobalContext context = contextSupplier.get();
         contextCheckBeforeExecute(context);
         processGlobalContextAware();
         Resolver resolver = context.resolver();
@@ -72,6 +71,7 @@ public abstract class Bootstrap {
 
     private void contextCheckBeforeExecute(GlobalContext context) {
         Preconditions.checkNotNull(context, "上下文信息不能为空！");
+        Preconditions.checkNotNull(context, "上下文信息不能为空！");
         Preconditions.checkNotNull(context.workspacePath(), "工作目录不能为空！");
         Preconditions.checkNotNull(context.exporter(), "输出工具不能为空！");
         Preconditions.checkNotNull(context.extractor(), "提取工具不能为空！");
@@ -89,18 +89,11 @@ public abstract class Bootstrap {
         });
     }
 
-    private <T> T requireAndCheck(Supplier<T> supplier) {
+    private <T> Supplier<T> requireAndCheck(Supplier<T> supplier) {
         T r = supplier.get();
         Preconditions.checkNotNull(r, "必要参数不能为空！");
-        return r;
+        return supplier;
     }
-
-    /**
-     * 组装全局上下文
-     *
-     * @return 全局上下文
-     */
-    protected abstract GlobalContext createGlobalContext();
 
     /**
      * 组装解析器入参

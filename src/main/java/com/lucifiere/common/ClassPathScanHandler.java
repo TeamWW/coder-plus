@@ -42,7 +42,7 @@ public class ClassPathScanHandler {
     /**
      * 必须设定路径！
      */
-    private ClassPathScanHandler() {
+    public ClassPathScanHandler() {
     }
 
     /**

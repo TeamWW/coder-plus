@@ -15,6 +15,7 @@ import java.nio.file.Paths;
  */
 public class NioTextFileAccessor implements TextFileAccessor {
 
+    @Override
     public String loadText(String pathStr) {
         try {
             var path = Paths.get(pathStr);
@@ -28,6 +29,16 @@ public class NioTextFileAccessor implements TextFileAccessor {
     public void writeText(String text, String pathStr) {
         try {
             var path = Paths.get(pathStr);
+            Files.write(path, text.getBytes());
+        } catch (IOException e) {
+            StaticLog.error("写入外部文件失败！", e);
+            throw ExceptionUtil.wrapRuntime(e);
+        }
+    }
+
+    public void createFile(String text, String pathStr, String fileName) {
+        try {
+            var path = Paths.get(pathStr + "/" + fileName);
             Files.write(path, text.getBytes());
         } catch (IOException e) {
             StaticLog.error("写入外部文件失败！", e);

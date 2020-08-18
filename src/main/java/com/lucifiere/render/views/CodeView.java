@@ -5,11 +5,17 @@ import com.lucifiere.render.View;
 
 public class CodeView implements View {
 
-    private  Class<? extends Render> render;
+    private Class<? extends Render> render;
 
-    private  String content;
+    private String content;
 
-    private  String fileSuffix;
+    private String fileSuffix;
+
+    private String filePrefix;
+
+    private String fileExt;
+
+    private String name;
 
     public Class<? extends Render> getRender() {
         return render;
@@ -35,4 +41,27 @@ public class CodeView implements View {
         this.fileSuffix = fileSuffix;
     }
 
+    public String getFilePrefix() {
+        return filePrefix;
+    }
+
+    public void setFilePrefix(String filePrefix) {
+        this.filePrefix = filePrefix;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFileExt() {
+        return fileExt;
+    }
+
+    public void setFileExt(String fileExt) {
+        this.fileExt = fileExt;
+    }
 }

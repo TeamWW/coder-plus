@@ -24,6 +24,7 @@ public class TableExtractor extends AbstractExtractor {
         this.resolver = globalContext.resolver();
     }
 
+    @Override
     public Model extract() {
         var ddlPath = Joiner.on("/").join(globalContext.workspacePath(), globalContext.inputPath(), globalContext.ddlName());
         var ddlStr = textFileAccessor.loadText(ddlPath);
