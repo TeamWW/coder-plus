@@ -12,7 +12,18 @@ import org.apache.commons.lang3.StringUtils;
 public class CodeUtils {
 
     public enum NamedStyle {
-        CAMEL, UNDERLINE, CAP_FIRST
+        /**
+         * 驼峰风格
+         */
+        CAMEL,
+        /**
+         * 下划线风格
+         */
+        UNDERLINE,
+        /**
+         * 首字母大写的驼峰风格
+         */
+        CAP_FIRST
     }
 
     public static String switchNamedStyle(String source, NamedStyle targetStyle) {

@@ -1,6 +1,7 @@
 package com.lucifiere.render;
 
 import com.lucifiere.extract.Model;
+import com.lucifiere.templates.Template;
 
 /**
  * 渲染器
@@ -10,6 +11,13 @@ import com.lucifiere.extract.Model;
  */
 public interface Render {
 
-    View rend(Model model);
+    /**
+     * 渲染
+     *
+     * @param model
+     * @param template
+     * @return
+     */
+    View rend(Model model, Template template);
 
 }

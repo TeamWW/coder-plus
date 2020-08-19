@@ -1,6 +1,7 @@
 package com.lucifiere.bootstrap;
 
-import com.lucifiere.antlr.*;
+import com.lucifiere.antlr.MySqlLexer;
+import com.lucifiere.antlr.MySqlParser;
 import com.lucifiere.extract.table.TableModel;
 import com.lucifiere.resovler.antlr.AntlrResolver;
 import org.antlr.v4.runtime.CharStreams;

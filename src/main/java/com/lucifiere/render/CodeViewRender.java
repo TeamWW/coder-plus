@@ -18,7 +18,7 @@ public class CodeViewRender extends StringTemplateRender {
     }
 
     @Override
-    protected String rendContent(Model model) {
+    protected String rendContent(Model model, Template template) {
         return null;
     }
 

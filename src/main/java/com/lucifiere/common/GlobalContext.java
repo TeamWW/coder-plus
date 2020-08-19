@@ -5,6 +5,7 @@ import com.lucifiere.extract.Extractor;
 import com.lucifiere.io.NioTextFileAccessor;
 import com.lucifiere.io.TextFileAccessor;
 import com.lucifiere.resovler.Resolver;
+import com.lucifiere.templates.TemplateContainer;
 
 import java.util.Optional;
 
@@ -54,6 +55,7 @@ public record GlobalContext(
         private Resolver resolver;
         private Extractor extractor;
         private Exporter exporter;
+        private TemplateContainer templateContainer;
 
         public Creator setWorkspacePath(String workspacePath) {
             this.workspacePath = workspacePath;

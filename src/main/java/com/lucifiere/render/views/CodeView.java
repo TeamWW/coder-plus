@@ -1,5 +1,6 @@
 package com.lucifiere.render.views;
 
+import com.lucifiere.common.FileSetting;
 import com.lucifiere.render.Render;
 import com.lucifiere.render.View;
 
@@ -9,11 +10,7 @@ public class CodeView implements View {
 
     private String content;
 
-    private String fileSuffix;
-
-    private String filePrefix;
-
-    private String fileExt;
+    private FileSetting fileSetting;
 
     private String name;
 
@@ -33,22 +30,6 @@ public class CodeView implements View {
         this.content = content;
     }
 
-    public String getFileSuffix() {
-        return fileSuffix;
-    }
-
-    public void setFileSuffix(String fileSuffix) {
-        this.fileSuffix = fileSuffix;
-    }
-
-    public String getFilePrefix() {
-        return filePrefix;
-    }
-
-    public void setFilePrefix(String filePrefix) {
-        this.filePrefix = filePrefix;
-    }
-
     public String getName() {
         return name;
     }
@@ -57,11 +38,11 @@ public class CodeView implements View {
         this.name = name;
     }
 
-    public String getFileExt() {
-        return fileExt;
+    public FileSetting getFileSetting() {
+        return fileSetting;
     }
 
-    public void setFileExt(String fileExt) {
-        this.fileExt = fileExt;
+    public void setFileSetting(FileSetting fileSetting) {
+        this.fileSetting = fileSetting;
     }
 }

@@ -9,9 +9,7 @@ import com.lucifiere.extract.table.TableModel;
 import com.lucifiere.resovler.ResolverReq;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.util.ArrayList;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * 基于ANTLR的属性值解析工具

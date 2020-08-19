@@ -6,20 +6,14 @@ import com.lucifiere.templates.Template;
 
 public abstract class AbstractRender implements Render {
 
-    protected Template template;
-
-    public AbstractRender(Template template) {
-        this.template = template;
-    }
-
     @Override
-    public View rend(final Model model) {
-        String content = rendContent(model);
+    public View rend(final Model model, Template template) {
+        String content = rendContent(model, template);
         StaticLog.info("渲染内容 --> {}" + content);
         return createView(content, model);
     }
 
-    protected abstract String rendContent(Model model);
+    protected abstract String rendContent(Model model, Template template);
 
     protected abstract View createView(String content, Model model);
 
