@@ -1,4 +1,4 @@
-package com.lucifiere.templates;
+package com.lucifiere.templates.spec;
 
 import java.util.List;
 import java.util.Set;

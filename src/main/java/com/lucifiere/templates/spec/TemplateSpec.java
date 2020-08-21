@@ -1,4 +1,4 @@
-package com.lucifiere.templates;
+package com.lucifiere.templates.spec;
 
 import com.lucifiere.common.FileSetting;
 
@@ -8,29 +8,29 @@ import com.lucifiere.common.FileSetting;
  */
 public class TemplateSpec {
 
-    protected String code;
+    private String id;
 
-    protected FileSetting fileSetting;
+    private FileSetting fileSetting;
 
-    protected String content;
+    private String path;
 
-    protected String description;
+    private String description;
 
-    public static TemplateSpec of(FileSetting fileSetting, String code, String content, String description) {
+    public static TemplateSpec of(FileSetting fileSetting, String id, String path, String description) {
         TemplateSpec spec = new TemplateSpec();
-        spec.setCode(code);
-        spec.setContent(content);
+        spec.setId(id);
+        spec.setPath(path);
         spec.setDescription(description);
         spec.setFileSetting(fileSetting);
         return spec;
     }
 
-    public String getCode() {
-        return code;
+    public String getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public FileSetting getFileSetting() {
@@ -41,12 +41,12 @@ public class TemplateSpec {
         this.fileSetting = fileSetting;
     }
 
-    public String getContent() {
-        return content;
+    public String getPath() {
+        return path;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getDescription() {

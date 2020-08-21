@@ -3,10 +3,7 @@ package com.lucifiere.bootstrap;
 import cn.hutool.core.util.ReflectUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
-import com.lucifiere.common.ClassPathScanHandler;
-import com.lucifiere.common.GlobalContext;
-import com.lucifiere.common.GlobalContextAware;
-import com.lucifiere.common.TemplateContainerAware;
+import com.lucifiere.common.*;
 import com.lucifiere.exporter.Exporter;
 import com.lucifiere.extract.Model;
 import com.lucifiere.render.View;
@@ -35,7 +32,7 @@ public abstract class Bootstrap {
 
     static {
         ClassPathScanHandler handler = new ClassPathScanHandler();
-        Set<Class<?>> allClasses = handler.getPackageAllClasses("com.lucifiere", true);
+        Set<Class<?>> allClasses = handler.getPackageAllClasses(Constants.CLASSES_SCAN_PATH, true);
         CLASSES.addAll(allClasses);
     }
 

@@ -2,34 +2,26 @@ package com.lucifiere.render;
 
 import com.google.common.base.Preconditions;
 import com.lucifiere.extract.Model;
+import com.lucifiere.extract.table.TableModel;
 import com.lucifiere.render.views.CodeView;
-import com.lucifiere.templates.Template;
+import com.lucifiere.templates.spec.TemplateSpec;
 import org.apache.commons.lang3.StringUtils;
 
 public class CodeViewRender extends StringTemplateRender {
 
-    public CodeViewRender(Template template) {
-        super(template);
+    public CodeViewRender(String templateId) {
+        super(templateId);
     }
 
     @Override
-    protected View createView(String content, Model model) {
-        return null;
-    }
-
-    @Override
-    protected String rendContent(Model model, Template template) {
-        return null;
-    }
-
-    private CodeView createCodeView(String c) {
-        Preconditions.checkArgument(StringUtils.isNotBlank(c));
+    protected View createView(String content, Model model, TemplateSpec spec) {
+        Preconditions.checkArgument(StringUtils.isNotBlank(content));
+        Preconditions.checkArgument(model instanceof TableModel);
         CodeView codeView = new CodeView();
-        codeView.setContent(c);
-        codeView.setFileExt("");
-        codeView.setFileSuffix("");
-        codeView.setFilePrefix("");
-        codeView.setName("");
+        codeView.setContent(content);
+        codeView.setFileSetting(spec.getFileSetting());
+        TableModel tableModel = (TableModel) model;
+        codeView.setName(tableModel.getName());
         return codeView;
     }
 

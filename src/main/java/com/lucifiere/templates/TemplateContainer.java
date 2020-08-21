@@ -1,6 +1,8 @@
 package com.lucifiere.templates;
 
 import com.google.common.collect.Maps;
+import com.lucifiere.templates.spec.TemplateRegister;
+import com.lucifiere.templates.spec.TemplateSpec;
 import com.lucifiere.utils.MyMapUtils;
 
 import java.util.List;
@@ -18,7 +20,7 @@ public class TemplateContainer {
 
     private static final Map<String, TemplateSpec> SPEC_MAP = Maps.newHashMap();
 
-    public TemplateSpec getTemplateByCode() {
+    public TemplateSpec getTemplateById(String id) {
         return null;
     }
 
@@ -36,7 +38,7 @@ public class TemplateContainer {
 
     public static TemplateContainer init(Set<Class<?>> classes) {
         List<TemplateSpec> specs = TemplateRegister.scan(classes);
-        Optional.ofNullable(specs).ifPresent(s -> SPEC_MAP.putAll(MyMapUtils.singleGroupBy(s, TemplateSpec::getCode)));
+        Optional.ofNullable(specs).ifPresent(s -> SPEC_MAP.putAll(MyMapUtils.singleGroupBy(s, TemplateSpec::getId)));
         return null;
     }
 

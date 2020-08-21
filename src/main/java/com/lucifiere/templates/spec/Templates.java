@@ -1,4 +1,4 @@
-package com.lucifiere.templates;
+package com.lucifiere.templates.spec;
 
 /**
  * @author created by XD.Wang
