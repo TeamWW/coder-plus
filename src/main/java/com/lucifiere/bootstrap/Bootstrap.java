@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
- * 启动类
+ * 启动类，串联组件逻辑，输入外部设置
  *
  * @author XD.Wang
  * Date 2020-8-2.
