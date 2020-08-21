@@ -1,6 +1,7 @@
 package com.lucifiere.exporter;
 
 import com.google.common.base.Preconditions;
+import com.lucifiere.common.FileSetting;
 import com.lucifiere.common.GlobalContext;
 import com.lucifiere.common.GlobalContextAware;
 import com.lucifiere.io.NioTextFileAccessor;
@@ -33,7 +34,8 @@ public class CodeExporter implements Exporter, GlobalContextAware {
     }
 
     private String createFileName(CodeView view) {
-        return view.getFilePrefix() + view.getName() + view.getName() + view.getFileExt();
+        FileSetting fileSetting = view.getFileSetting();
+        return fileSetting.getPrefix() + view.getName() + view.getName() + fileSetting.getExt();
     }
 
     @Override

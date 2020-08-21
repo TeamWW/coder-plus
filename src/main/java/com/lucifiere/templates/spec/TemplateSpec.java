@@ -2,6 +2,8 @@ package com.lucifiere.templates.spec;
 
 import com.lucifiere.common.FileSetting;
 
+import java.util.Objects;
+
 /**
  * @author created by XD.Wang
  * Date 2020/8/7.
@@ -55,6 +57,19 @@ public class TemplateSpec {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TemplateSpec that = (TemplateSpec) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }

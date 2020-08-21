@@ -24,22 +24,23 @@ public class TemplateContainer {
         return null;
     }
 
-    public TemplateSpec getAllTemplates() {
+    public Set<TemplateSpec> getAllTemplates() {
         return null;
     }
 
     public void registerTemplates(List<TemplateSpec> templates) {
-
+        // todo check unique
     }
 
     public void registerTemplate(List<TemplateSpec> templates) {
-
+        // todo check unique
     }
 
     public static TemplateContainer init(Set<Class<?>> classes) {
         List<TemplateSpec> specs = TemplateRegister.scan(classes);
         Optional.ofNullable(specs).ifPresent(s -> SPEC_MAP.putAll(MyMapUtils.singleGroupBy(s, TemplateSpec::getId)));
-        return null;
+        // todo register template to container
+        return CONTAINER;
     }
 
 }

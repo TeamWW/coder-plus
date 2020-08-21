@@ -2,6 +2,7 @@ package com.lucifiere.render.executor;
 
 import com.lucifiere.render.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class HandlerResponse {
     /**
      * 解析出来的视图
      */
-    private List<View> views;
+    private final List<View> views = new ArrayList<>();
 
     public boolean isSuccess() {
         return success;
@@ -34,7 +35,12 @@ public class HandlerResponse {
         return views;
     }
 
-    public void setViews(List<View> views) {
-        this.views = views;
+    public void addViews(List<View> views) {
+        this.views.addAll(views);
     }
+
+    public void addView(View views) {
+        this.views.add(views);
+    }
+
 }

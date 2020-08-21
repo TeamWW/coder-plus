@@ -7,10 +7,7 @@ import com.lucifiere.common.*;
 import com.lucifiere.exporter.Exporter;
 import com.lucifiere.extract.Model;
 import com.lucifiere.render.View;
-import com.lucifiere.render.executor.ConfigurableRendersExecutor;
-import com.lucifiere.render.executor.HandlerRequest;
-import com.lucifiere.render.executor.HandlerResponse;
-import com.lucifiere.render.executor.RenderWrapper;
+import com.lucifiere.render.executor.*;
 import com.lucifiere.resovler.Resolver;
 import com.lucifiere.resovler.ResolverReq;
 import com.lucifiere.templates.TemplateContainer;
@@ -59,7 +56,8 @@ public abstract class Bootstrap {
      * @return 模型
      */
     private List<View> renderViews(Model model) {
-        RenderWrapper renderHeader = createRenderChain();
+        List<String> templateIdList = acquireTemplateIds();
+        RenderWrapper renderHeader = CodeRendersChainManager.getManager().chaining(templateIdList);
         ConfigurableRendersExecutor rendersExecutor = new ConfigurableRendersExecutor(renderHeader);
         HandlerRequest req = new HandlerRequest();
         req.setModel(model);
@@ -115,6 +113,6 @@ public abstract class Bootstrap {
      *
      * @return 模板链
      */
-    protected abstract RenderWrapper createRenderChain();
+    protected abstract List<String> acquireTemplateIds();
 
 }
