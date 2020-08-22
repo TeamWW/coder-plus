@@ -2,14 +2,14 @@ package com.lucifiere.bootstrap;
 
 import cn.hutool.core.util.ReflectUtil;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.lucifiere.common.*;
 import com.lucifiere.exporter.Exporter;
+import com.lucifiere.extract.Extractor;
 import com.lucifiere.extract.Model;
 import com.lucifiere.render.View;
 import com.lucifiere.render.executor.*;
-import com.lucifiere.resovler.Resolver;
-import com.lucifiere.resovler.ResolverReq;
 import com.lucifiere.templates.TemplateContainer;
 
 import java.util.List;
@@ -33,18 +33,21 @@ public abstract class Bootstrap {
         CLASSES.addAll(allClasses);
     }
 
+    public void execute(String... templateIds) {
+        execute(Lists.newArrayList(templateIds));
+    }
+
     /**
      * 串联组件（基于接口）
      */
-    public void execute(Supplier<GlobalContext> contextSupplier) {
-        GlobalContext context = contextSupplier.get();
+    public void execute(List<String> templateIds) {
+        GlobalContext context = acquireContext();
         contextCheckBeforeExecute(context);
         processGlobalContextAware(context);
         processContainerAware();
-        Resolver resolver = context.resolver();
-        ResolverReq resolverReq = createResolverReq();
-        Model model = resolver.resolve(resolverReq);
-        List<View> views = renderViews(model);
+        Extractor extractor = context.extractor();
+        Model model = extractor.extract();
+        List<View> views = renderViews(model, templateIds);
         Exporter exporter = context.exporter();
         exporter.export(views);
     }
@@ -55,9 +58,8 @@ public abstract class Bootstrap {
      * @param model 数据
      * @return 模型
      */
-    private List<View> renderViews(Model model) {
-        List<String> templateIdList = acquireTemplateIds();
-        RenderWrapper renderHeader = CodeRendersChainManager.getManager().chaining(templateIdList);
+    private List<View> renderViews(Model model, List<String> templateIds) {
+        RenderWrapper renderHeader = CodeRendersChainManager.getManager().chaining(templateIds);
         ConfigurableRendersExecutor rendersExecutor = new ConfigurableRendersExecutor(renderHeader);
         HandlerRequest req = new HandlerRequest();
         req.setModel(model);
@@ -102,17 +104,10 @@ public abstract class Bootstrap {
     }
 
     /**
-     * 组装解析器入参
+     * 获取上下文
      *
-     * @return 全局上下文
+     * @return 获取上下文
      */
-    protected abstract ResolverReq createResolverReq();
-
-    /**
-     * 组装模板链
-     *
-     * @return 模板链
-     */
-    protected abstract List<String> acquireTemplateIds();
+    protected abstract GlobalContext acquireContext();
 
 }

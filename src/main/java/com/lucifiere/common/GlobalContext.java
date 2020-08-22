@@ -23,7 +23,8 @@ public record GlobalContext(
         TextFileAccessor textFileAccessor,
         Resolver resolver,
         Extractor extractor,
-        Exporter exporter) {
+        Exporter exporter,
+        TemplateContainer templateContainer) {
 
     public GlobalContext {
         // 自定义配置
@@ -37,6 +38,7 @@ public record GlobalContext(
         this.resolver = Optional.ofNullable(resolver).orElseThrow();
         this.extractor = Optional.ofNullable(extractor).orElseThrow();
         this.exporter = Optional.ofNullable(exporter).orElseThrow();
+        this.templateContainer = Optional.ofNullable(templateContainer).orElseThrow();
     }
 
     /**
@@ -45,7 +47,7 @@ public record GlobalContext(
      * @author created by XD.Wang
      * Date 2020/7/12.
      */
-    class Creator {
+    public static class Creator {
 
         private String workspacePath;
         private String inputPath;
@@ -97,9 +99,15 @@ public record GlobalContext(
             return this;
         }
 
-        public GlobalContext init() {
-            return new GlobalContext(workspacePath, inputPath, outputPath, ddlName, textFileAccessor, resolver, extractor, exporter);
+        public Creator setTemplateContainer(TemplateContainer templateContainer) {
+            this.templateContainer = templateContainer;
+            return this;
         }
+
+        public GlobalContext init() {
+            return new GlobalContext(workspacePath, inputPath, outputPath, ddlName, textFileAccessor, resolver, extractor, exporter, templateContainer);
+        }
+
     }
 
 }
