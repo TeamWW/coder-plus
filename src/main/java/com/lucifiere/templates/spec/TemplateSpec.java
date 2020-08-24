@@ -5,8 +5,10 @@ import com.lucifiere.common.FileSetting;
 import java.util.Objects;
 
 /**
- * @author created by XD.Wang
- * Date 2020/8/7.
+ * 定义模板
+ *
+ * @author wuhuilin
+ * Date 2020-8-23.
  */
 public class TemplateSpec {
 
@@ -19,7 +21,7 @@ public class TemplateSpec {
     private String description;
 
     public static TemplateSpec of(FileSetting fileSetting, String id, String path, String description) {
-        TemplateSpec spec = new TemplateSpec();
+        var spec = new TemplateSpec();
         spec.setId(id);
         spec.setPath(path);
         spec.setDescription(description);
@@ -63,7 +65,7 @@ public class TemplateSpec {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TemplateSpec that = (TemplateSpec) o;
+        var that = (TemplateSpec) o;
         return Objects.equals(id, that.id);
     }
 

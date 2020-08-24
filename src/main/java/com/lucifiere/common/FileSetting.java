@@ -41,7 +41,7 @@ public class FileSetting {
     }
 
     public static FileSetting of(String prefix, String suffix, String ext) {
-        FileSetting setting = new FileSetting();
+        var setting = new FileSetting();
         setting.setExt(ext);
         setting.setPrefix(prefix);
         setting.setSuffix(suffix);

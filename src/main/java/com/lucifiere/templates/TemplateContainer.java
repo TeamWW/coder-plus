@@ -12,8 +12,10 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * @author created by XD.Wang
- * Date 2020/8/18.
+ * 模板容器
+ *
+ * @author wuhuilin
+ * Date 2020-8-23.
  */
 public class TemplateContainer {
 
@@ -41,7 +43,7 @@ public class TemplateContainer {
     }
 
     public static TemplateContainer init(Set<Class<?>> classes) {
-        List<TemplateSpec> specs = TemplateRegister.scan(classes);
+        var specs = TemplateRegister.scan(classes);
         Optional.ofNullable(specs).ifPresent(s -> SPEC_MAP.putAll(MyMapUtils.singleGroupBy(s, TemplateSpec::getId)));
         // todo register template to container
         return CONTAINER;

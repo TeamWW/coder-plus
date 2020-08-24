@@ -5,13 +5,22 @@ import com.lucifiere.common.TemplateContainerAware;
 import com.lucifiere.extract.Model;
 import com.lucifiere.io.NioTextFileAccessor;
 import com.lucifiere.templates.TemplateContainer;
+import com.lucifiere.templates.TemplateInstant;
 import com.lucifiere.templates.spec.TemplateSpec;
+
+import java.util.function.Function;
 
 public abstract class AbstractRender implements Render, TemplateContainerAware {
 
     private TemplateContainer templateContainer;
 
     private final String templateId;
+
+    private static Function<Model, Model> MODEL_ATTR_PROCESSOR = (m) -> m;
+
+    public static void setModelAttrProcessor(Function<Model, Model> modelAttrProcessor) {
+        MODEL_ATTR_PROCESSOR = modelAttrProcessor;
+    }
 
     public AbstractRender(String templateId) {
         this.templateId = templateId;
@@ -22,22 +31,31 @@ public abstract class AbstractRender implements Render, TemplateContainerAware {
         this.templateContainer = templateContainer;
     }
 
+    private TemplateInstant getTemplate() {
+        var spec = templateContainer.getTemplateById(templateId);
+        var templateContent = loadTemplateContent(spec);
+        var instant = new TemplateInstant();
+        instant.setContent(templateContent);
+        instant.setTemplateSpec(spec);
+        return instant;
+    }
+
     @Override
-    public View rend(final Model model) {
-        TemplateSpec templateSpec = templateContainer.getTemplateById(templateId);
-        String templateContent = loadTemplateContent(templateSpec);
-        String content = rendContent(model, templateSpec, templateContent);
+    public View render(final Model model) {
+        var template = getTemplate();
+        MODEL_ATTR_PROCESSOR.apply(model);
+        var content = doRender(model, template);
         StaticLog.info("渲染内容 --> {}" + content);
-        return createView(content, model, templateSpec);
+        return createView(content, model, template);
     }
 
     private static String loadTemplateContent(TemplateSpec spec) {
-        NioTextFileAccessor accessor = new NioTextFileAccessor();
+        var accessor = new NioTextFileAccessor();
         return accessor.loadText(spec.getPath());
     }
 
-    protected abstract String rendContent(Model model, TemplateSpec template, String templateContent);
+    protected abstract String doRender(Model model, TemplateInstant template);
 
-    protected abstract View createView(String content, Model model, TemplateSpec template);
+    protected abstract View createView(String content, Model model, TemplateInstant template);
 
 }

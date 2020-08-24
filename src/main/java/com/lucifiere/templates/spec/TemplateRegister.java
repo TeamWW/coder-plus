@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author created by XD.Wang
- * Date 2020/8/18.
+ * 扫描注册模板
+ *
+ * @author wuhuilin
+ * Date 2020-8-23.
  */
 public class TemplateRegister {
 

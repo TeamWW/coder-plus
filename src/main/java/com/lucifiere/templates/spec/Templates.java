@@ -1,8 +1,10 @@
 package com.lucifiere.templates.spec;
 
 /**
- * @author created by XD.Wang
- * Date 2020/8/7.
+ * 配置模板
+ *
+ * @author wuhuilin
+ * Date 2020-8-23.
  */
 public @interface Templates {
 }

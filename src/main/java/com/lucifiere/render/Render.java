@@ -17,6 +17,6 @@ public interface Render {
      * @param template
      * @return
      */
-    View rend(Model model);
+    View render(Model model);
 
 }

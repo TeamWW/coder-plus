@@ -1,7 +1,7 @@
 package com.lucifiere.render;
 
 import com.lucifiere.extract.Model;
-import com.lucifiere.templates.spec.TemplateSpec;
+import com.lucifiere.templates.TemplateInstant;
 
 public abstract class StringTemplateRender extends AbstractRender {
 
@@ -10,7 +10,7 @@ public abstract class StringTemplateRender extends AbstractRender {
     }
 
     @Override
-    protected String rendContent(Model model, TemplateSpec template, String templateContent) {
+    protected String doRender(Model model, TemplateInstant template) {
         return null;
     }
 

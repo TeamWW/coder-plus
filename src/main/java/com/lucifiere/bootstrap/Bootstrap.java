@@ -41,14 +41,13 @@ public abstract class Bootstrap {
      * 串联组件（基于接口）
      */
     public void execute(List<String> templateIds) {
-        GlobalContext context = acquireContext();
+        var context = acquireContext();
         contextCheckBeforeExecute(context);
         processGlobalContextAware(context);
         processContainerAware();
-        Extractor extractor = context.extractor();
-        Model model = extractor.extract();
+        var model = context.extractor().extract();
         List<View> views = renderViews(model, templateIds);
-        Exporter exporter = context.exporter();
+        var exporter = context.exporter();
         exporter.export(views);
     }
 
@@ -59,11 +58,11 @@ public abstract class Bootstrap {
      * @return 模型
      */
     private List<View> renderViews(Model model, List<String> templateIds) {
-        RenderWrapper renderHeader = CodeRendersChainManager.getManager().chaining(templateIds);
-        ConfigurableRendersExecutor rendersExecutor = new ConfigurableRendersExecutor(renderHeader);
-        HandlerRequest req = new HandlerRequest();
+        var renderHeader = CodeRendersChainManager.getManager().chaining(templateIds);
+        var rendersExecutor = new ConfigurableRendersExecutor(renderHeader);
+        var req = new HandlerRequest();
         req.setModel(model);
-        HandlerResponse resp = new HandlerResponse();
+        var resp = new HandlerResponse();
         rendersExecutor.execute(req, resp);
         return resp.getViews();
     }
@@ -89,7 +88,7 @@ public abstract class Bootstrap {
     }
 
     public void processContainerAware() {
-        TemplateContainer templateContainer = TemplateContainer.init(CLASSES);
+        var templateContainer = TemplateContainer.init(CLASSES);
         Stream.of(CLASSES).forEach(component -> {
             if (component instanceof TemplateContainerAware templateContainerAware) {
                 ReflectUtil.invoke(templateContainerAware, "setTemplateContainer", templateContainer);

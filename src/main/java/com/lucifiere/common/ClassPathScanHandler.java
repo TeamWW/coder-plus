@@ -71,22 +71,22 @@ public class ClassPathScanHandler {
             return new HashSet<>();
         }
         Set<Class<?>> classes = new LinkedHashSet<>();
-        String packageName = basePackage;
-        String t = ".";
+        var packageName = basePackage;
+        var t = ".";
         if (packageName.endsWith(t)) {
             packageName = packageName.substring(0, packageName.lastIndexOf('.'));
         }
-        String package2Path = packageName.replace('.', '/');
+        var package2Path = packageName.replace('.', '/');
 
         Enumeration<URL> dirs;
         try {
             dirs = Thread.currentThread().getContextClassLoader().getResources(package2Path);
             while (dirs.hasMoreElements()) {
                 URL url = dirs.nextElement();
-                String protocol = url.getProtocol();
+                var protocol = url.getProtocol();
                 if ("file".equals(protocol)) {
                     StaticLog.debug("扫描file类型的class文件....");
-                    String filePath = URLDecoder.decode(url.getFile(), StandardCharsets.UTF_8);
+                    var filePath = URLDecoder.decode(url.getFile(), StandardCharsets.UTF_8);
                     doScanPackageClassesByFile(classes, packageName, filePath, recursive);
                 } else if ("jar".equals(protocol)) {
                     StaticLog.debug("扫描jar文件中的类....");
@@ -112,14 +112,14 @@ public class ClassPathScanHandler {
      */
     private void doScanPackageClassesByJar(String basePackage, URL url, final boolean recursive,
                                            Set<Class<?>> classes) {
-        String package2Path = basePackage.replace('.', '/');
+        var package2Path = basePackage.replace('.', '/');
         JarFile jar;
         try {
             jar = ((JarURLConnection) url.openConnection()).getJarFile();
             Enumeration<JarEntry> entries = jar.entries();
             while (entries.hasMoreElements()) {
-                JarEntry entry = entries.nextElement();
-                String name = entry.getName();
+                var entry = entries.nextElement();
+                var name = entry.getName();
                 if (!name.startsWith(package2Path) || entry.isDirectory()) {
                     continue;
                 }
@@ -133,10 +133,10 @@ public class ClassPathScanHandler {
                     StaticLog.debug("exclude inner class with name:" + name);
                     continue;
                 }
-                String classSimpleName = name.substring(name.lastIndexOf('/') + 1);
+                var classSimpleName = name.substring(name.lastIndexOf('/') + 1);
                 // 判定是否符合过滤条件
                 if (this.filterClassName(classSimpleName)) {
-                    String className = name.replace('/', '.');
+                    var className = name.replace('/', '.');
                     className = className.substring(0, className.length() - 6);
                     try {
                         classes.add(Thread.currentThread().getContextClassLoader().loadClass(className));
@@ -163,25 +163,23 @@ public class ClassPathScanHandler {
      * @param recursive   whether to search recursive.
      */
     private void doScanPackageClassesByFile(
-            Set<Class<?>> classes, String packageName, String packagePath, final boolean recursive) {
-        File dir = new File(packagePath);
+            Set<Class<?>> classes, String packageName, String packagePath, boolean recursive) {
+        var dir = new File(packagePath);
         if (!dir.exists() || !dir.isDirectory()) {
             return;
         }
-        File[] files = dir.listFiles(pathname -> filterClassFileByCustomization(pathname, recursive));
+        var files = dir.listFiles(pathname -> filterClassFileByCustomization(pathname, recursive));
         if (null == files || files.length == 0) {
             return;
         }
-        for (File file : files) {
+        for (var file : files) {
             if (file.isDirectory()) {
-                doScanPackageClassesByFile(classes, packageName + "." + file.getName(), file.getAbsolutePath(),
-                        recursive);
+                doScanPackageClassesByFile(classes, packageName + "." + file.getName(), file.getAbsolutePath(), recursive);
             } else {
-                String className = file.getName().substring(0,
+                var className = file.getName().substring(0,
                         file.getName().length() - CLASS_EXTENSION_NAME.length());
                 try {
-                    classes.add(
-                            Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
+                    classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
                 } catch (ClassNotFoundException e) {
                     StaticLog.error("LoadClass exception: ===>" + className, e);
                 } catch (NoClassDefFoundError error) {
@@ -202,8 +200,8 @@ public class ClassPathScanHandler {
         if (file.isDirectory()) {
             return recursive;
         }
-        String filename = file.getName();
-        char c = '$';
+        var filename = file.getName();
+        var c = '$';
         if (excludeInner && filename.indexOf(c) != -1) {
             StaticLog.debug("exclude inner class with name:" + filename);
             return false;
@@ -224,9 +222,9 @@ public class ClassPathScanHandler {
         if (null == this.classFilters || this.classFilters.isEmpty()) {
             return true;
         }
-        String tmpName = className.substring(0, className.length() - 6);
-        boolean flag = false;
-        for (String str : classFilters) {
+        var tmpName = className.substring(0, className.length() - 6);
+        var flag = false;
+        for (var str : classFilters) {
             flag = matchInnerClassname(tmpName, str);
             if (flag) {
                 break;
@@ -243,8 +241,8 @@ public class ClassPathScanHandler {
      * @return true or false.
      */
     private boolean matchInnerClassname(String className, String filterString) {
-        String reg = "^" + filterString.replace("*", ".*") + "$";
-        Pattern p = Pattern.compile(reg);
+        var reg = "^" + filterString.replace("*", ".*") + "$";
+        var p = Pattern.compile(reg);
         return p.matcher(className).find();
     }
 

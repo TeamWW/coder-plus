@@ -34,7 +34,7 @@ public class CodeExporter implements Exporter, GlobalContextAware {
     }
 
     private String createFileName(CodeView view) {
-        FileSetting fileSetting = view.getFileSetting();
+        var fileSetting = view.getFileSetting();
         return fileSetting.getPrefix() + view.getName() + view.getName() + fileSetting.getExt();
     }
 

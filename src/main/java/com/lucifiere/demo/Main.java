@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+@SuppressWarnings("Duplicates")
 public class Main {
 
     public static void main(String[] args) {
@@ -49,26 +50,26 @@ public class Main {
                                   `prefix` varchar(20) character set utf8 collate utf8_bin default null comment '预制券码前缀',
                                   `detail_source_code` varchar(30) character set utf8 collate utf8_bin default null comment 'source_code粒度太粗，再细一点的在这里'
                                 ) engine=innodb auto_increment=21438132 default charset=utf8 comment='券码表';""";
-        // 将代码文本导入Antlr自建流中
-        var input = CharStreams.fromString(sql.toUpperCase());
-        // 词法解析
-        var lexer = new MySqlLexer(input);
-        var tokens = new CommonTokenStream(lexer);
-        // 语法解析
-        var parser = new MySqlParser(tokens);
-        // 指定根语法节点
-        MySqlParser.CreateTableContext ctDdlTree = parser.createTable();
-        // 创建一个树遍历器
-        var walker = new ParseTreeWalker();
-        var model = new TableModel();
-        var listener = new AntlrResolver(model);
-        // 注册回调，开始遍历树
-        walker.walk(listener, ctDdlTree);
-        System.out.println(listener.getTableModel().toString());
+//        // 将代码文本导入Antlr自建流中
+//        var input = CharStreams.fromString(sql.toUpperCase());
+//        // 词法解析
+//        var lexer = new MySqlLexer(input);
+//        var tokens = new CommonTokenStream(lexer);
+//        // 语法解析
+//        var parser = new MySqlParser(tokens);
+//        // 指定根语法节点
+//        MySqlParser.CreateTableContext ctDdlTree = parser.createTable();
+//        // 创建一个树遍历器
+//        var walker = new ParseTreeWalker();
+//        var model = new TableModel();
+//        var listener = new AntlrResolver(model);
+//        // 注册回调，开始遍历树
+//        walker.walk(listener, ctDdlTree);
+//        System.out.println(listener.getTableModel().toString());
     }
 
     private void testBootstrap() {
-        DefaultBootstrap myBootstrap = new DefaultBootstrap();
+        var myBootstrap = new DefaultBootstrap();
         myBootstrap.execute();
     }
 

@@ -1,7 +1,6 @@
 package com.lucifiere.render.executor;
 
 import com.lucifiere.render.Render;
-import com.lucifiere.render.View;
 
 /**
  * 渲染节点基类
@@ -24,7 +23,7 @@ public class DefaultRenderWrapper extends RenderWrapper {
      */
     @Override
     protected boolean rend(HandlerRequest req, HandlerResponse resp) {
-        View view = render.rend(req.getModel());
+        var view = render.render(req.getModel());
         resp.addView(view);
         return true;
     }
