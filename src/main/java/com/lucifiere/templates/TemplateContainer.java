@@ -30,7 +30,7 @@ public class TemplateContainer {
     }
 
     public void registerTemplates(List<TemplateSpec> templates) {
-        Optional.ofNullable(templates).ifPresent(templateSpecs -> templateSpecs.stream().forEach(templateSpec -> registerTemplate(templateSpec)));
+        Optional.ofNullable(templates).ifPresent(templateSpecs -> templateSpecs.forEach(this::registerTemplate));
     }
 
     public void registerTemplate(TemplateSpec template) {
