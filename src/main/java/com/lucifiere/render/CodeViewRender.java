@@ -6,11 +6,30 @@ import com.lucifiere.extract.Model;
 import com.lucifiere.extract.table.TableModel;
 import com.lucifiere.render.views.CodeView;
 import com.lucifiere.templates.TemplateInstant;
+import com.lucifiere.utils.CodeStyle;
 
 public class CodeViewRender extends StringTemplateRender {
 
+    private static final String BIZ = "biz";
+
+    private static final String BIZ_PREFIX = "biz-pref";
+
+    private static final String CAPTAl_FIRST_BIZ = "cf-biz";
+
+    private static final String CAMEL_BIZ = "c-biz";
+
+    private static final String UNDERLINE_BIZ = "u-biz";
+
     public CodeViewRender(String templateId) {
         super(templateId);
+    }
+
+    @Override
+    protected void processModelBeforeRender(Model model) {
+        if (model instanceof TableModel tableModel) {
+            super.processModelBeforeRender(model);
+            model.addAttr(BIZ, CodeStyle.switchNamedStyle(tableModel.getName(), CodeStyle.NamedStyle.CAMEL));
+        }
     }
 
     @Override
