@@ -3,17 +3,16 @@ package com.lucifiere.bootstrap;
 import cn.hutool.core.util.ReflectUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.lucifiere.common.*;
-import com.lucifiere.exporter.Exporter;
-import com.lucifiere.extract.Extractor;
 import com.lucifiere.extract.Model;
 import com.lucifiere.render.View;
-import com.lucifiere.render.executor.*;
+import com.lucifiere.render.executor.CodeRendersChainManager;
+import com.lucifiere.render.executor.ConfigurableRendersExecutor;
+import com.lucifiere.render.executor.HandlerRequest;
+import com.lucifiere.render.executor.HandlerResponse;
 import com.lucifiere.templates.TemplateContainer;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -24,14 +23,6 @@ import java.util.stream.Stream;
  * Date 2020-8-2.
  */
 public abstract class Bootstrap {
-
-    private static final Set<Class<?>> CLASSES = Sets.newHashSet();
-
-    static {
-        ClassPathScanHandler handler = new ClassPathScanHandler();
-        Set<Class<?>> allClasses = handler.getPackageAllClasses(Constants.CLASSES_SCAN_PATH, true);
-        CLASSES.addAll(allClasses);
-    }
 
     public void execute(String... templateIds) {
         execute(Lists.newArrayList(templateIds));
@@ -44,7 +35,7 @@ public abstract class Bootstrap {
         var context = acquireContext();
         contextCheckBeforeExecute(context);
         processGlobalContextAware(context);
-        processContainerAware();
+        processContainerAware(context);
         var model = context.extractor().extract();
         List<View> views = renderViews(model, templateIds);
         var exporter = context.exporter();
@@ -80,16 +71,16 @@ public abstract class Bootstrap {
      * 按需进行全局上下文注入
      */
     public void processGlobalContextAware(GlobalContext context) {
-        Stream.of(CLASSES).forEach(component -> {
+        Stream.of(ClassManager.getCoderPlusClazz()).forEach(component -> {
             if (component instanceof GlobalContextAware globalContextAware) {
                 ReflectUtil.invoke(globalContextAware, "setGlobalContext", context);
             }
         });
     }
 
-    public void processContainerAware() {
-        var templateContainer = TemplateContainer.init(CLASSES);
-        Stream.of(CLASSES).forEach(component -> {
+    public void processContainerAware(GlobalContext context) {
+        var templateContainer = TemplateContainer.init(ClassManager.getClazzByPath(context.templatesPath()));
+        Stream.of(ClassManager.getCoderPlusClazz()).forEach(component -> {
             if (component instanceof TemplateContainerAware templateContainerAware) {
                 ReflectUtil.invoke(templateContainerAware, "setTemplateContainer", templateContainer);
             }

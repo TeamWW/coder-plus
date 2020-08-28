@@ -1,0 +1,29 @@
+package com.lucifiere.common;
+
+import com.google.common.collect.Sets;
+
+import java.util.Set;
+
+/**
+ * @author created by XD.Wang
+ * Date 2020/8/28.
+ */
+public class ClassManager {
+
+    private static final Set<Class<?>> CLASSES = Sets.newHashSet();
+
+    private static final ClassPathScanHandler SCAN_HANDLER = new ClassPathScanHandler();
+
+    static {
+        CLASSES.addAll(getClazzByPath("com.lucifiere"));
+    }
+
+    public static Set<Class<?>> getCoderPlusClazz() {
+        return CLASSES;
+    }
+
+    public static Set<Class<?>> getClazzByPath(String path) {
+        return SCAN_HANDLER.getPackageAllClasses(path, true);
+    }
+
+}

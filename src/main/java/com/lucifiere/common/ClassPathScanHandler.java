@@ -1,7 +1,7 @@
 package com.lucifiere.common;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class ClassPathScanHandler {
      * @return Set of the found classes.
      */
     public Set<Class<?>> getPackageAllClasses(String basePackage, boolean recursive) {
-        if (StringUtils.isEmpty(basePackage)) {
+        if (StrUtil.isEmpty(basePackage)) {
             return new HashSet<>();
         }
         Set<Class<?>> classes = new LinkedHashSet<>();

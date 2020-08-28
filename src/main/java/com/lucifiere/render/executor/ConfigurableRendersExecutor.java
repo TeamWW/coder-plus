@@ -61,7 +61,7 @@ public class ConfigurableRendersExecutor {
     public void execute(HandlerRequest req, HandlerResponse resp) {
         boolean proceed = true;
         while (proceed) {
-            proceed = rend(req, resp);
+            proceed = render(req, resp);
         }
     }
 
@@ -72,7 +72,7 @@ public class ConfigurableRendersExecutor {
      * @param resp 执行结果
      * @return 是否继续执行
      */
-    private boolean rend(HandlerRequest req, HandlerResponse resp) {
+    private boolean render(HandlerRequest req, HandlerResponse resp) {
         boolean isSuccess = false;
         try {
             curHandler.actionBeforeRend(req);

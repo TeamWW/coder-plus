@@ -1,15 +1,14 @@
 package com.lucifiere.templates;
 
+import cn.hutool.core.annotation.AnnotationUtil;
+import cn.hutool.core.util.ReflectUtil;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.lucifiere.templates.spec.TemplateRegister;
+import com.lucifiere.templates.spec.Template;
 import com.lucifiere.templates.spec.TemplateSpec;
-import com.lucifiere.utils.MyMapUtils;
+import com.lucifiere.templates.spec.Templates;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 模板容器
@@ -19,16 +18,20 @@ import java.util.Set;
  */
 public class TemplateContainer {
 
-    private static volatile TemplateContainer CONTAINER;
+    private static volatile TemplateContainer container;
 
-    private static final Map<String, TemplateSpec> SPEC_MAP = Maps.newHashMap();
+    private final Map<String, TemplateSpec> specMap = Maps.newConcurrentMap();
+
+    public Map<String, TemplateSpec> getSpecMap() {
+        return specMap;
+    }
 
     public TemplateSpec getTemplateById(String id) {
-        return SPEC_MAP.get(id);
+        return specMap.get(id);
     }
 
     public Set<TemplateSpec> getAllTemplates() {
-        return Sets.newHashSet(SPEC_MAP.values());
+        return Sets.newHashSet(specMap.values());
     }
 
     public void registerTemplates(List<TemplateSpec> templates) {
@@ -36,17 +39,36 @@ public class TemplateContainer {
     }
 
     public void registerTemplate(TemplateSpec template) {
-        if (null != SPEC_MAP.get(template.getId())) {
+        if (null != specMap.get(template.getId())) {
             return;
         }
-        SPEC_MAP.put(template.getId(), template);
+        specMap.put(template.getId(), template);
     }
 
     public static TemplateContainer init(Set<Class<?>> classes) {
-        var specs = TemplateRegister.scan(classes);
-        Optional.ofNullable(specs).ifPresent(s -> SPEC_MAP.putAll(MyMapUtils.singleGroupBy(s, TemplateSpec::getId)));
-        // todo register template to container
-        return CONTAINER;
+        if (container == null) {
+            container = new TemplateContainer();
+            register(classes, container.getSpecMap());
+        }
+        return container;
+    }
+
+    public static void register(Set<Class<?>> classes, Map<String, TemplateSpec> map) {
+        classes.parallelStream().forEach(clazz -> {
+            Templates ts = AnnotationUtil.getAnnotation(clazz, Templates.class);
+            if (ts != null && !ts.skip()) {
+                Object ins = ReflectUtil.newInstance(clazz);
+                Arrays.stream(clazz.getDeclaredMethods()).forEach(method -> {
+                    Template define = AnnotationUtil.getAnnotation(method, Template.class);
+                    if (define != null) {
+                        Object obj = ReflectUtil.invoke(ins, method);
+                        if (obj instanceof TemplateSpec spec) {
+                            map.put(spec.getId(), spec);
+                        }
+                    }
+                });
+            }
+        });
     }
 
 }

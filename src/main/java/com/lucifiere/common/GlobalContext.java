@@ -5,7 +5,6 @@ import com.lucifiere.extract.Extractor;
 import com.lucifiere.io.NioTextFileAccessor;
 import com.lucifiere.io.TextFileAccessor;
 import com.lucifiere.resovler.Resolver;
-import com.lucifiere.templates.TemplateContainer;
 
 import java.util.Optional;
 
@@ -20,25 +19,24 @@ public record GlobalContext(
         String inputPath,
         String outputPath,
         String ddlName,
+        String templatesPath,
         TextFileAccessor textFileAccessor,
         Resolver resolver,
         Extractor extractor,
-        Exporter exporter,
-        TemplateContainer templateContainer) {
+        Exporter exporter) {
 
     public GlobalContext {
-        // 自定义配置
-        this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow();
         // 可默认的配置
         this.inputPath = Optional.ofNullable(inputPath).orElse("input");
         this.outputPath = Optional.ofNullable(outputPath).orElse("output");
         this.ddlName = Optional.ofNullable(outputPath).orElse("ddl.sql");
         this.textFileAccessor = Optional.ofNullable(textFileAccessor).orElse(new NioTextFileAccessor());
         // 可扩展的配置
+        this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow();
+        this.templatesPath = Optional.ofNullable(templatesPath).orElseThrow();
         this.resolver = Optional.ofNullable(resolver).orElseThrow();
         this.extractor = Optional.ofNullable(extractor).orElseThrow();
         this.exporter = Optional.ofNullable(exporter).orElseThrow();
-        this.templateContainer = Optional.ofNullable(templateContainer).orElseThrow();
     }
 
     /**
@@ -53,11 +51,11 @@ public record GlobalContext(
         private String inputPath;
         private String outputPath;
         private String ddlName;
+        private String templatesPath;
         private TextFileAccessor textFileAccessor;
         private Resolver resolver;
         private Extractor extractor;
         private Exporter exporter;
-        private TemplateContainer templateContainer;
 
         public Creator setWorkspacePath(String workspacePath) {
             this.workspacePath = workspacePath;
@@ -76,6 +74,11 @@ public record GlobalContext(
 
         public Creator setDdlName(String ddlName) {
             this.ddlName = ddlName;
+            return this;
+        }
+
+        public Creator setTemplatesPath(String templatesPath) {
+            this.templatesPath = templatesPath;
             return this;
         }
 
@@ -99,13 +102,8 @@ public record GlobalContext(
             return this;
         }
 
-        public Creator setTemplateContainer(TemplateContainer templateContainer) {
-            this.templateContainer = templateContainer;
-            return this;
-        }
-
         public GlobalContext init() {
-            return new GlobalContext(workspacePath, inputPath, outputPath, ddlName, textFileAccessor, resolver, extractor, exporter, templateContainer);
+            return new GlobalContext(workspacePath, inputPath, outputPath, ddlName, templatesPath, textFileAccessor, resolver, extractor, exporter);
         }
 
     }

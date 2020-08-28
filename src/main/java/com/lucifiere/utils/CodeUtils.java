@@ -1,7 +1,6 @@
 package com.lucifiere.utils;
 
 import cn.hutool.core.util.StrUtil;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 代码格式工具
@@ -30,7 +29,7 @@ public class CodeUtils {
         return switch (targetStyle) {
             case CAMEL -> StrUtil.toCamelCase(source);
             case UNDERLINE -> StrUtil.toUnderlineCase(source);
-            case CAP_FIRST -> StringUtils.capitalize(source);
+            case CAP_FIRST -> StrUtil.upperFirstAndAddPre(source, "");
         };
     }
 

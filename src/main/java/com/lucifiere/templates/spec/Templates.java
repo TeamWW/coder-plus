@@ -7,4 +7,7 @@ package com.lucifiere.templates.spec;
  * Date 2020-8-23.
  */
 public @interface Templates {
+
+    boolean skip() default false;
+
 }

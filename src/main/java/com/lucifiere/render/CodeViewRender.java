@@ -1,11 +1,11 @@
 package com.lucifiere.render;
 
+import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
 import com.lucifiere.extract.Model;
 import com.lucifiere.extract.table.TableModel;
 import com.lucifiere.render.views.CodeView;
 import com.lucifiere.templates.TemplateInstant;
-import org.apache.commons.lang3.StringUtils;
 
 public class CodeViewRender extends StringTemplateRender {
 
@@ -15,7 +15,7 @@ public class CodeViewRender extends StringTemplateRender {
 
     @Override
     protected View createView(String content, Model model, TemplateInstant template) {
-        Preconditions.checkArgument(StringUtils.isNotBlank(content));
+        Preconditions.checkArgument(StrUtil.isNotBlank(content));
         Preconditions.checkArgument(model instanceof TableModel);
         var codeView = new CodeView();
         codeView.setContent(content);

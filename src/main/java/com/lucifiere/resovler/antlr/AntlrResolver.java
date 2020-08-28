@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 public class AntlrResolver extends MySqlParserBaseListener {
 
-    private final TableModel tableModel;
+    private TableModel tableModel;
 
     private TableField cursor;
 
@@ -36,7 +36,7 @@ public class AntlrResolver extends MySqlParserBaseListener {
         cursor = null;
     }
 
-    public AntlrResolver(TableModel tableModel) {
+    public void setTableModel(TableModel tableModel) {
         this.tableModel = tableModel;
     }
 
@@ -94,10 +94,9 @@ public class AntlrResolver extends MySqlParserBaseListener {
             // 创建一个树遍历器
             var walker = new ParseTreeWalker();
             var model = new TableModel();
-            var listener = new AntlrResolver(model);
             // 注册回调，开始遍历树
-            walker.walk(listener, ctDdlTree);
-            return tableModel;
+            walker.walk(this, ctDdlTree);
+            return model;
         }
         throw new UnsupportedOperationException("类型匹配有误！");
     }
