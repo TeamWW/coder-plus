@@ -1,8 +1,8 @@
-package com.lucifiere.extract.table;
+package com.lucifiere.model;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
-import com.lucifiere.extract.Model;
+import com.lucifiere.extract.table.TableField;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,9 +17,19 @@ public class TableModel extends Model {
 
     private String name;
 
+    private String desc;
+
     private String bizPrefix;
 
     private final Set<TableField> fields = Sets.newHashSet();
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
     public String getName() {
         return name;

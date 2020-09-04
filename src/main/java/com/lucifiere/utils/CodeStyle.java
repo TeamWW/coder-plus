@@ -75,7 +75,7 @@ public class CodeStyle {
      */
     public CodeStyle toStyle(NamedStyle targetStyle) {
         if (targetStyle == style) return this;
-        String s = CONVERT_FUNCTION_SELECTOR.get(new EnumListLocateWrapper(style, targetStyle)).apply(source);
+        var s = CONVERT_FUNCTION_SELECTOR.get(new EnumListLocateWrapper(style, targetStyle)).apply(source);
         return new CodeStyle(s, targetStyle);
     }
 

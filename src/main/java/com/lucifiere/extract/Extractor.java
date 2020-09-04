@@ -1,5 +1,7 @@
 package com.lucifiere.extract;
 
+import com.lucifiere.model.Model;
+
 /**
  * 预置数据提取器
  *

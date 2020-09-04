@@ -2,7 +2,7 @@ package com.lucifiere.render;
 
 import cn.hutool.log.StaticLog;
 import com.lucifiere.common.TemplateContainerAware;
-import com.lucifiere.extract.Model;
+import com.lucifiere.model.Model;
 import com.lucifiere.io.NioTextFileAccessor;
 import com.lucifiere.templates.TemplateSpecContainer;
 import com.lucifiere.templates.TemplateInstant;

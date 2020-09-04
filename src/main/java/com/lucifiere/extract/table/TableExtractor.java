@@ -2,7 +2,7 @@ package com.lucifiere.extract.table;
 
 import com.google.common.base.Joiner;
 import com.lucifiere.extract.AbstractExtractor;
-import com.lucifiere.extract.Model;
+import com.lucifiere.model.Model;
 import com.lucifiere.io.NioTextFileAccessor;
 import com.lucifiere.resovler.Resolver;
 import com.lucifiere.resovler.antlr.AntlrResolverReq;
@@ -25,7 +25,9 @@ public class TableExtractor extends AbstractExtractor {
     public Model extract() {
         var ddlPath = Joiner.on("/").join(globalContext.workspacePath(), globalContext.inputPath(), globalContext.ddlName());
         var ddlStr = NioTextFileAccessor.loadText(ddlPath);
-        return resolver.resolve(new AntlrResolverReq(ddlStr));
+        var model = resolver.resolve(new AntlrResolverReq(ddlStr));
+        loadCustomizedAttrs(model);
+        return model;
     }
 
 }

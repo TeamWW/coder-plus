@@ -4,7 +4,7 @@ import cn.hutool.core.util.ReflectUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.lucifiere.common.*;
-import com.lucifiere.extract.Model;
+import com.lucifiere.model.Model;
 import com.lucifiere.render.View;
 import com.lucifiere.render.executor.CodeRendersChainManager;
 import com.lucifiere.render.executor.ConfigurableRendersExecutor;
@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 public abstract class Bootstrap {
 
     public void execute(String... templateIds) {
-        Preconditions.checkArgument(templateIds != null && templateIds.length > 0);
+        Preconditions.checkArgument(templateIds != null && templateIds.length > 0, "模板ID不能为空！");
         execute(Lists.newArrayList(templateIds));
     }
 
@@ -79,7 +79,8 @@ public abstract class Bootstrap {
     }
 
     public void processContainerAware(GlobalContext context) {
-        var templateContainer = TemplateSpecContainer.init(ClassManager.getClazzByPath(context.templatesPath()));
+        var templateContainer = TemplateSpecContainer.init(ClassManager.getClazzByPath(context.templatesConfigScanPath(),
+                "com.lucifiere.templates.embed"));
         Stream.of(ClassManager.getCoderPlusClazz()).forEach(component -> {
             if (component instanceof TemplateContainerAware templateContainerAware) {
                 ReflectUtil.invoke(templateContainerAware, "setTemplateContainer", templateContainer);

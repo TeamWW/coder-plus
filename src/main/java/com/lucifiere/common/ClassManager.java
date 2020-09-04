@@ -2,7 +2,8 @@ package com.lucifiere.common;
 
 import com.google.common.collect.Sets;
 
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author created by XD.Wang
@@ -22,8 +23,9 @@ public class ClassManager {
         return CLASSES;
     }
 
-    public static Set<Class<?>> getClazzByPath(String path) {
-        return SCAN_HANDLER.getPackageAllClasses(path, true);
+    public static Set<Class<?>> getClazzByPath(String... path) {
+        return Arrays.stream(path).filter(Objects::nonNull).map(p -> new ArrayList<>(SCAN_HANDLER.getPackageAllClasses(p, true)))
+                .flatMap(Collection::stream).collect(Collectors.toSet());
     }
 
 }

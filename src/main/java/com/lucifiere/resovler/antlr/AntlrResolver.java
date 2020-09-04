@@ -4,9 +4,9 @@ import com.lucifiere.antlr.MySqlLexer;
 import com.lucifiere.antlr.MySqlParser;
 import com.lucifiere.antlr.MySqlParserBaseListener;
 import com.lucifiere.common.FiledType;
-import com.lucifiere.extract.Model;
+import com.lucifiere.model.Model;
 import com.lucifiere.extract.table.TableField;
-import com.lucifiere.extract.table.TableModel;
+import com.lucifiere.model.TableModel;
 import com.lucifiere.resovler.ResolverReq;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -84,17 +84,12 @@ public class AntlrResolver extends MySqlParserBaseListener {
     public Model resolve(ResolverReq resolverReq) {
         if (resolverReq instanceof AntlrResolverReq req) {
             var input = CharStreams.fromString(req.sourceCode().toUpperCase());
-            // 词法解析
             var lexer = new MySqlLexer(input);
             var tokens = new CommonTokenStream(lexer);
-            // 语法解析
             var parser = new MySqlParser(tokens);
-            // 指定根语法节点
             MySqlParser.CreateTableContext ctDdlTree = parser.createTable();
-            // 创建一个树遍历器
             var walker = new ParseTreeWalker();
             var model = new TableModel();
-            // 注册回调，开始遍历树
             walker.walk(this, ctDdlTree);
             return model;
         }

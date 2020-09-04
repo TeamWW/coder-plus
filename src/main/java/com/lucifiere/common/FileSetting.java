@@ -16,6 +16,8 @@ public class FileSetting {
 
     public static final FileSetting EMPTY = of(StrUtil.EMPTY, StrUtil.EMPTY, StrUtil.EMPTY);
 
+    public static final FileSetting JAVA_FILE = of(StrUtil.EMPTY, StrUtil.EMPTY, ".java");
+
     public String getPrefix() {
         return prefix;
     }

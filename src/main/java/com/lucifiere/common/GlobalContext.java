@@ -2,7 +2,6 @@ package com.lucifiere.common;
 
 import com.lucifiere.exporter.Exporter;
 import com.lucifiere.extract.Extractor;
-import com.lucifiere.io.NioTextFileAccessor;
 import com.lucifiere.resovler.Resolver;
 
 import java.util.Optional;
@@ -18,7 +17,7 @@ public record GlobalContext(
         String inputPath,
         String outputPath,
         String ddlName,
-        String templatesPath,
+        String templatesConfigScanPath,
         Resolver resolver,
         Extractor extractor,
         Exporter exporter) {
@@ -28,9 +27,9 @@ public record GlobalContext(
         this.inputPath = Optional.ofNullable(inputPath).orElse("input");
         this.outputPath = Optional.ofNullable(outputPath).orElse("output");
         this.ddlName = Optional.ofNullable(outputPath).orElse("ddl.sql");
+        this.templatesConfigScanPath = Optional.ofNullable(templatesConfigScanPath).orElse(null);
         // 可扩展的配置
         this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow();
-        this.templatesPath = Optional.ofNullable(templatesPath).orElseThrow();
         this.resolver = Optional.ofNullable(resolver).orElseThrow();
         this.extractor = Optional.ofNullable(extractor).orElseThrow();
         this.exporter = Optional.ofNullable(exporter).orElseThrow();
@@ -53,29 +52,24 @@ public record GlobalContext(
         private Extractor extractor;
         private Exporter exporter;
 
-        public Creator setWorkspacePath(String workspacePath) {
+        public void setWorkspacePath(String workspacePath) {
             this.workspacePath = workspacePath;
-            return this;
         }
 
-        public Creator setInputPath(String inputPath) {
+        public void setInputPath(String inputPath) {
             this.inputPath = inputPath;
-            return this;
         }
 
-        public Creator setOutputPath(String outputPath) {
+        public void setOutputPath(String outputPath) {
             this.outputPath = outputPath;
-            return this;
         }
 
-        public Creator setDdlName(String ddlName) {
+        public void setDdlName(String ddlName) {
             this.ddlName = ddlName;
-            return this;
         }
 
-        public Creator setTemplatesPath(String templatesPath) {
+        public void setTemplatesPath(String templatesPath) {
             this.templatesPath = templatesPath;
-            return this;
         }
 
         public Creator setResolver(Resolver resolver) {

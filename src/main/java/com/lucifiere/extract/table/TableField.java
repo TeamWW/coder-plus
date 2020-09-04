@@ -1,6 +1,7 @@
 package com.lucifiere.extract.table;
 
 import com.lucifiere.common.FiledType;
+import com.lucifiere.utils.CodeStyle;
 
 import java.util.Objects;
 
@@ -24,6 +25,10 @@ public class TableField {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCfName() {
+        return CodeStyle.ofCamelCode(name).toStyle(CodeStyle.NamedStyle.CAP_FIRST).toString();
     }
 
     public FiledType getType() {

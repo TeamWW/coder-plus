@@ -1,14 +1,12 @@
 package com.lucifiere.render.freemarker;
 
 import cn.hutool.log.StaticLog;
-import com.lucifiere.extract.Model;
+import com.lucifiere.model.Model;
 import com.lucifiere.render.AbstractRender;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.io.Writer;
 
 public abstract class FreemarkerRender extends AbstractRender {
 
@@ -20,10 +18,10 @@ public abstract class FreemarkerRender extends AbstractRender {
 
     @Override
     protected String doRender(Model model) {
-        Writer out = new StringWriter();
+        var out = new StringWriter();
         try {
-            String templateId = template.getTemplateSpec().getId();
-            Template template = freemarkerTemplateManager.getTemplate(templateId);
+            var templateId = template.getTemplateSpec().getId();
+            var template = freemarkerTemplateManager.getTemplate(templateId);
             template.process(model, out);
             return out.toString();
         } catch (TemplateException e) {

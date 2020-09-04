@@ -1,6 +1,6 @@
 package com.lucifiere.resovler;
 
-import com.lucifiere.extract.Model;
+import com.lucifiere.model.Model;
 
 /**
  * 属性值解析工具

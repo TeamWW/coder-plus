@@ -55,13 +55,13 @@ public class TemplateSpecContainer {
 
     public static void register(Set<Class<?>> classes, Map<String, TemplateSpec> map) {
         classes.parallelStream().forEach(clazz -> {
-            Templates ts = AnnotationUtil.getAnnotation(clazz, Templates.class);
+            var ts = AnnotationUtil.getAnnotation(clazz, Templates.class);
             if (ts != null && !ts.skip()) {
-                Object ins = ReflectUtil.newInstance(clazz);
+                var ins = ReflectUtil.newInstance(clazz);
                 Arrays.stream(clazz.getDeclaredMethods()).forEach(method -> {
-                    Template define = AnnotationUtil.getAnnotation(method, Template.class);
+                    var define = AnnotationUtil.getAnnotation(method, Template.class);
                     if (define != null) {
-                        Object obj = ReflectUtil.invoke(ins, method);
+                        var obj = ReflectUtil.invoke(ins, method);
                         if (obj instanceof TemplateSpec spec) {
                             map.put(spec.getId(), spec);
                         }

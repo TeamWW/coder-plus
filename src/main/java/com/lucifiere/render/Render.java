@@ -1,6 +1,6 @@
 package com.lucifiere.render;
 
-import com.lucifiere.extract.Model;
+import com.lucifiere.model.Model;
 
 /**
  * 渲染器

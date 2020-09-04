@@ -1,6 +1,6 @@
 package com.lucifiere.render.executor;
 
-import com.lucifiere.extract.Model;
+import com.lucifiere.model.Model;
 
 /**
  * 节点执行上下文
