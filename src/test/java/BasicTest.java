@@ -11,6 +11,8 @@ public class BasicTest {
     @Test
     public void testBootstrap() {
         var myBootstrap = new DefaultBootstrap();
+        myBootstrap.setDdlName("ddl.sql")
+                .setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
         myBootstrap.execute(BaseTemplatesConfig.BASE_POJO);
     }
 
