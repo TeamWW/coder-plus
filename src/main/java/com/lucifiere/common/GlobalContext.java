@@ -3,7 +3,6 @@ package com.lucifiere.common;
 import com.lucifiere.exporter.Exporter;
 import com.lucifiere.extract.Extractor;
 import com.lucifiere.io.NioTextFileAccessor;
-import com.lucifiere.io.TextFileAccessor;
 import com.lucifiere.resovler.Resolver;
 
 import java.util.Optional;
@@ -20,7 +19,6 @@ public record GlobalContext(
         String outputPath,
         String ddlName,
         String templatesPath,
-        TextFileAccessor textFileAccessor,
         Resolver resolver,
         Extractor extractor,
         Exporter exporter) {
@@ -30,7 +28,6 @@ public record GlobalContext(
         this.inputPath = Optional.ofNullable(inputPath).orElse("input");
         this.outputPath = Optional.ofNullable(outputPath).orElse("output");
         this.ddlName = Optional.ofNullable(outputPath).orElse("ddl.sql");
-        this.textFileAccessor = Optional.ofNullable(textFileAccessor).orElse(new NioTextFileAccessor());
         // 可扩展的配置
         this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow();
         this.templatesPath = Optional.ofNullable(templatesPath).orElseThrow();
@@ -52,7 +49,6 @@ public record GlobalContext(
         private String outputPath;
         private String ddlName;
         private String templatesPath;
-        private TextFileAccessor textFileAccessor;
         private Resolver resolver;
         private Extractor extractor;
         private Exporter exporter;
@@ -82,11 +78,6 @@ public record GlobalContext(
             return this;
         }
 
-        public Creator setTextFileAccessor(TextFileAccessor textFileAccessor) {
-            this.textFileAccessor = textFileAccessor;
-            return this;
-        }
-
         public Creator setResolver(Resolver resolver) {
             this.resolver = resolver;
             return this;
@@ -103,7 +94,7 @@ public record GlobalContext(
         }
 
         public GlobalContext init() {
-            return new GlobalContext(workspacePath, inputPath, outputPath, ddlName, templatesPath, textFileAccessor, resolver, extractor, exporter);
+            return new GlobalContext(workspacePath, inputPath, outputPath, ddlName, templatesPath, resolver, extractor, exporter);
         }
 
     }

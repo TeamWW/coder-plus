@@ -14,7 +14,7 @@ public abstract class AbstractRender implements Render, TemplateContainerAware {
 
     private TemplateContainer templateContainer;
 
-    private final String templateId;
+    protected final TemplateInstant template;
 
     protected static Function<Model, Model> MODEL_ATTR_PROCESSOR = (m) -> m;
 
@@ -23,7 +23,7 @@ public abstract class AbstractRender implements Render, TemplateContainerAware {
     }
 
     public AbstractRender(String templateId) {
-        this.templateId = templateId;
+        this.template = getTemplate(templateId);
     }
 
     @Override
@@ -31,7 +31,7 @@ public abstract class AbstractRender implements Render, TemplateContainerAware {
         this.templateContainer = templateContainer;
     }
 
-    private TemplateInstant getTemplate() {
+    private TemplateInstant getTemplate(String templateId) {
         var spec = templateContainer.getTemplateById(templateId);
         var templateContent = loadTemplateContent(spec);
         var instant = new TemplateInstant();
@@ -42,7 +42,6 @@ public abstract class AbstractRender implements Render, TemplateContainerAware {
 
     @Override
     public View render(final Model model) {
-        var template = getTemplate();
         processModelBeforeRender(model);
         var content = doRender(model, template);
         StaticLog.info("渲染内容 --> {}" + content);
@@ -50,8 +49,7 @@ public abstract class AbstractRender implements Render, TemplateContainerAware {
     }
 
     private static String loadTemplateContent(TemplateSpec spec) {
-        var accessor = new NioTextFileAccessor();
-        return accessor.loadText(spec.getPath());
+        return NioTextFileAccessor.loadText(spec.getPath());
     }
 
     protected void processModelBeforeRender(Model model) {

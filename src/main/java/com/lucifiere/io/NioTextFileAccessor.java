@@ -17,10 +17,9 @@ import java.util.Map;
  * @author created by XD.Wang
  * Date 2020/7/12.
  */
-public class NioTextFileAccessor implements TextFileAccessor {
+final public class NioTextFileAccessor {
 
-    @Override
-    public String loadText(String pathStr) {
+    public static String loadText(String pathStr) {
         try {
             var path = Paths.get(pathStr);
             return Files.readString(path);
@@ -30,8 +29,7 @@ public class NioTextFileAccessor implements TextFileAccessor {
         }
     }
 
-
-    public void writeText(String text, String pathStr) {
+    public static void writeText(String text, String pathStr) {
         try {
             var path = Paths.get(pathStr);
             Files.write(path, text.getBytes());
@@ -41,7 +39,7 @@ public class NioTextFileAccessor implements TextFileAccessor {
         }
     }
 
-    public void createFile(String text, String pathStr, String fileName) {
+    public static void createFile(String text, String pathStr, String fileName) {
         try {
             var path = Paths.get(pathStr + "/" + fileName);
             Files.write(path, text.getBytes());

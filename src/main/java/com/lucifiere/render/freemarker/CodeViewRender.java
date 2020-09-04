@@ -1,9 +1,10 @@
-package com.lucifiere.render;
+package com.lucifiere.render.freemarker;
 
 import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
 import com.lucifiere.extract.Model;
 import com.lucifiere.extract.table.TableModel;
+import com.lucifiere.render.View;
 import com.lucifiere.render.views.CodeView;
 import com.lucifiere.templates.TemplateInstant;
 import static com.lucifiere.utils.CodeStyle.*;

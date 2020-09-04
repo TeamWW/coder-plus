@@ -4,12 +4,11 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
 import com.lucifiere.common.TemplateContainerAware;
-import com.lucifiere.render.CodeViewRender;
+import com.lucifiere.render.freemarker.CodeViewRender;
 import com.lucifiere.templates.TemplateContainer;
 import com.lucifiere.templates.spec.TemplateSpec;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**

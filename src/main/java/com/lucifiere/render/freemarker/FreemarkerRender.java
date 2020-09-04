@@ -1,7 +1,9 @@
-package com.lucifiere.render;
+package com.lucifiere.render.freemarker;
 
 import com.lucifiere.extract.Model;
+import com.lucifiere.render.AbstractRender;
 import com.lucifiere.templates.TemplateInstant;
+import freemarker.template.Configuration;
 
 public abstract class FreemarkerRender extends AbstractRender {
 
