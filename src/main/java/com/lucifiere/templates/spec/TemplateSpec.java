@@ -20,18 +20,16 @@ public class TemplateSpec {
 
     private String description;
 
-    public static TemplateSpec of(FileSetting fileSetting, String id, String path, String description) {
+    public static TemplateSpec of(FileSetting fileSetting, String path, String description) {
         var spec = new TemplateSpec();
-        spec.setId(id);
         spec.setPath(path);
         spec.setDescription(description);
         spec.setFileSetting(fileSetting);
         return spec;
     }
 
-    public static TemplateSpec of(String prefix, String suffix, String ext, String id, String path, String description) {
+    public static TemplateSpec of(String prefix, String suffix, String ext, String path, String description) {
         var spec = new TemplateSpec();
-        spec.setId(id);
         spec.setPath(path);
         spec.setDescription(description);
         spec.setFileSetting(FileSetting.of(prefix, suffix, ext));

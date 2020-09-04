@@ -4,6 +4,9 @@ import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
+import java.util.function.Function;
+
+import static com.lucifiere.utils.CodeStyle.NamedStyle.*;
 
 /**
  * 代码格式工具
@@ -13,25 +16,25 @@ import java.util.Map;
  */
 public class CodeStyle {
 
-    private String source;
+    private final String source;
 
-    private NamedStyle style;
+    private final NamedStyle style;
 
     public CodeStyle(String source, NamedStyle style) {
         this.source = source;
         this.style = style;
     }
 
-    public CodeStyle ofCamelCode(String source) {
-        return new CodeStyle(source, NamedStyle.CAMEL);
+    public static CodeStyle ofCamelCode(String source) {
+        return new CodeStyle(source, CAMEL);
     }
 
-    public CodeStyle ofUlCode(String source) {
-        return new CodeStyle(source, NamedStyle.UNDERLINE);
+    public static CodeStyle ofUlCode(String source) {
+        return new CodeStyle(source, UNDERLINE);
     }
 
-    public CodeStyle ofCapCode(String source) {
-        return new CodeStyle(source, NamedStyle.CAP_FIRST);
+    public static CodeStyle ofCapCode(String source) {
+        return new CodeStyle(source, CAP_FIRST);
     }
 
     public enum NamedStyle {
@@ -48,13 +51,37 @@ public class CodeStyle {
          */
         CAP_FIRST
     }
-    
-    public String switchNamedStyle(NamedStyle targetStyle) {
-        return switch (targetStyle) {
-            case CAMEL -> StrUtil.toCamelCase(source);
-            case UNDERLINE -> StrUtil.toUnderlineCase(source);
-            case CAP_FIRST -> StrUtil.upperFirstAndAddPre(source, "");
-        };
+
+    private static final Map<EnumListLocateWrapper, Function<String, String>> CONVERT_FUNCTION_SELECTOR = Maps.newHashMap();
+
+    static {
+        CONVERT_FUNCTION_SELECTOR.put(new EnumListLocateWrapper(CAMEL, UNDERLINE), StrUtil::toUnderlineCase);
+        CONVERT_FUNCTION_SELECTOR.put(new EnumListLocateWrapper(CAMEL, CAP_FIRST), StrUtil::upperFirst);
+        CONVERT_FUNCTION_SELECTOR.put(new EnumListLocateWrapper(UNDERLINE, CAMEL), StrUtil::toCamelCase);
+        CONVERT_FUNCTION_SELECTOR.put(new EnumListLocateWrapper(UNDERLINE, CAP_FIRST), StrUtil::upperFirst);
+        CONVERT_FUNCTION_SELECTOR.put(new EnumListLocateWrapper(CAP_FIRST, UNDERLINE), s -> StrUtil.toUnderlineCase(StrUtil.lowerFirst(s)));
+        CONVERT_FUNCTION_SELECTOR.put(new EnumListLocateWrapper(CAP_FIRST, CAMEL), StrUtil::lowerFirst);
+    }
+
+
+    /**
+     * 基本规则：
+     * 1 下划线 -> 驼峰
+     * 2 驼峰 -> 下划线
+     * 3 驼峰 -> 首字母大写的驼峰
+     *
+     * @param targetStyle 目标风格
+     * @return 目标代码
+     */
+    public CodeStyle toStyle(NamedStyle targetStyle) {
+        if (targetStyle == style) return this;
+        String s = CONVERT_FUNCTION_SELECTOR.get(new EnumListLocateWrapper(style, targetStyle)).apply(source);
+        return new CodeStyle(s, targetStyle);
+    }
+
+    @Override
+    public String toString() {
+        return source;
     }
 
 }

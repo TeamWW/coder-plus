@@ -25,6 +25,7 @@ import java.util.stream.Stream;
 public abstract class Bootstrap {
 
     public void execute(String... templateIds) {
+        Preconditions.checkArgument(templateIds != null && templateIds.length > 0);
         execute(Lists.newArrayList(templateIds));
     }
 
@@ -59,7 +60,6 @@ public abstract class Bootstrap {
     }
 
     private void contextCheckBeforeExecute(GlobalContext context) {
-        Preconditions.checkNotNull(context, "上下文信息不能为空！");
         Preconditions.checkNotNull(context, "上下文信息不能为空！");
         Preconditions.checkNotNull(context.workspacePath(), "工作目录不能为空！");
         Preconditions.checkNotNull(context.exporter(), "输出工具不能为空！");

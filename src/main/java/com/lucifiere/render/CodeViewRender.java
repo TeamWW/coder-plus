@@ -6,9 +6,9 @@ import com.lucifiere.extract.Model;
 import com.lucifiere.extract.table.TableModel;
 import com.lucifiere.render.views.CodeView;
 import com.lucifiere.templates.TemplateInstant;
-import com.lucifiere.utils.CodeStyle;
+import static com.lucifiere.utils.CodeStyle.*;
 
-public class CodeViewRender extends StringTemplateRender {
+public class CodeViewRender extends FreemarkerRender {
 
     private static final String BIZ = "biz";
 
@@ -26,9 +26,13 @@ public class CodeViewRender extends StringTemplateRender {
 
     @Override
     protected void processModelBeforeRender(Model model) {
+        super.processModelBeforeRender(model);
         if (model instanceof TableModel tableModel) {
-            super.processModelBeforeRender(model);
-            model.addAttr(BIZ, CodeStyle.switchNamedStyle(tableModel.getName(), CodeStyle.NamedStyle.CAMEL));
+            model.addAttr(BIZ, ofCamelCode(tableModel.getName()).toString());
+            model.addAttr(BIZ_PREFIX, tableModel.getBizPrefix());
+            model.addAttr(CAPTAl_FIRST_BIZ, ofCamelCode(tableModel.getName()).toStyle(NamedStyle.CAP_FIRST).toString());
+            model.addAttr(CAMEL_BIZ, ofCamelCode(tableModel.getName()).toString());
+            model.addAttr(UNDERLINE_BIZ, ofCamelCode(tableModel.getName()).toString());
         }
     }
 
