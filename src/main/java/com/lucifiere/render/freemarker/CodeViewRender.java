@@ -6,8 +6,9 @@ import com.lucifiere.extract.Model;
 import com.lucifiere.extract.table.TableModel;
 import com.lucifiere.render.View;
 import com.lucifiere.render.views.CodeView;
-import com.lucifiere.templates.TemplateInstant;
-import static com.lucifiere.utils.CodeStyle.*;
+
+import static com.lucifiere.utils.CodeStyle.NamedStyle;
+import static com.lucifiere.utils.CodeStyle.ofCamelCode;
 
 public class CodeViewRender extends FreemarkerRender {
 
@@ -38,7 +39,7 @@ public class CodeViewRender extends FreemarkerRender {
     }
 
     @Override
-    protected View createView(String content, Model model, TemplateInstant template) {
+    protected View createView(String content, Model model) {
         Preconditions.checkArgument(StrUtil.isNotBlank(content));
         Preconditions.checkArgument(model instanceof TableModel);
         var codeView = new CodeView();

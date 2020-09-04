@@ -10,7 +10,7 @@ import com.lucifiere.render.executor.CodeRendersChainManager;
 import com.lucifiere.render.executor.ConfigurableRendersExecutor;
 import com.lucifiere.render.executor.HandlerRequest;
 import com.lucifiere.render.executor.HandlerResponse;
-import com.lucifiere.templates.TemplateContainer;
+import com.lucifiere.templates.TemplateSpecContainer;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -79,7 +79,7 @@ public abstract class Bootstrap {
     }
 
     public void processContainerAware(GlobalContext context) {
-        var templateContainer = TemplateContainer.init(ClassManager.getClazzByPath(context.templatesPath()));
+        var templateContainer = TemplateSpecContainer.init(ClassManager.getClazzByPath(context.templatesPath()));
         Stream.of(ClassManager.getCoderPlusClazz()).forEach(component -> {
             if (component instanceof TemplateContainerAware templateContainerAware) {
                 ReflectUtil.invoke(templateContainerAware, "setTemplateContainer", templateContainer);

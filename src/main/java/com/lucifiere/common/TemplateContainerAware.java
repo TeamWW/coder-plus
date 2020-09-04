@@ -1,6 +1,6 @@
 package com.lucifiere.common;
 
-import com.lucifiere.templates.TemplateContainer;
+import com.lucifiere.templates.TemplateSpecContainer;
 
 /**
  * 为组件提供全局配置
@@ -10,6 +10,6 @@ import com.lucifiere.templates.TemplateContainer;
  */
 public interface TemplateContainerAware {
 
-    void setTemplateContainer(TemplateContainer templateContainer);
+    void setTemplateSpecContainer(TemplateSpecContainer templateSpecContainer);
 
 }

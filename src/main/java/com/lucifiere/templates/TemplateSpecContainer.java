@@ -16,9 +16,9 @@ import java.util.*;
  * @author wuhuilin
  * Date 2020-8-23.
  */
-public class TemplateContainer {
+public class TemplateSpecContainer {
 
-    private static volatile TemplateContainer container;
+    private static volatile TemplateSpecContainer container;
 
     private final Map<String, TemplateSpec> specMap = Maps.newConcurrentMap();
 
@@ -45,9 +45,9 @@ public class TemplateContainer {
         specMap.put(template.getId(), template);
     }
 
-    public static TemplateContainer init(Set<Class<?>> classes) {
+    public static TemplateSpecContainer init(Set<Class<?>> classes) {
         if (container == null) {
-            container = new TemplateContainer();
+            container = new TemplateSpecContainer();
             register(classes, container.getSpecMap());
         }
         return container;

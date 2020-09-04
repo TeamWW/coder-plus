@@ -2,9 +2,12 @@ package com.lucifiere.render.freemarker;
 
 import com.lucifiere.common.TemplateContainerAware;
 import com.lucifiere.io.NioTextFileAccessor;
-import com.lucifiere.templates.TemplateContainer;
+import com.lucifiere.templates.TemplateSpecContainer;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
+import freemarker.template.Template;
+
+import java.io.IOException;
 
 /**
  * 基于TEMPLATE-SPEC去加载模板
@@ -14,9 +17,9 @@ import freemarker.template.Configuration;
  */
 public class FreemarkerTemplateManager extends StringTemplateLoader implements TemplateContainerAware {
 
-    private Configuration configuration;
+    private final Configuration configuration;
 
-    private TemplateContainer templateContainer;
+    private TemplateSpecContainer templateSpecContainer;
 
     private static volatile FreemarkerTemplateManager INSTANT;
 
@@ -30,21 +33,28 @@ public class FreemarkerTemplateManager extends StringTemplateLoader implements T
     private FreemarkerTemplateManager() {
         this.configuration = new Configuration(Configuration.VERSION_2_3_28);
         configuration.setDefaultEncoding("UTF-8");
-        init();
+        initStringTemplateLoader();
         configuration.setTemplateLoader(this);
+        configuration.setTemplateExceptionHandler((te, env, out) -> {
+
+        });
     }
 
-    public void init() {
-        var allSpec = templateContainer.getAllTemplates();
+    public void initStringTemplateLoader() {
+        var allSpec = templateSpecContainer.getAllTemplates();
         allSpec.forEach(spec -> {
             var content = NioTextFileAccessor.loadText(spec.getPath());
             super.putTemplate(spec.getId(), content);
         });
     }
 
+    public Template getTemplate(String templateId) throws IOException {
+        return configuration.getTemplate(templateId);
+    }
+
     @Override
-    public void setTemplateContainer(TemplateContainer templateContainer) {
-        this.templateContainer = templateContainer;
+    public void setTemplateSpecContainer(TemplateSpecContainer templateSpecContainer) {
+        this.templateSpecContainer = templateSpecContainer;
     }
 
 }
