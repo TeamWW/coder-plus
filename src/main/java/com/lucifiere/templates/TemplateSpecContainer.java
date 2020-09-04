@@ -63,6 +63,7 @@ public class TemplateSpecContainer {
                     if (define != null) {
                         var obj = ReflectUtil.invoke(ins, method);
                         if (obj instanceof TemplateSpec spec) {
+                            spec.setId(define.value());
                             map.put(spec.getId(), spec);
                         }
                     }
