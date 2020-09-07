@@ -2,15 +2,16 @@ package com.lucifiere.render.freemarker;
 
 import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
+import com.lucifiere.container.ManagedBean;
 import com.lucifiere.model.Model;
 import com.lucifiere.model.TableModel;
 import com.lucifiere.render.View;
 import com.lucifiere.render.views.CodeView;
 
 import static com.lucifiere.model.ModelBuiltInAttr.*;
-import static com.lucifiere.utils.CodeStyle.NamedStyle;
-import static com.lucifiere.utils.CodeStyle.ofCamelCode;
+import static com.lucifiere.utils.CodeStyle.*;
 
+@ManagedBean
 public class CodeViewRender extends FreemarkerRender {
 
     public CodeViewRender(String templateId) {

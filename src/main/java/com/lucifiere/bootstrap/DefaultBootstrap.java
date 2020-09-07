@@ -1,13 +1,13 @@
 package com.lucifiere.bootstrap;
 
-import com.lucifiere.common.GlobalContext;
+import com.lucifiere.common.GlobalConfig;
 import com.lucifiere.exporter.CodeExporter;
 import com.lucifiere.extract.table.TableExtractor;
 import com.lucifiere.resovler.antlr.AntlrResolver;
 
 public class DefaultBootstrap extends Bootstrap {
 
-    private GlobalContext.Creator creator = new GlobalContext.Creator();
+    private GlobalConfig.Creator creator = new GlobalConfig.Creator();
 
     public DefaultBootstrap setWorkspacePath(String workspacePath) {
         creator.setWorkspacePath(workspacePath);
@@ -35,10 +35,10 @@ public class DefaultBootstrap extends Bootstrap {
     }
 
     @Override
-    protected GlobalContext acquireContext() {
-        return creator.setExporter(new CodeExporter())
-                .setExtractor(new TableExtractor())
-                .setResolver(new AntlrResolver())
+    protected GlobalConfig configureContext() {
+        return creator.setExporter(CodeExporter.class)
+                .setExtractor(TableExtractor.class)
+                .setResolver(AntlrResolver.class)
                 .init();
     }
 

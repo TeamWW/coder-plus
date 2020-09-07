@@ -1,8 +1,9 @@
 package com.lucifiere.exporter;
 
 import com.google.common.base.Preconditions;
-import com.lucifiere.common.GlobalContext;
-import com.lucifiere.common.GlobalContextAware;
+import com.lucifiere.container.GlobalContext;
+import com.lucifiere.container.GlobalContextAware;
+import com.lucifiere.container.ManagedBean;
 import com.lucifiere.io.NioTextFileAccessor;
 import com.lucifiere.render.View;
 import com.lucifiere.render.views.CodeView;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author XD.Wang
  * Date 2020-8-2.
  */
+@ManagedBean
 public class CodeExporter implements Exporter, GlobalContextAware {
 
     private GlobalContext context;
@@ -22,7 +24,7 @@ public class CodeExporter implements Exporter, GlobalContextAware {
     @Override
     public void export(List<View> views) {
         checkViewType(views);
-        views.parallelStream().map(view -> (CodeView) view).forEach(view -> NioTextFileAccessor.createFile(view.getContent(), context.outputPath(), createFileName(view)));
+        views.parallelStream().map(view -> (CodeView) view).forEach(view -> NioTextFileAccessor.createFile(view.getContent(), context.getConfig().outputPath(), createFileName(view)));
     }
 
     private void checkViewType(List<View> views) {

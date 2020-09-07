@@ -10,6 +10,6 @@ import com.lucifiere.model.Model;
  */
 public interface Resolver {
 
-    Model resolve(ResolverReq req);
+    Model resolve(String sourceCode);
 
 }

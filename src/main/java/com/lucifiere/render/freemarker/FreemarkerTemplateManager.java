@@ -1,8 +1,8 @@
 package com.lucifiere.render.freemarker;
 
-import com.lucifiere.common.TemplateContainerAware;
+import com.lucifiere.container.GlobalContextAware;
 import com.lucifiere.io.NioTextFileAccessor;
-import com.lucifiere.templates.TemplateSpecContainer;
+import com.lucifiere.container.GlobalContext;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -15,13 +15,18 @@ import java.io.IOException;
  * @author created by XD.Wang
  * Date 2020/9/4.
  */
-public class FreemarkerTemplateManager extends StringTemplateLoader implements TemplateContainerAware {
+public class FreemarkerTemplateManager extends StringTemplateLoader implements GlobalContextAware {
 
     private final Configuration configuration;
 
-    private TemplateSpecContainer templateSpecContainer;
+    private GlobalContext globalContext;
 
     private static volatile FreemarkerTemplateManager INSTANT;
+
+    @Override
+    public void setGlobalContext(GlobalContext globalContext) {
+        this.globalContext = globalContext;
+    }
 
     public static FreemarkerTemplateManager getManager() {
         if (INSTANT == null) {
@@ -41,7 +46,7 @@ public class FreemarkerTemplateManager extends StringTemplateLoader implements T
     }
 
     public void initStringTemplateLoader() {
-        var allSpec = templateSpecContainer.getAllTemplates();
+        var allSpec = globalContext.getAllTemplates();
         allSpec.forEach(spec -> {
             var content = NioTextFileAccessor.loadText(spec.getPath());
             super.putTemplate(spec.getId(), content);
@@ -50,11 +55,6 @@ public class FreemarkerTemplateManager extends StringTemplateLoader implements T
 
     public Template getTemplate(String templateId) throws IOException {
         return configuration.getTemplate(templateId);
-    }
-
-    @Override
-    public void setTemplateSpecContainer(TemplateSpecContainer templateSpecContainer) {
-        this.templateSpecContainer = templateSpecContainer;
     }
 
 }

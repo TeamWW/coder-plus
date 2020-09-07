@@ -12,24 +12,24 @@ import java.util.Optional;
  * @author created by XD.Wang
  * Date 2020/7/12.
  */
-public record GlobalContext(
+public record GlobalConfig(
         String workspacePath,
         String inputPath,
         String outputPath,
         String ddlName,
         String templatesConfigScanPath,
-        Resolver resolver,
-        Extractor extractor,
-        Exporter exporter) {
+        Class<? extends Resolver>resolver,
+        Class<? extends Extractor>extractor,
+        Class<? extends Exporter>exporter) {
 
-    public GlobalContext {
+    public GlobalConfig {
         // 可默认的配置
         this.inputPath = Optional.ofNullable(inputPath).orElse("input");
         this.outputPath = Optional.ofNullable(outputPath).orElse("output");
         this.ddlName = Optional.ofNullable(outputPath).orElse("ddl.sql");
         this.templatesConfigScanPath = Optional.ofNullable(templatesConfigScanPath).orElse(null);
-        // 可扩展的配置
         this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow();
+        // 可扩展的配置
         this.resolver = Optional.ofNullable(resolver).orElseThrow();
         this.extractor = Optional.ofNullable(extractor).orElseThrow();
         this.exporter = Optional.ofNullable(exporter).orElseThrow();
@@ -48,9 +48,9 @@ public record GlobalContext(
         private String outputPath;
         private String ddlName;
         private String templatesPath;
-        private Resolver resolver;
-        private Extractor extractor;
-        private Exporter exporter;
+        private Class<? extends Resolver> resolver;
+        private Class<? extends Extractor> extractor;
+        private Class<? extends Exporter> exporter;
 
         public void setWorkspacePath(String workspacePath) {
             this.workspacePath = workspacePath;
@@ -72,27 +72,25 @@ public record GlobalContext(
             this.templatesPath = templatesPath;
         }
 
-        public Creator setResolver(Resolver resolver) {
+        public Creator setResolver(Class<? extends Resolver> resolver) {
             this.resolver = resolver;
             return this;
         }
 
-        public Creator setExtractor(Extractor extractor) {
+        public Creator setExtractor(Class<? extends Extractor> extractor) {
             this.extractor = extractor;
             return this;
         }
 
-        public Creator setExporter(Exporter exporter) {
+        public Creator setExporter(Class<? extends Exporter> exporter) {
             this.exporter = exporter;
             return this;
         }
 
-        public GlobalContext init() {
-            return new GlobalContext(workspacePath, inputPath, outputPath, ddlName, templatesPath, resolver, extractor, exporter);
+        public GlobalConfig init() {
+            return new GlobalConfig(workspacePath, inputPath, outputPath, ddlName, templatesPath, resolver, extractor, exporter);
         }
-
     }
-
 }
 
 

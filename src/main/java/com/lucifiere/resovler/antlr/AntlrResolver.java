@@ -4,6 +4,7 @@ import com.lucifiere.antlr.MySqlLexer;
 import com.lucifiere.antlr.MySqlParser;
 import com.lucifiere.antlr.MySqlParserBaseListener;
 import com.lucifiere.common.FiledType;
+import com.lucifiere.container.ManagedBean;
 import com.lucifiere.model.Model;
 import com.lucifiere.extract.table.TableField;
 import com.lucifiere.model.TableModel;
@@ -21,6 +22,7 @@ import java.util.Optional;
  * @author XD.Wang
  * Date 2020-7-25.
  */
+@ManagedBean
 public class AntlrResolver extends MySqlParserBaseListener {
 
     private TableModel tableModel;
@@ -81,19 +83,16 @@ public class AntlrResolver extends MySqlParserBaseListener {
     }
 
     @Override
-    public Model resolve(ResolverReq resolverReq) {
-        if (resolverReq instanceof AntlrResolverReq req) {
-            var input = CharStreams.fromString(req.sourceCode().toUpperCase());
-            var lexer = new MySqlLexer(input);
-            var tokens = new CommonTokenStream(lexer);
-            var parser = new MySqlParser(tokens);
-            MySqlParser.CreateTableContext ctDdlTree = parser.createTable();
-            var walker = new ParseTreeWalker();
-            var model = new TableModel();
-            walker.walk(this, ctDdlTree);
-            return model;
-        }
-        throw new UnsupportedOperationException("类型匹配有误！");
+    public Model resolve(String sourceCode) {
+        var input = CharStreams.fromString(sourceCode.toUpperCase());
+        var lexer = new MySqlLexer(input);
+        var tokens = new CommonTokenStream(lexer);
+        var parser = new MySqlParser(tokens);
+        MySqlParser.CreateTableContext ctDdlTree = parser.createTable();
+        var walker = new ParseTreeWalker();
+        var model = new TableModel();
+        walker.walk(this, ctDdlTree);
+        return model;
     }
 
 }

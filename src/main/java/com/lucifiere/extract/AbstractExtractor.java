@@ -1,8 +1,9 @@
 package com.lucifiere.extract;
 
 import com.google.common.collect.Lists;
-import com.lucifiere.common.GlobalContext;
-import com.lucifiere.common.GlobalContextAware;
+import com.lucifiere.common.GlobalConfig;
+import com.lucifiere.container.GlobalContext;
+import com.lucifiere.container.GlobalContextAware;
 import com.lucifiere.model.Model;
 import com.lucifiere.model.loader.ModelAttrLoader;
 import com.lucifiere.model.loader.UserAttrLoader;

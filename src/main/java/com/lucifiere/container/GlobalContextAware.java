@@ -1,4 +1,4 @@
-package com.lucifiere.common;
+package com.lucifiere.container;
 
 /**
  * 为组件提供全局配置

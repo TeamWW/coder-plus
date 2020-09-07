@@ -1,20 +1,18 @@
 package com.lucifiere.bootstrap;
 
-import cn.hutool.core.util.ReflectUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.lucifiere.common.*;
+import com.lucifiere.common.GlobalConfig;
+import com.lucifiere.container.GlobalContext;
+import com.lucifiere.extract.Extractor;
 import com.lucifiere.model.Model;
 import com.lucifiere.render.View;
 import com.lucifiere.render.executor.CodeRendersChainManager;
 import com.lucifiere.render.executor.ConfigurableRendersExecutor;
 import com.lucifiere.render.executor.HandlerRequest;
 import com.lucifiere.render.executor.HandlerResponse;
-import com.lucifiere.templates.TemplateSpecContainer;
 
 import java.util.List;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 /**
  * 启动类，串联组件逻辑，输入外部设置
@@ -33,14 +31,12 @@ public abstract class Bootstrap {
      * 串联组件（基于接口）
      */
     public void execute(List<String> templateIds) {
-        var context = acquireContext();
-        contextCheckBeforeExecute(context);
-        processGlobalContextAware(context);
-        processContainerAware(context);
-        var model = context.extractor().extract();
-        List<View> views = renderViews(model, templateIds);
-        var exporter = context.exporter();
-        exporter.export(views);
+        var config = configureContext();
+        contextCheckBeforeExecute(config);
+        var context = GlobalContext.create(config);
+        var model = context.calByComponent(config.extractor(), Extractor::extract);
+        var views = renderViews(model, templateIds);
+        context.doWithComponent(config.exporter(), exporter -> exporter.export(views));
     }
 
     /**
@@ -59,39 +55,12 @@ public abstract class Bootstrap {
         return resp.getViews();
     }
 
-    private void contextCheckBeforeExecute(GlobalContext context) {
-        Preconditions.checkNotNull(context, "上下文信息不能为空！");
-        Preconditions.checkNotNull(context.workspacePath(), "工作目录不能为空！");
-        Preconditions.checkNotNull(context.exporter(), "输出工具不能为空！");
-        Preconditions.checkNotNull(context.extractor(), "提取工具不能为空！");
-        Preconditions.checkNotNull(context.extractor(), "解析工具不能为空！");
-    }
-
-    /**
-     * 按需进行全局上下文注入
-     */
-    public void processGlobalContextAware(GlobalContext context) {
-        Stream.of(ClassManager.getCoderPlusClazz()).forEach(component -> {
-            if (component instanceof GlobalContextAware globalContextAware) {
-                ReflectUtil.invoke(globalContextAware, "setGlobalContext", context);
-            }
-        });
-    }
-
-    public void processContainerAware(GlobalContext context) {
-        var templateContainer = TemplateSpecContainer.init(ClassManager.getClazzByPath(context.templatesConfigScanPath(),
-                "com.lucifiere.templates.embed"));
-        Stream.of(ClassManager.getCoderPlusClazz()).forEach(component -> {
-            if (component instanceof TemplateContainerAware templateContainerAware) {
-                ReflectUtil.invoke(templateContainerAware, "setTemplateContainer", templateContainer);
-            }
-        });
-    }
-
-    private <T> Supplier<T> requireAndCheck(Supplier<T> supplier) {
-        T r = supplier.get();
-        Preconditions.checkNotNull(r, "必要参数不能为空！");
-        return supplier;
+    private void contextCheckBeforeExecute(GlobalConfig config) {
+        Preconditions.checkNotNull(config, "上下文信息不能为空！");
+        Preconditions.checkNotNull(config.workspacePath(), "工作目录不能为空！");
+        Preconditions.checkNotNull(config.exporter(), "输出工具不能为空！");
+        Preconditions.checkNotNull(config.extractor(), "提取工具不能为空！");
+        Preconditions.checkNotNull(config.resolver(), "解析工具不能为空！");
     }
 
     /**
@@ -99,6 +68,6 @@ public abstract class Bootstrap {
      *
      * @return 获取上下文
      */
-    protected abstract GlobalContext acquireContext();
+    protected abstract GlobalConfig configureContext();
 
 }

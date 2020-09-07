@@ -10,7 +10,7 @@ import java.io.StringWriter;
 
 public abstract class FreemarkerRender extends AbstractRender {
 
-    private FreemarkerTemplateManager freemarkerTemplateManager = FreemarkerTemplateManager.getManager();
+    private final FreemarkerTemplateManager freemarkerTemplateManager = FreemarkerTemplateManager.getManager();
 
     public FreemarkerRender(String templateId) {
         super(templateId);

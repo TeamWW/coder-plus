@@ -1,18 +1,18 @@
 package com.lucifiere.render;
 
 import cn.hutool.log.StaticLog;
-import com.lucifiere.common.TemplateContainerAware;
+import com.lucifiere.container.GlobalContextAware;
 import com.lucifiere.model.Model;
 import com.lucifiere.io.NioTextFileAccessor;
-import com.lucifiere.templates.TemplateSpecContainer;
+import com.lucifiere.container.GlobalContext;
 import com.lucifiere.templates.TemplateInstant;
 import com.lucifiere.templates.spec.TemplateSpec;
 
 import java.util.function.Function;
 
-public abstract class AbstractRender implements Render, TemplateContainerAware {
+public abstract class AbstractRender implements Render, GlobalContextAware {
 
-    private TemplateSpecContainer templateSpecContainer;
+    private GlobalContext globalContext;
 
     protected final TemplateInstant template;
 
@@ -27,12 +27,12 @@ public abstract class AbstractRender implements Render, TemplateContainerAware {
     }
 
     @Override
-    public void setTemplateSpecContainer(TemplateSpecContainer templateSpecContainer) {
-        this.templateSpecContainer = templateSpecContainer;
+    public void setGlobalContext(GlobalContext globalContext) {
+        this.globalContext = globalContext;
     }
 
     private TemplateInstant getTemplate(String templateId) {
-        var spec = templateSpecContainer.getTemplateById(templateId);
+        var spec = globalContext.getTemplateById(templateId);
         var templateContent = loadTemplateContent(spec);
         var instant = new TemplateInstant();
         instant.setContent(templateContent);
