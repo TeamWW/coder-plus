@@ -51,7 +51,7 @@ public abstract class RenderWrapper {
      * @param resp 执行结果
      * @return 是否执行成功
      */
-    protected abstract boolean rend(HandlerRequest req, HandlerResponse resp);
+    protected abstract boolean render(HandlerRequest req, HandlerResponse resp);
 
     /**
      * 渲染前触发

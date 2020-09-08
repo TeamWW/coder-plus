@@ -79,7 +79,7 @@ public class TableModel extends Model {
             var fieldsAttrs = Maps.newHashMap();
             fieldsAttrs.put(FIELD_CAMEL_NAME.key(), ofUlCode(f.getName()).toStyle(NamedStyle.CAMEL).toString());
             fieldsAttrs.put(FIELD_CAPTAl_FIRST_NAME.key(), f.getCfName());
-            fieldsAttrs.put(FIELD_DESC.key(), f.getComment());
+            fieldsAttrs.put(FIELD_DESC.key(), Optional.ofNullable(f.getComment()).orElse(""));
             fieldsAttrs.put(FIELD_J_TYPE.key(), f.getType().getJavaType());
             return fieldsAttrs;
         }).collect(Collectors.toList()));
