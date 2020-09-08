@@ -36,7 +36,7 @@ public abstract class AbstractRender implements Render {
         if (content == null) {
             throw new RuntimeException("模板渲染失败！");
         }
-        StaticLog.info("渲染内容 --> {0}" + content);
+        StaticLog.info("渲染内容 --> " + content);
         return createView(content, model);
     }
 

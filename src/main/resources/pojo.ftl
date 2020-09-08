@@ -1,11 +1,11 @@
 import java.util.Date;
 
 /**
-* POJO FOR ${_m_comment}
-*
-* Created By @author ${_au}
-* Date ${.now}
-*/
+ * POJO FOR ${_m_comment}
+ *
+ * Created By @author ${_au}
+ * Date ${.now}
+ */
 public class ${_m_cf} {
 <#list _f as filed>
 
