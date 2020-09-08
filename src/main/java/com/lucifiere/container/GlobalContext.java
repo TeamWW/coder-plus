@@ -44,12 +44,12 @@ public class GlobalContext {
     }
 
     public <T, R> R calByComponent(Class<T> clazz, Function<T, R> function) {
-        var bean = Objects.requireNonNull(getComponent(clazz));
+        T bean = Objects.requireNonNull(getComponent(clazz));
         return function.apply(bean);
     }
 
     public <T> void doWithComponent(Class<T> clazz, Consumer<T> function) {
-        var bean = Objects.requireNonNull(getComponent(clazz));
+        T bean = Objects.requireNonNull(getComponent(clazz));
         function.accept(bean);
     }
 
@@ -67,7 +67,7 @@ public class GlobalContext {
     }
 
     public static GlobalContext create(GlobalConfig config) {
-        var container = new GlobalContext();
+        GlobalContext container = new GlobalContext();
         if (container.isInit.get()) {
             return container;
         }
@@ -91,7 +91,8 @@ public class GlobalContext {
 
     private void processGlobalContextAware() {
         componentMap.values().stream().map(ManagedBeanSpec::getInstant).forEach(bean -> {
-            if (bean instanceof GlobalContextAware globalContextAware) {
+            if (bean instanceof GlobalContextAware) {
+                GlobalContextAware globalContextAware = (GlobalContextAware) bean;
                 ReflectUtil.invoke(globalContextAware, "setGlobalContext", this);
             }
         });
@@ -111,17 +112,18 @@ public class GlobalContext {
     private static final String TEMPLATES_EMBED = "com.lucifiere.templates.embed";
 
     private void registerTemplates() {
-        String customizedTPath = config.templatesConfigScanPath();
+        String customizedTPath = config.getTemplatesConfigScanPath();
         Set<Class<?>> templates = ClassManager.getClazzByPath(customizedTPath, TEMPLATES_EMBED);
         templates.parallelStream().forEach(clazz -> {
-            var ts = AnnotationUtil.getAnnotation(clazz, Templates.class);
+            Templates ts = AnnotationUtil.getAnnotation(clazz, Templates.class);
             if (ts != null && !ts.skip()) {
-                var ins = ReflectUtil.newInstance(clazz);
+                Object ins = ReflectUtil.newInstance(clazz);
                 Arrays.stream(clazz.getDeclaredMethods()).forEach(method -> {
-                    var define = AnnotationUtil.getAnnotation(method, Template.class);
+                    Template define = AnnotationUtil.getAnnotation(method, Template.class);
                     if (define != null) {
-                        var obj = ReflectUtil.invoke(ins, method);
-                        if (obj instanceof TemplateSpec spec) {
+                        Object obj = ReflectUtil.invoke(ins, method);
+                        if (obj instanceof TemplateSpec) {
+                            TemplateSpec spec = (TemplateSpec) obj;
                             spec.setId(define.value());
                             templateMap.put(spec.getId(), spec);
                         }
@@ -134,7 +136,7 @@ public class GlobalContext {
     private void registerComponents() {
         Set<Class<?>> clazzSet = ClassManager.getCoderPlusClazz();
         clazzSet.forEach(clazz -> {
-            var an = AnnotationUtil.getAnnotation(clazz, ManagedBean.class);
+            ManagedBean an = AnnotationUtil.getAnnotation(clazz, ManagedBean.class);
             if (an != null) {
                 ManagedBeanSpec c = ManagedBeanSpec.of(clazz);
                 Optional.of(an.value()).filter(StrUtil::isNotBlank).ifPresent(c::setId);

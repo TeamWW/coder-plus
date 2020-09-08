@@ -12,25 +12,54 @@ import java.util.Optional;
  * @author created by XD.Wang
  * Date 2020/7/12.
  */
-public record GlobalConfig(
-        String workspacePath,
-        String outputDir,
-        String ddlName,
-        String templatesConfigScanPath,
-        Class<? extends Resolver>resolver,
-        Class<? extends Extractor>extractor,
-        Class<? extends Exporter>exporter) {
+public class GlobalConfig {
 
-    public GlobalConfig {
+    private final String workspacePath;
+    private final String outputDir;
+    private final String ddlName;
+    private final String templatesConfigScanPath;
+    private final Class<? extends Resolver> resolver;
+    private final Class<? extends Extractor> extractor;
+    private final Class<? extends Exporter> exporter;
+
+    public GlobalConfig(String workspacePath, String outputDir, String ddlName, String templatesConfigScanPath, Class<? extends Resolver> resolver, Class<? extends Extractor> extractor, Class<? extends Exporter> exporter) {
         // 可默认的配置
         this.outputDir = Optional.ofNullable(outputDir).orElse("output");
         this.ddlName = Optional.ofNullable(outputDir).orElse("ddl.sql");
         this.templatesConfigScanPath = Optional.ofNullable(templatesConfigScanPath).orElse(null);
-        this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow();
+        this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow(() -> new RuntimeException("必须配置工作目录！"));
         // 可扩展的配置
-        this.resolver = Optional.ofNullable(resolver).orElseThrow();
-        this.extractor = Optional.ofNullable(extractor).orElseThrow();
-        this.exporter = Optional.ofNullable(exporter).orElseThrow();
+        this.resolver = Optional.ofNullable(resolver).orElseThrow(() -> new RuntimeException("必须配置文本解析器！"));
+        this.extractor = Optional.ofNullable(extractor).orElseThrow(() -> new RuntimeException("必须配置提取器！"));
+        this.exporter = Optional.ofNullable(exporter).orElseThrow(() -> new RuntimeException("必须配置导出器！"));
+    }
+
+    public String getWorkspacePath() {
+        return workspacePath;
+    }
+
+    public String getOutputDir() {
+        return outputDir;
+    }
+
+    public String getDdlName() {
+        return ddlName;
+    }
+
+    public String getTemplatesConfigScanPath() {
+        return templatesConfigScanPath;
+    }
+
+    public Class<? extends Resolver> getResolver() {
+        return resolver;
+    }
+
+    public Class<? extends Extractor> getExtractor() {
+        return extractor;
+    }
+
+    public Class<? extends Exporter> getExporter() {
+        return exporter;
     }
 
     /**

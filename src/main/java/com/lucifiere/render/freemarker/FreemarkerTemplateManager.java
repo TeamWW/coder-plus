@@ -1,12 +1,14 @@
 package com.lucifiere.render.freemarker;
 
 import com.lucifiere.io.NioTextFileAccessor;
+import com.lucifiere.templates.spec.TemplateSpec;
 import com.lucifiere.utils.GlobalContextHolder;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * 基于TEMPLATE-SPEC去加载模板
@@ -38,9 +40,9 @@ public class FreemarkerTemplateManager extends StringTemplateLoader {
     }
 
     public void initStringTemplateLoader() {
-        var allSpec = GlobalContextHolder.globalContext.getAllTemplates();
+        Set<TemplateSpec> allSpec = GlobalContextHolder.globalContext.getAllTemplates();
         allSpec.forEach(spec -> {
-            var content = NioTextFileAccessor.loadEmbedFile(spec.getPath());
+            String content = NioTextFileAccessor.loadEmbedFile(spec.getPath());
             super.putTemplate(spec.getId(), content);
         });
     }

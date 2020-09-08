@@ -9,7 +9,7 @@
     <version>1.0</version>
 
     <properties>
-        <maven.jdk.version>1.14</maven.jdk.version>
+        <maven.jdk.version>1.8</maven.jdk.version>
     </properties>
 
     <dependencies>

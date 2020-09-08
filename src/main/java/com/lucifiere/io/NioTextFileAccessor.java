@@ -6,6 +6,7 @@ import cn.hutool.log.StaticLog;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -18,8 +19,8 @@ final public class NioTextFileAccessor {
 
     public static String loadFile(String pathStr) {
         try {
-            var path = Paths.get(pathStr);
-            return Files.readString(path);
+            Path path = Paths.get(pathStr);
+            return String.join("\n", Files.readAllLines(path));
         } catch (IOException e) {
             StaticLog.error("外部文件加载失败！", e);
             throw ExceptionUtil.wrapRuntime(e);
@@ -31,8 +32,8 @@ final public class NioTextFileAccessor {
             URL s = NioTextFileAccessor.class.getClassLoader()
                     .getResource(fileName.startsWith("/") ? fileName.substring(1) : fileName);
             assert s != null;
-            var path = Paths.get(s.getFile());
-            return Files.readString(path);
+            Path path = Paths.get(s.getFile());
+            return String.join("\n", Files.readAllLines(path));
         } catch (IOException e) {
             StaticLog.error("外部文件加载失败！", e);
             throw ExceptionUtil.wrapRuntime(e);
@@ -41,7 +42,7 @@ final public class NioTextFileAccessor {
 
     public static void writeText(String text, String pathStr) {
         try {
-            var path = Paths.get(pathStr);
+            Path path = Paths.get(pathStr);
             Files.write(path, text.getBytes());
         } catch (IOException e) {
             StaticLog.error("写入外部文件失败！", e);
@@ -51,7 +52,7 @@ final public class NioTextFileAccessor {
 
     public static void createFile(String text, String pathStr, String fileName) {
         try {
-            var path = Paths.get(pathStr + "/" + fileName);
+            Path path = Paths.get(pathStr + "/" + fileName);
             if (!Files.exists(path)) {
                 Files.createFile(path);
             }

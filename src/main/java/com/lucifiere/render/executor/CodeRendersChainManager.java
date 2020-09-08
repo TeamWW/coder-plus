@@ -10,6 +10,7 @@ import com.lucifiere.render.freemarker.CodeViewRender;
 import com.lucifiere.templates.spec.TemplateSpec;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -41,9 +42,9 @@ public class CodeRendersChainManager implements GlobalContextAware {
 
     public RenderWrapper chaining(List<String> templateIds) {
         Preconditions.checkArgument(templateIds != null && templateIds.size() > 0, "必须指定需要渲染的模板");
-        var templateSpecs = globalContext.getAllTemplates();
+        Set<TemplateSpec> templateSpecs = globalContext.getAllTemplates();
         Preconditions.checkArgument(CollectionUtil.isNotEmpty(templateSpecs), "尚未未注册任何模板！");
-        var missingTemplateIds = templateIds.stream()
+        String missingTemplateIds = templateIds.stream()
                 .filter(tId -> !templateSpecs.stream().map(TemplateSpec::getId).collect(Collectors.toSet()).contains(tId))
                 .collect(Collectors.joining(","));
         Preconditions.checkArgument(StrUtil.isBlank(missingTemplateIds), "模板" + missingTemplateIds + "不存在！");

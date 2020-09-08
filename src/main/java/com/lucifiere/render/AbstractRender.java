@@ -3,6 +3,7 @@ package com.lucifiere.render;
 import cn.hutool.log.StaticLog;
 import com.lucifiere.model.Model;
 import com.lucifiere.templates.TemplateInstant;
+import com.lucifiere.templates.spec.TemplateSpec;
 import com.lucifiere.utils.GlobalContextHolder;
 
 import java.util.function.Function;
@@ -22,8 +23,8 @@ public abstract class AbstractRender implements Render {
     }
 
     private TemplateInstant getTemplate(String templateId) {
-        var spec = GlobalContextHolder.globalContext.getTemplateById(templateId);
-        var instant = new TemplateInstant();
+        TemplateSpec spec = GlobalContextHolder.globalContext.getTemplateById(templateId);
+        TemplateInstant instant = new TemplateInstant();
         instant.setTemplateSpec(spec);
         return instant;
     }
@@ -31,7 +32,7 @@ public abstract class AbstractRender implements Render {
     @Override
     public View render(final Model model) {
         processModelBeforeRender(model);
-        var content = doRender(model);
+        String content = doRender(model);
         if (content == null) {
             throw new RuntimeException("模板渲染失败！");
         }

@@ -4,10 +4,12 @@ import cn.hutool.log.StaticLog;
 import com.lucifiere.model.Model;
 import com.lucifiere.render.AbstractRender;
 import com.lucifiere.utils.GlobalContextHolder;
+import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.Writer;
 
 public abstract class FreemarkerRender extends AbstractRender {
 
@@ -17,11 +19,11 @@ public abstract class FreemarkerRender extends AbstractRender {
 
     @Override
     protected String doRender(Model model) {
-        var out = new StringWriter();
+        Writer out = new StringWriter();
         try {
-            var templateId = template.getTemplateSpec().getId();
-            var manager = FreemarkerTemplateManager.getManager();
-            var template = manager.getTemplate(templateId);
+            String templateId = template.getTemplateSpec().getId();
+            FreemarkerTemplateManager manager = FreemarkerTemplateManager.getManager();
+            Template template = manager.getTemplate(templateId);
             template.process(model.extractAttrs(), out);
             return out.toString();
         } catch (TemplateException e) {

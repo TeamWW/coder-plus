@@ -23,7 +23,7 @@ public class TemplateSpec {
     private boolean isEmbed = false;
 
     public static TemplateSpec of(FileSetting fileSetting, String path, String description) {
-        var spec = new TemplateSpec();
+        TemplateSpec spec = new TemplateSpec();
         spec.setPath(path);
         spec.setDescription(description);
         spec.setFileSetting(fileSetting);
@@ -31,7 +31,7 @@ public class TemplateSpec {
     }
 
     public static TemplateSpec of(String prefix, String suffix, String ext, String path, String description) {
-        var spec = new TemplateSpec();
+        TemplateSpec spec = new TemplateSpec();
         spec.setPath(path);
         spec.setDescription(description);
         spec.setFileSetting(FileSetting.of(prefix, suffix, ext));
@@ -82,7 +82,7 @@ public class TemplateSpec {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        var that = (TemplateSpec) o;
+        TemplateSpec that = (TemplateSpec) o;
         return Objects.equals(id, that.id);
     }
 

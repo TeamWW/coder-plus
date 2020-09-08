@@ -13,7 +13,7 @@ public class Main {
      * @param args args
      */
     public static void main(String[] args) {
-        var codeGenerator = new CodeGenerator();
+        CodeGenerator codeGenerator = new CodeGenerator();
         codeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
         codeGenerator.execute(BaseTemplatesConfig.BASE_POJO);
     }

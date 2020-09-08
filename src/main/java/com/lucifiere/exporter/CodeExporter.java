@@ -1,6 +1,7 @@
 package com.lucifiere.exporter;
 
 import com.google.common.base.Preconditions;
+import com.lucifiere.common.FileSetting;
 import com.lucifiere.container.GlobalContext;
 import com.lucifiere.container.GlobalContextAware;
 import com.lucifiere.container.ManagedBean;
@@ -25,7 +26,7 @@ public class CodeExporter implements Exporter, GlobalContextAware {
     @Override
     public void export(List<View> views) {
         checkViewType(views);
-        String outPath = context.getConfig().workspacePath() + "/" + context.getConfig().outputDir();
+        String outPath = context.getConfig().getWorkspacePath() + "/" + context.getConfig().getOutputDir();
         views.parallelStream().map(view -> (CodeView) view).forEach(view -> NioTextFileAccessor.createFile(view.getContent(), outPath, createFileName(view)));
     }
 
@@ -35,7 +36,7 @@ public class CodeExporter implements Exporter, GlobalContextAware {
     }
 
     private String createFileName(CodeView view) {
-        var fileSetting = view.getFileSetting();
+        FileSetting fileSetting = view.getFileSetting();
         String fileName = CodeStyle.ofUlCode(view.getName()).toStyle(CodeStyle.NamedStyle.CAMEL).toStyle(CodeStyle.NamedStyle.CAP_FIRST).toString();
         return fileSetting.getPrefix() + fileName + fileSetting.getExt();
     }

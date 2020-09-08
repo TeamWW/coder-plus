@@ -8,10 +8,7 @@ import com.lucifiere.container.GlobalContext;
 import com.lucifiere.extract.Extractor;
 import com.lucifiere.model.Model;
 import com.lucifiere.render.View;
-import com.lucifiere.render.executor.CodeRendersChainManager;
-import com.lucifiere.render.executor.ConfigurableRendersExecutor;
-import com.lucifiere.render.executor.HandlerRequest;
-import com.lucifiere.render.executor.HandlerResponse;
+import com.lucifiere.render.executor.*;
 
 import java.util.List;
 
@@ -40,12 +37,12 @@ public abstract class Bootstrap {
      */
     public void execute(List<String> templateIds) {
         Preconditions.checkArgument(CollectionUtil.isNotEmpty(templateIds), "模板ID不能为空！");
-        var config = configureContext();
+        GlobalConfig config = configureContext();
         contextCheckBeforeExecute(config);
-        var context = GlobalContext.create(config);
-        var model = context.calByComponent(config.extractor(), Extractor::extract);
-        var views = renderViews(model, templateIds);
-        context.doWithComponent(config.exporter(), exporter -> exporter.export(views));
+        GlobalContext context = GlobalContext.create(config);
+        Model model = context.calByComponent(config.getExtractor(), Extractor::extract);
+        List<View> views = renderViews(model, templateIds);
+        context.doWithComponent(config.getExporter(), exporter -> exporter.export(views));
     }
 
     /**
@@ -55,21 +52,21 @@ public abstract class Bootstrap {
      * @return 模型
      */
     private List<View> renderViews(Model model, List<String> templateIds) {
-        var renderHeader = CodeRendersChainManager.getManager().chaining(templateIds);
-        var rendersExecutor = new ConfigurableRendersExecutor(renderHeader);
-        var req = new HandlerRequest();
+        RenderWrapper renderHeader = CodeRendersChainManager.getManager().chaining(templateIds);
+        ConfigurableRendersExecutor rendersExecutor = new ConfigurableRendersExecutor(renderHeader);
+        HandlerRequest req = new HandlerRequest();
         req.setModel(model);
-        var resp = new HandlerResponse();
+        HandlerResponse resp = new HandlerResponse();
         rendersExecutor.execute(req, resp);
         return resp.getViews();
     }
 
     private void contextCheckBeforeExecute(GlobalConfig config) {
         Preconditions.checkNotNull(config, "上下文信息不能为空！");
-        Preconditions.checkNotNull(config.workspacePath(), "工作目录不能为空！");
-        Preconditions.checkNotNull(config.exporter(), "输出工具不能为空！");
-        Preconditions.checkNotNull(config.extractor(), "提取工具不能为空！");
-        Preconditions.checkNotNull(config.resolver(), "解析工具不能为空！");
+        Preconditions.checkNotNull(config.getWorkspacePath(), "工作目录不能为空！");
+        Preconditions.checkNotNull(config.getExporter(), "输出工具不能为空！");
+        Preconditions.checkNotNull(config.getExtractor(), "提取工具不能为空！");
+        Preconditions.checkNotNull(config.getResolver(), "解析工具不能为空！");
     }
 
     /**
