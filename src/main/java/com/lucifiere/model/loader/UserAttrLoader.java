@@ -2,6 +2,8 @@ package com.lucifiere.model.loader;
 
 import com.lucifiere.demo.Cons;
 import com.lucifiere.model.Model;
+import com.lucifiere.model.enums.BaseBuiltInAttr;
+import com.lucifiere.model.enums.TableModelBuiltInAttr;
 
 /**
  * @author created by XD.Wang
@@ -9,11 +11,9 @@ import com.lucifiere.model.Model;
  */
 public class UserAttrLoader implements ModelAttrLoader {
 
-    public static final String USER_NAME = "user";
-
     @Override
     public void loadTo(Model model) {
-        model.addBuiltInAttr(USER_NAME, Cons.AUTHOR);
+        model.addBuiltInAttr(BaseBuiltInAttr.BASE_AUTHOR.key(), Cons.AUTHOR);
     }
 
 }

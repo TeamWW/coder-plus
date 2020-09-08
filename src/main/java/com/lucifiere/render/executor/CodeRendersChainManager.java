@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
 import com.lucifiere.container.GlobalContext;
 import com.lucifiere.container.GlobalContextAware;
+import com.lucifiere.container.ManagedBean;
 import com.lucifiere.render.freemarker.CodeViewRender;
 import com.lucifiere.templates.spec.TemplateSpec;
 
@@ -17,22 +18,18 @@ import java.util.stream.Collectors;
  * @author XD.Wang
  * Date 2020/7/25.
  */
+@ManagedBean
 public class CodeRendersChainManager implements GlobalContextAware {
 
-    private GlobalContext globalContext;
-
-    private static volatile CodeRendersChainManager MANAGER;
+    private static GlobalContext globalContext;
 
     @Override
-    public void setGlobalContext(GlobalContext globalContext) {
-        this.globalContext = globalContext;
+    public void setGlobalContext(GlobalContext context) {
+        globalContext = context;
     }
 
     public static CodeRendersChainManager getManager() {
-        if (MANAGER == null) {
-            MANAGER = new CodeRendersChainManager();
-        }
-        return MANAGER;
+        return globalContext.getComponent(CodeRendersChainManager.class);
     }
 
     private RenderWrapper chainingNode(List<RenderWrapper> handlers) {

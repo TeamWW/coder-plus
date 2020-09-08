@@ -5,7 +5,9 @@ import cn.hutool.log.StaticLog;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -19,9 +21,22 @@ import java.util.Map;
  */
 final public class NioTextFileAccessor {
 
-    public static String loadText(String pathStr) {
+    public static String loadFile(String pathStr) {
         try {
             var path = Paths.get(pathStr);
+            return Files.readString(path);
+        } catch (IOException e) {
+            StaticLog.error("外部文件加载失败！", e);
+            throw ExceptionUtil.wrapRuntime(e);
+        }
+    }
+
+    public static String loadEmbedFile(String fileName) {
+        try {
+            URL s = NioTextFileAccessor.class.getClassLoader()
+                    .getResource(fileName.startsWith("/") ? fileName.substring(1) : fileName);
+            assert s != null;
+            var path = Paths.get(s.getFile());
             return Files.readString(path);
         } catch (IOException e) {
             StaticLog.error("外部文件加载失败！", e);
@@ -42,6 +57,9 @@ final public class NioTextFileAccessor {
     public static void createFile(String text, String pathStr, String fileName) {
         try {
             var path = Paths.get(pathStr + "/" + fileName);
+            if (!Files.exists(path)) {
+                Files.createFile(path);
+            }
             Files.write(path, text.getBytes());
         } catch (IOException e) {
             StaticLog.error("写入外部文件失败！", e);

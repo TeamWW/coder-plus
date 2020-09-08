@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 import static com.lucifiere.utils.CodeStyle.NamedStyle.*;
@@ -26,15 +27,15 @@ public class CodeStyle {
     }
 
     public static CodeStyle ofCamelCode(String source) {
-        return new CodeStyle(source, CAMEL);
+        return new CodeStyle(Optional.ofNullable(source).orElse(""), CAMEL);
     }
 
     public static CodeStyle ofUlCode(String source) {
-        return new CodeStyle(source, UNDERLINE);
+        return new CodeStyle(Optional.ofNullable(source).orElse(""), UNDERLINE);
     }
 
     public static CodeStyle ofCapCode(String source) {
-        return new CodeStyle(source, CAP_FIRST);
+        return new CodeStyle(Optional.ofNullable(source).orElse(""), CAP_FIRST);
     }
 
     public enum NamedStyle {

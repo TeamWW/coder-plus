@@ -2,6 +2,8 @@ package com.lucifiere.container;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -15,7 +17,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
  * 模板容器
@@ -39,7 +40,7 @@ public class GlobalContext {
 
     @SuppressWarnings("unchecked")
     public <T> T getComponent(Class<T> clazz) {
-        return (T) componentMap.values().stream().filter(c -> Objects.equals(clazz, c.getClazz())).findAny().orElseThrow(() -> new ContainerException("不存在目标类型的组件！"));
+        return (T) componentMap.values().stream().filter(c -> Objects.equals(clazz, c.getClazz())).map(ManagedBeanSpec::getInstant).findAny().orElseThrow(() -> new ContainerException("不存在目标类型的组件！"));
     }
 
     public <T, R> R calByComponent(Class<T> clazz, Function<T, R> function) {
@@ -89,7 +90,11 @@ public class GlobalContext {
     }
 
     private void processGlobalContextAware() {
-
+        componentMap.values().stream().map(ManagedBeanSpec::getInstant).forEach(bean -> {
+            if (bean instanceof GlobalContextAware globalContextAware) {
+                ReflectUtil.invoke(globalContextAware, "setGlobalContext", this);
+            }
+        });
     }
 
     private void registerTemplates(List<TemplateSpec> templates) {
@@ -127,13 +132,19 @@ public class GlobalContext {
     }
 
     private void registerComponents() {
-        Stream.of(config.extractor(), config.exporter(), config.resolver()).forEach(cClass -> {
-            ManagedBeanSpec c = ManagedBeanSpec.of(cClass);
-            componentMap.put(c.getId(), c);
+        Set<Class<?>> clazzSet = ClassManager.getCoderPlusClazz();
+        clazzSet.forEach(clazz -> {
+            var an = AnnotationUtil.getAnnotation(clazz, ManagedBean.class);
+            if (an != null) {
+                ManagedBeanSpec c = ManagedBeanSpec.of(clazz);
+                Optional.of(an.value()).filter(StrUtil::isNotBlank).ifPresent(c::setId);
+                componentMap.put(c.getId(), c);
+            }
         });
     }
 
     private void clear() {
+        StaticLog.error("模板快照 --> {0}, 组件快照 --> {1}, " + JSONUtil.toJsonStr(templateMap), JSONUtil.toJsonStr(componentMap));
         templateMap.clear();
         componentMap.clear();
     }

@@ -20,6 +20,8 @@ public class TemplateSpec {
 
     private String description;
 
+    private boolean isEmbed = false;
+
     public static TemplateSpec of(FileSetting fileSetting, String path, String description) {
         var spec = new TemplateSpec();
         spec.setPath(path);
@@ -66,6 +68,14 @@ public class TemplateSpec {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isEmbed() {
+        return isEmbed;
+    }
+
+    public void setEmbed(boolean embed) {
+        isEmbed = embed;
     }
 
     @Override

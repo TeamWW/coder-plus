@@ -2,16 +2,11 @@ package com.lucifiere.render.freemarker;
 
 import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
-import com.lucifiere.container.ManagedBean;
 import com.lucifiere.model.Model;
 import com.lucifiere.model.TableModel;
 import com.lucifiere.render.View;
 import com.lucifiere.render.views.CodeView;
 
-import static com.lucifiere.model.ModelBuiltInAttr.*;
-import static com.lucifiere.utils.CodeStyle.*;
-
-@ManagedBean
 public class CodeViewRender extends FreemarkerRender {
 
     public CodeViewRender(String templateId) {
@@ -21,15 +16,6 @@ public class CodeViewRender extends FreemarkerRender {
     @Override
     protected void processModelBeforeRender(Model model) {
         super.processModelBeforeRender(model);
-        if (model instanceof TableModel tableModel) {
-            model.addBuiltInAttr(BIZ.key(), ofCamelCode(tableModel.getName()).toString())
-                    .addBuiltInAttr(BIZ_DESC.key(), tableModel.getDesc())
-                    .addBuiltInAttr(BIZ_PREFIX.key(), tableModel.getBizPrefix())
-                    .addBuiltInAttr(CAPTAl_FIRST_BIZ.key(), ofCamelCode(tableModel.getName()).toStyle(NamedStyle.CAP_FIRST).toString())
-                    .addBuiltInAttr(CAMEL_BIZ.key(), ofCamelCode(tableModel.getName()).toString())
-                    .addBuiltInAttr(UNDERLINE_BIZ.key(), ofCamelCode(tableModel.getName()).toString())
-                    .addBuiltInAttr(FIELDS.key(), tableModel.getFields());
-        }
     }
 
     @Override

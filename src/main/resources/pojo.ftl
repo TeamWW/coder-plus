@@ -1,33 +1,35 @@
 import java.util.Date;
 
 /**
-* POJO FOR ${biz-desc}
+* POJO FOR ${_m_comment}
 *
-* Created By @author ${user}
+* Created By @author ${_au}
 * Date ${.now}
 */
-public class ${cf-biz} {
+public class ${_m_cf} {
 
-<#list fs as it>
+<#list _f as filed>
     /**
-    * ${it.comment}
+    * ${filed._f_comment}
     */
-    private ${it.fieldType.javaType} ${it.name};
+    private ${filed._f_jt} ${filed._f_c};
+
 </#list>
 
-<#list fs as it>
+<#list _f as filed>
+
     /**
-    * 【${it.comment}】访问器
+    * 【${filed._f_comment}】访问器
     */
-    public ${it.fieldType.javaType} get${it.cfName}() {
-    return ${it.name};
+    public ${filed._f_jt} get${filed._f_cf}() {
+        return ${filed._f_c};
     }
 
     /**
-    * 【${it.comment}】修改器
+    * 【${filed._f_comment}】修改器
     */
-    public void set${it.cfName}(${it.fieldType.javaType} ${it.name}) {
-    this.${it.name} = ${it.name};
+    public void set${filed._f_cf}(${filed._f_jt} ${filed._f_c}) {
+        this.${filed._f_c} = ${filed._f_c};
     }
 </#list>
 

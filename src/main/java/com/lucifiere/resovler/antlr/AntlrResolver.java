@@ -8,7 +8,6 @@ import com.lucifiere.container.ManagedBean;
 import com.lucifiere.model.Model;
 import com.lucifiere.extract.table.TableField;
 import com.lucifiere.model.TableModel;
-import com.lucifiere.resovler.ResolverReq;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -79,7 +78,18 @@ public class AntlrResolver extends MySqlParserBaseListener {
     }
 
     private String extractContent(ParseTree treeNode) {
-        return treeNode == null ? null : treeNode.getText().toLowerCase();
+        String field = treeNode == null ? null : treeNode.getText().toLowerCase();
+        if (field == null) {
+            return null;
+        }
+        final String fieldDef = "`";
+        if (field.startsWith(fieldDef)) {
+            field = field.substring(1);
+        }
+        if (field.endsWith(fieldDef)) {
+            field = field.substring(0, field.length() - 1);
+        }
+        return field;
     }
 
     @Override
@@ -91,6 +101,7 @@ public class AntlrResolver extends MySqlParserBaseListener {
         MySqlParser.CreateTableContext ctDdlTree = parser.createTable();
         var walker = new ParseTreeWalker();
         var model = new TableModel();
+        this.setTableModel(model);
         walker.walk(this, ctDdlTree);
         return model;
     }

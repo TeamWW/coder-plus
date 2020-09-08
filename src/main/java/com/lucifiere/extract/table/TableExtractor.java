@@ -18,7 +18,7 @@ public class TableExtractor extends AbstractExtractor {
     @Override
     public Model extract() {
         var ddlPath = Joiner.on("/").join(globalContext.getConfig().workspacePath(), globalContext.getConfig().inputPath(), globalContext.getConfig().ddlName());
-        var ddlStr = NioTextFileAccessor.loadText(ddlPath);
+        var ddlStr = NioTextFileAccessor.loadFile(ddlPath);
         var model = globalContext.calByComponent(globalContext.getConfig().resolver(), resolver -> resolver.resolve(ddlStr));
         loadCustomizedAttrs(model);
         return model;

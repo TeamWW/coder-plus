@@ -130,7 +130,6 @@ public class ClassPathScanHandler {
                 // 判断是否过滤 inner class
                 char c = '$';
                 if (this.excludeInner && name.indexOf(c) != -1) {
-                    StaticLog.debug("exclude inner class with name:" + name);
                     continue;
                 }
                 var classSimpleName = name.substring(name.lastIndexOf('/') + 1);
@@ -203,7 +202,6 @@ public class ClassPathScanHandler {
         var filename = file.getName();
         var c = '$';
         if (excludeInner && filename.indexOf(c) != -1) {
-            StaticLog.debug("exclude inner class with name:" + filename);
             return false;
         }
         return filterClassName(filename);

@@ -1,18 +1,13 @@
 package com.lucifiere.render;
 
 import cn.hutool.log.StaticLog;
-import com.lucifiere.container.GlobalContextAware;
 import com.lucifiere.model.Model;
-import com.lucifiere.io.NioTextFileAccessor;
-import com.lucifiere.container.GlobalContext;
 import com.lucifiere.templates.TemplateInstant;
-import com.lucifiere.templates.spec.TemplateSpec;
+import com.lucifiere.utils.GlobalContextHolder;
 
 import java.util.function.Function;
 
-public abstract class AbstractRender implements Render, GlobalContextAware {
-
-    private GlobalContext globalContext;
+public abstract class AbstractRender implements Render {
 
     protected final TemplateInstant template;
 
@@ -26,16 +21,9 @@ public abstract class AbstractRender implements Render, GlobalContextAware {
         this.template = getTemplate(templateId);
     }
 
-    @Override
-    public void setGlobalContext(GlobalContext globalContext) {
-        this.globalContext = globalContext;
-    }
-
     private TemplateInstant getTemplate(String templateId) {
-        var spec = globalContext.getTemplateById(templateId);
-        var templateContent = loadTemplateContent(spec);
+        var spec = GlobalContextHolder.globalContext.getTemplateById(templateId);
         var instant = new TemplateInstant();
-        instant.setContent(templateContent);
         instant.setTemplateSpec(spec);
         return instant;
     }
@@ -44,12 +32,11 @@ public abstract class AbstractRender implements Render, GlobalContextAware {
     public View render(final Model model) {
         processModelBeforeRender(model);
         var content = doRender(model);
-        StaticLog.info("渲染内容 --> {}" + content);
+        if (content == null) {
+            throw new RuntimeException("模板渲染失败！");
+        }
+        StaticLog.info("渲染内容 --> {0}" + content);
         return createView(content, model);
-    }
-
-    private static String loadTemplateContent(TemplateSpec spec) {
-        return NioTextFileAccessor.loadText(spec.getPath());
     }
 
     protected void processModelBeforeRender(Model model) {
