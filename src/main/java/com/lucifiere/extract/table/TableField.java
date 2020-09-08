@@ -28,7 +28,7 @@ public class TableField {
     }
 
     public String getCfName() {
-        return CodeStyle.ofCamelCode(name).toStyle(CodeStyle.NamedStyle.CAP_FIRST).toString();
+        return CodeStyle.ofUlCode(name).toStyle(CodeStyle.NamedStyle.CAMEL).toStyle(CodeStyle.NamedStyle.CAP_FIRST).toString();
     }
 
     public FiledType getType() {

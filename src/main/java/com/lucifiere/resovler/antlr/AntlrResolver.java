@@ -83,10 +83,11 @@ public class AntlrResolver extends MySqlParserBaseListener {
             return null;
         }
         final String fieldDef = "`";
-        if (field.startsWith(fieldDef)) {
+        final String commentDef = "'";
+        if (field.startsWith(fieldDef) || field.startsWith(commentDef)) {
             field = field.substring(1);
         }
-        if (field.endsWith(fieldDef)) {
+        if (field.endsWith(fieldDef) || field.endsWith(commentDef)) {
             field = field.substring(0, field.length() - 1);
         }
         return field;

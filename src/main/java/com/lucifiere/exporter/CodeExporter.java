@@ -7,6 +7,7 @@ import com.lucifiere.container.ManagedBean;
 import com.lucifiere.io.NioTextFileAccessor;
 import com.lucifiere.render.View;
 import com.lucifiere.render.views.CodeView;
+import com.lucifiere.utils.CodeStyle;
 
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class CodeExporter implements Exporter, GlobalContextAware {
 
     private String createFileName(CodeView view) {
         var fileSetting = view.getFileSetting();
-        return fileSetting.getPrefix() + view.getName() + view.getName() + fileSetting.getExt();
+        String fileName = CodeStyle.ofUlCode(view.getName()).toStyle(CodeStyle.NamedStyle.CAMEL).toStyle(CodeStyle.NamedStyle.CAP_FIRST).toString();
+        return fileSetting.getPrefix() + fileName + fileSetting.getExt();
     }
 
     @Override

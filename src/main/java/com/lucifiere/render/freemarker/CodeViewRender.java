@@ -6,6 +6,7 @@ import com.lucifiere.model.Model;
 import com.lucifiere.model.TableModel;
 import com.lucifiere.render.View;
 import com.lucifiere.render.views.CodeView;
+import com.lucifiere.utils.CodeStyle;
 
 public class CodeViewRender extends FreemarkerRender {
 

@@ -2,16 +2,11 @@ package com.lucifiere.io;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.log.StaticLog;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 基于NIO的简易文本工具
