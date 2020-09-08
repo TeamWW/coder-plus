@@ -5,31 +5,31 @@ import com.lucifiere.exporter.CodeExporter;
 import com.lucifiere.extract.table.TableExtractor;
 import com.lucifiere.resovler.antlr.AntlrResolver;
 
-public class DefaultBootstrap extends Bootstrap {
+/**
+ * 预制好组件实现类型的启动器
+ *
+ * @author XD.Wang
+ */
+public class CodeGenerator extends Bootstrap {
 
-    private GlobalConfig.Creator creator = new GlobalConfig.Creator();
+    private final GlobalConfig.Creator creator = new GlobalConfig.Creator();
 
-    public DefaultBootstrap setWorkspacePath(String workspacePath) {
+    public CodeGenerator setWorkspacePath(String workspacePath) {
         creator.setWorkspacePath(workspacePath);
         return this;
     }
 
-    public DefaultBootstrap setInputPath(String inputPath) {
-        creator.setInputPath(inputPath);
+    public CodeGenerator setOutputDir(String outputPath) {
+        creator.setOutputDir(outputPath);
         return this;
     }
 
-    public DefaultBootstrap setOutputPath(String outputPath) {
-        creator.setOutputPath(outputPath);
-        return this;
-    }
-
-    public DefaultBootstrap setDdlName(String ddlName) {
+    public CodeGenerator setDdlName(String ddlName) {
         creator.setDdlName(ddlName);
         return this;
     }
 
-    public DefaultBootstrap setTemplatesPath(String templatesPath) {
+    public CodeGenerator setTemplatesPath(String templatesPath) {
         creator.setTemplatesPath(templatesPath);
         return this;
     }

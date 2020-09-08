@@ -25,7 +25,7 @@ public class CodeExporter implements Exporter, GlobalContextAware {
     @Override
     public void export(List<View> views) {
         checkViewType(views);
-        String outPath = context.getConfig().workspacePath() + "/" + context.getConfig().outputPath();
+        String outPath = context.getConfig().workspacePath() + "/" + context.getConfig().outputDir();
         views.parallelStream().map(view -> (CodeView) view).forEach(view -> NioTextFileAccessor.createFile(view.getContent(), outPath, createFileName(view)));
     }
 

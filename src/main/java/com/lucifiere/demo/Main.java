@@ -1,18 +1,21 @@
 package com.lucifiere.demo;
 
-import com.lucifiere.bootstrap.DefaultBootstrap;
+import com.lucifiere.bootstrap.CodeGenerator;
+import com.lucifiere.templates.embed.BaseTemplatesConfig;
 
 @SuppressWarnings("Duplicates")
 public class Main {
 
+    /**
+     * 使用代码生成器来生成内容时，至少要配置工作目录在哪里，以及sql文件叫什么，sql文件需要放在工作目录文件夹里
+     * 如果要使用你自己定义的模板，需要制定模板位置templatesPath
+     *
+     * @param args args
+     */
     public static void main(String[] args) {
-        var myBootstrap = new DefaultBootstrap();
-        myBootstrap.setDdlName("sda")
-                .setInputPath("31231")
-                .setOutputPath("asdsa")
-                .setTemplatesPath("asdas")
-                .setWorkspacePath("3123");
-        myBootstrap.execute("template1", "template2", "template3");
+        var codeGenerator = new CodeGenerator();
+        codeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
+        codeGenerator.execute(BaseTemplatesConfig.BASE_POJO);
     }
 
 }

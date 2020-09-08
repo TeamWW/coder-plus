@@ -14,8 +14,7 @@ import java.util.Optional;
  */
 public record GlobalConfig(
         String workspacePath,
-        String inputPath,
-        String outputPath,
+        String outputDir,
         String ddlName,
         String templatesConfigScanPath,
         Class<? extends Resolver>resolver,
@@ -24,9 +23,8 @@ public record GlobalConfig(
 
     public GlobalConfig {
         // 可默认的配置
-        this.inputPath = Optional.ofNullable(inputPath).orElse("input");
-        this.outputPath = Optional.ofNullable(outputPath).orElse("output");
-        this.ddlName = Optional.ofNullable(outputPath).orElse("ddl.sql");
+        this.outputDir = Optional.ofNullable(outputDir).orElse("output");
+        this.ddlName = Optional.ofNullable(outputDir).orElse("ddl.sql");
         this.templatesConfigScanPath = Optional.ofNullable(templatesConfigScanPath).orElse(null);
         this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow();
         // 可扩展的配置
@@ -44,8 +42,7 @@ public record GlobalConfig(
     public static class Creator {
 
         private String workspacePath;
-        private String inputPath;
-        private String outputPath;
+        private String outputDir;
         private String ddlName;
         private String templatesPath;
         private Class<? extends Resolver> resolver;
@@ -56,12 +53,8 @@ public record GlobalConfig(
             this.workspacePath = workspacePath;
         }
 
-        public void setInputPath(String inputPath) {
-            this.inputPath = inputPath;
-        }
-
-        public void setOutputPath(String outputPath) {
-            this.outputPath = outputPath;
+        public void setOutputDir(String outputDir) {
+            this.outputDir = outputDir;
         }
 
         public void setDdlName(String ddlName) {
@@ -88,7 +81,7 @@ public record GlobalConfig(
         }
 
         public GlobalConfig init() {
-            return new GlobalConfig(workspacePath, inputPath, outputPath, ddlName, templatesPath, resolver, extractor, exporter);
+            return new GlobalConfig(workspacePath, outputDir, ddlName, templatesPath, resolver, extractor, exporter);
         }
     }
 }

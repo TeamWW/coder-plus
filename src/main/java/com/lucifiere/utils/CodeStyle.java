@@ -64,7 +64,6 @@ public class CodeStyle {
         CONVERT_FUNCTION_SELECTOR.put(new EnumListLocateWrapper(CAP_FIRST, CAMEL), StrUtil::lowerFirst);
     }
 
-
     /**
      * 基本规则：
      * 1 下划线 -> 驼峰

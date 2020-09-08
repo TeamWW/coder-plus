@@ -1,5 +1,6 @@
 package com.lucifiere.bootstrap;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.lucifiere.common.GlobalConfig;
@@ -15,22 +16,30 @@ import com.lucifiere.render.executor.HandlerResponse;
 import java.util.List;
 
 /**
- * 启动类，串联组件逻辑，输入外部设置
+ * 启动器
+ * 根据外部配置串联框架中的各组件，并定义了内容生成的主干逻辑
  *
  * @author XD.Wang
  * Date 2020-8-2.
  */
 public abstract class Bootstrap {
 
+    /**
+     * 基于模板来生成内容
+     *
+     * @param templateIds 模板ID
+     */
     public void execute(String... templateIds) {
-        Preconditions.checkArgument(templateIds != null && templateIds.length > 0, "模板ID不能为空！");
         execute(Lists.newArrayList(templateIds));
     }
 
     /**
-     * 串联组件（基于接口）
+     * 基于模板来生成内容
+     *
+     * @param templateIds 模板ID
      */
     public void execute(List<String> templateIds) {
+        Preconditions.checkArgument(CollectionUtil.isNotEmpty(templateIds), "模板ID不能为空！");
         var config = configureContext();
         contextCheckBeforeExecute(config);
         var context = GlobalContext.create(config);
