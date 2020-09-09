@@ -9,8 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 存放自定义属性值
- * <p>
+ * 业务数据的表示模型
+ *
  * Created By XD.Wang
  * Date：2020-24
  */

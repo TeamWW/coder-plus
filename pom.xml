@@ -58,7 +58,6 @@
                 <configuration>
                     <source>${maven.jdk.version}</source>
                     <target>${maven.jdk.version}</target>
-                    <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

@@ -74,15 +74,15 @@ public class TableModel extends Model {
                 .addBuiltInAttr(MODEL_PREFIX.key(), Optional.ofNullable(bizPrefix).orElse(""))
                 .addBuiltInAttr(MODEL_CAPTAl_FIRST_NAME.key(), ofUlCode(name).toStyle(NamedStyle.CAMEL).toStyle(NamedStyle.CAP_FIRST).toString())
                 .addBuiltInAttr(MODEL_CAMEL_NAME.key(), ofUlCode(name).toStyle(NamedStyle.CAMEL).toString())
-                .addBuiltInAttr(MODEL_UNDERLINE_NAME.key(), ofUlCode(name).toString());
-        addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields).stream().map(f -> {
-            Map<String, Object> fieldsAttrs = Maps.newHashMap();
-            fieldsAttrs.put(FIELD_CAMEL_NAME.key(), ofUlCode(f.getName()).toStyle(NamedStyle.CAMEL).toString());
-            fieldsAttrs.put(FIELD_CAPTAl_FIRST_NAME.key(), f.getCfName());
-            fieldsAttrs.put(FIELD_DESC.key(), Optional.ofNullable(f.getComment()).orElse(""));
-            fieldsAttrs.put(FIELD_J_TYPE.key(), f.getType().getJavaType());
-            return fieldsAttrs;
-        }).collect(Collectors.toList()));
+                .addBuiltInAttr(MODEL_UNDERLINE_NAME.key(), ofUlCode(name).toString())
+                .addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields).stream().map(f -> {
+                    Map<String, Object> fieldsAttrs = Maps.newHashMap();
+                    fieldsAttrs.put(FIELD_CAMEL_NAME.key(), ofUlCode(f.getName()).toStyle(NamedStyle.CAMEL).toString());
+                    fieldsAttrs.put(FIELD_CAPTAl_FIRST_NAME.key(), f.getCfName());
+                    fieldsAttrs.put(FIELD_DESC.key(), Optional.ofNullable(f.getComment()).orElse(""));
+                    fieldsAttrs.put(FIELD_J_TYPE.key(), f.getType().getJavaType());
+                    return fieldsAttrs;
+                }).collect(Collectors.toList()));
         return super.extractAttrs();
     }
 }
