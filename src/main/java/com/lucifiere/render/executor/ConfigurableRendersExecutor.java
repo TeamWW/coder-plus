@@ -76,7 +76,7 @@ public class ConfigurableRendersExecutor {
         boolean isSuccess = false;
         try {
             curHandler.actionBeforeRend(req);
-            isSuccess = curHandler.rend(req, resp);
+            isSuccess = curHandler.render(req, resp);
             curHandler.actionAfterRend(req);
         } catch (ChainExecFailedException e) {
             StaticLog.warn("节点执行失败：" + e.getMessage());

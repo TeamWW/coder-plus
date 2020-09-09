@@ -23,7 +23,7 @@ public class DefaultRenderWrapper extends RenderWrapper {
      * @return 是否执行成功
      */
     @Override
-    protected boolean rend(HandlerRequest req, HandlerResponse resp) {
+    protected boolean render(HandlerRequest req, HandlerResponse resp) {
         View view = render.render(req.getModel());
         resp.addView(view);
         return true;
