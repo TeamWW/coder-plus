@@ -1,13 +1,19 @@
 package com.lucifiere.io;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.URLUtil;
 import cn.hutool.log.StaticLog;
+import com.google.common.base.Charsets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * 基于NIO的简易文本工具
@@ -29,15 +35,32 @@ final public class NioTextFileAccessor {
 
     public static String loadEmbedFile(String fileName) {
         try {
-            URL s = NioTextFileAccessor.class.getClassLoader()
-                    .getResource(fileName.startsWith("/") ? fileName.substring(1) : fileName);
-            assert s != null;
-            Path path = Paths.get(s.getFile());
-            return String.join("\n", Files.readAllLines(path));
-        } catch (IOException e) {
+            URL url = NioTextFileAccessor.class.getClassLoader().getResource(fileName.startsWith("/") ? fileName.substring(1) : fileName);
+            if (url == null) {
+                throw new RuntimeException("embed file not found!" + fileName);
+            }
+            if (URLUtil.isJarURL(url)) {
+                String path = url.getPath();
+                String jarPath = path.substring(0, path.indexOf("!"));
+                JarFile jarFile = URLUtil.getJarFile(URLUtil.url(jarPath));
+                return loadResourceFromJarRoot(jarFile, fileName);
+            } else {
+                Path path = Paths.get(url.getFile());
+                return Files.readString(path);
+            }
+        } catch (Exception e) {
             StaticLog.error("外部文件加载失败！", e);
             throw ExceptionUtil.wrapRuntime(e);
         }
+    }
+
+    private static String loadResourceFromJarRoot(JarFile jar, String resourceName) throws IOException {
+        JarEntry entry = jar.getJarEntry(resourceName);
+        if (entry == null) {
+            throw new RuntimeException("embed jar resource not found!" + resourceName);
+        }
+        InputStream inputStream = jar.getInputStream(entry);
+        return IoUtil.read(inputStream, Charsets.UTF_8);
     }
 
     public static void writeText(String text, String pathStr) {
