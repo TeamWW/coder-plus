@@ -1,7 +1,9 @@
 package com.lucifiere.templates.spec;
 
+import com.google.common.collect.Maps;
 import com.lucifiere.common.FileSetting;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -17,6 +19,8 @@ public class TemplateSpec {
     private FileSetting fileSetting;
 
     private String path;
+
+    private final Map<String, Object> attrs = Maps.newHashMap();
 
     private String description;
 
@@ -76,6 +80,15 @@ public class TemplateSpec {
 
     public void setEmbed(boolean embed) {
         isEmbed = embed;
+    }
+
+    public TemplateSpec addAttr(String name, Object val) {
+        attrs.put(name, val);
+        return this;
+    }
+
+    public Map<String, Object> getAttrs() {
+        return attrs;
     }
 
     @Override

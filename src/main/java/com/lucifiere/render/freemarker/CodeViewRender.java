@@ -6,7 +6,6 @@ import com.lucifiere.model.Model;
 import com.lucifiere.model.TableModel;
 import com.lucifiere.render.View;
 import com.lucifiere.render.views.CodeView;
-import com.lucifiere.utils.CodeStyle;
 
 public class CodeViewRender extends FreemarkerRender {
 
@@ -25,7 +24,7 @@ public class CodeViewRender extends FreemarkerRender {
         Preconditions.checkArgument(model instanceof TableModel);
         CodeView codeView = new CodeView();
         codeView.setContent(content);
-        codeView.setFileSetting(template.getTemplateSpec().getFileSetting());
+        codeView.setFileSetting(templateInstant.getTemplateSpec().getFileSetting());
         TableModel tableModel = (TableModel) model;
         codeView.setName(tableModel.getName());
         return codeView;

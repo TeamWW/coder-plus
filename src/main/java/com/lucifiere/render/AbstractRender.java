@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 public abstract class AbstractRender implements Render {
 
-    protected final TemplateInstant template;
+    protected final TemplateInstant templateInstant;
 
     protected static Function<Model, Model> MODEL_ATTR_PROCESSOR = (m) -> m;
 
@@ -19,7 +19,7 @@ public abstract class AbstractRender implements Render {
     }
 
     public AbstractRender(String templateId) {
-        this.template = getTemplate(templateId);
+        this.templateInstant = getTemplate(templateId);
     }
 
     private TemplateInstant getTemplate(String templateId) {

@@ -18,7 +18,7 @@ public class BaseTemplatesConfig {
     public TemplateSpec pojoTemplate() {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("最基本的POJO");
-        spec.setPath("/pojo.ftl");
+        spec.setPath("/ftl/pojo.ftl");
         spec.setFileSetting(FileSetting.JAVA_FILE);
         return spec;
     }
