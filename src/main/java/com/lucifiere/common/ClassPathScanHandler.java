@@ -84,11 +84,11 @@ public class ClassPathScanHandler {
                 URL url = dirs.nextElement();
                 String protocol = url.getProtocol();
                 if ("file".equals(protocol)) {
-                    StaticLog.debug("扫描file类型的class文件....");
+                    StaticLog.debug("scan file....");
                     String filePath = URLDecoder.decode(url.getFile(), "UTF_8");
                     doScanPackageClassesByFile(classes, packageName, filePath, recursive);
                 } else if ("jar".equals(protocol)) {
-                    StaticLog.debug("扫描jar文件中的类....");
+                    StaticLog.debug("scan jar....");
                     doScanPackageClassesByJar(packageName, url, recursive, classes);
                 }
             }

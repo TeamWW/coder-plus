@@ -36,7 +36,6 @@ public class DefaultRenderWrapper extends RenderWrapper {
      */
     @Override
     protected void actionBeforeRend(HandlerRequest req) {
-        // todo 能做啥
     }
 
     /**
@@ -46,7 +45,6 @@ public class DefaultRenderWrapper extends RenderWrapper {
      */
     @Override
     protected void actionAfterRend(HandlerRequest req) {
-        // todo 能做啥
     }
 
 }

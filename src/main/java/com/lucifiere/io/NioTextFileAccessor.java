@@ -28,7 +28,7 @@ final public class NioTextFileAccessor {
             Path path = Paths.get(pathStr);
             return String.join("\n", Files.readAllLines(path));
         } catch (IOException e) {
-            StaticLog.error("外部文件加载失败！", e);
+            StaticLog.error("external file load failed！", e);
             throw ExceptionUtil.wrapRuntime(e);
         }
     }
@@ -49,7 +49,7 @@ final public class NioTextFileAccessor {
                 return Files.readString(path);
             }
         } catch (Exception e) {
-            StaticLog.error("外部文件加载失败！", e);
+            StaticLog.error("embed file load failed！", e);
             throw ExceptionUtil.wrapRuntime(e);
         }
     }
@@ -68,7 +68,7 @@ final public class NioTextFileAccessor {
             Path path = Paths.get(pathStr);
             Files.write(path, text.getBytes());
         } catch (IOException e) {
-            StaticLog.error("写入外部文件失败！", e);
+            StaticLog.error("external file write failed！", e);
             throw ExceptionUtil.wrapRuntime(e);
         }
     }
@@ -81,7 +81,7 @@ final public class NioTextFileAccessor {
             }
             Files.write(path, text.getBytes());
         } catch (IOException e) {
-            StaticLog.error("写入外部文件失败！", e);
+            StaticLog.error("external file create failed！！", e);
             throw ExceptionUtil.wrapRuntime(e);
         }
     }

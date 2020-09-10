@@ -27,11 +27,11 @@ public class GlobalConfig {
         this.outputDir = Optional.ofNullable(outputDir).orElse("output");
         this.ddlName = Optional.ofNullable(outputDir).orElse("ddl.sql");
         this.templatesConfigScanPath = Optional.ofNullable(templatesConfigScanPath).orElse(null);
-        this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow(() -> new RuntimeException("必须配置工作目录！"));
+        this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow(() -> new RuntimeException("work space required！"));
         // 可扩展的配置
-        this.resolver = Optional.ofNullable(resolver).orElseThrow(() -> new RuntimeException("必须配置文本解析器！"));
-        this.extractor = Optional.ofNullable(extractor).orElseThrow(() -> new RuntimeException("必须配置提取器！"));
-        this.exporter = Optional.ofNullable(exporter).orElseThrow(() -> new RuntimeException("必须配置导出器！"));
+        this.resolver = Optional.ofNullable(resolver).orElseThrow(() -> new RuntimeException("resolver required！！"));
+        this.extractor = Optional.ofNullable(extractor).orElseThrow(() -> new RuntimeException("extractor required！！"));
+        this.exporter = Optional.ofNullable(exporter).orElseThrow(() -> new RuntimeException("exporter required！！"));
     }
 
     public String getWorkspacePath() {

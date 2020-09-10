@@ -8,7 +8,7 @@ package com.lucifiere.render.executor;
  */
 public class ChainExecFailedException extends RuntimeException {
 
-    private static final String DEFAULT_MSG = "失败";
+    private static final String DEFAULT_MSG = "chain execute failed";
 
     private static final String DEFAULT_CODE = "FAILED";
 

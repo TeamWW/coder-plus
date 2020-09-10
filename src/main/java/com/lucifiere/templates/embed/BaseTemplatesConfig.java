@@ -20,6 +20,7 @@ public class BaseTemplatesConfig {
         spec.setDescription("最基本的POJO");
         spec.setPath("/ftl/pojo.ftl");
         spec.setFileSetting(FileSetting.JAVA_FILE);
+        spec.addAttr("xxxx","2132131");
         return spec;
     }
 

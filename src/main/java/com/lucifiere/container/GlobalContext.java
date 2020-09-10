@@ -3,7 +3,6 @@ package com.lucifiere.container;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -84,8 +83,8 @@ public class GlobalContext {
             this.isInit.compareAndSet(false, true);
         } catch (Exception e) {
             clear();
-            StaticLog.error("全局上下文初始化失败！", e);
-            throw new ContainerException("容器初始化失败", e);
+            StaticLog.error("global context init failed！", e);
+            throw new ContainerException("global context init failed！", e);
         }
     }
 
@@ -146,7 +145,6 @@ public class GlobalContext {
     }
 
     private void clear() {
-        StaticLog.error("模板快照 --> {0}, 组件快照 --> {1}, " + JSONUtil.toJsonStr(templateMap), JSONUtil.toJsonStr(componentMap));
         templateMap.clear();
         componentMap.clear();
     }

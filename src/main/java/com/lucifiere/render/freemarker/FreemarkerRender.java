@@ -31,19 +31,19 @@ public abstract class FreemarkerRender extends AbstractRender {
             template.process(dataModel, out);
             return out.toString();
         } catch (TemplateException e) {
-            StaticLog.error("模板操作执行失败！" + e.getMessage(), e);
+            StaticLog.error("freemarker template render failed！" + e.getMessage(), e);
             return null;
         } catch (IOException e) {
-            StaticLog.error("IO操作失败！" + e.getMessage(), e);
+            StaticLog.error("io exception occurred！" + e.getMessage(), e);
             return null;
         } catch (Exception e) {
-            StaticLog.error("执行失败！" + e.getMessage(), e);
+            StaticLog.error("render with fatal error！" + e.getMessage(), e);
             return null;
         } finally {
             try {
                 out.close();
             } catch (IOException e) {
-                StaticLog.error("IO关闭失败！" + e.getMessage(), e);
+                StaticLog.error("io exception occurred！" + e.getMessage(), e);
             }
         }
     }

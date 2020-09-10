@@ -36,7 +36,7 @@ public abstract class Bootstrap {
      * @param templateIds 模板ID
      */
     public void execute(List<String> templateIds) {
-        Preconditions.checkArgument(CollectionUtil.isNotEmpty(templateIds), "模板ID不能为空！");
+        Preconditions.checkArgument(CollectionUtil.isNotEmpty(templateIds), "registered template id required！");
         GlobalConfig config = configureContext();
         contextCheckBeforeExecute(config);
         GlobalContext context = GlobalContext.create(config);
@@ -62,11 +62,11 @@ public abstract class Bootstrap {
     }
 
     private void contextCheckBeforeExecute(GlobalConfig config) {
-        Preconditions.checkNotNull(config, "上下文信息不能为空！");
-        Preconditions.checkNotNull(config.getWorkspacePath(), "工作目录不能为空！");
-        Preconditions.checkNotNull(config.getExporter(), "输出工具不能为空！");
-        Preconditions.checkNotNull(config.getExtractor(), "提取工具不能为空！");
-        Preconditions.checkNotNull(config.getResolver(), "解析工具不能为空！");
+        Preconditions.checkNotNull(config, "global config cant be null！");
+        Preconditions.checkNotNull(config.getWorkspacePath(), "work space path must be set！");
+        Preconditions.checkNotNull(config.getExporter(), "require a exporter！");
+        Preconditions.checkNotNull(config.getExtractor(), "require a extractor！");
+        Preconditions.checkNotNull(config.getResolver(), "require a resolver！");
     }
 
     /**

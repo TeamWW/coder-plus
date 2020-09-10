@@ -79,7 +79,7 @@ public class ConfigurableRendersExecutor {
             isSuccess = curHandler.render(req, resp);
             curHandler.actionAfterRend(req);
         } catch (ChainExecFailedException e) {
-            StaticLog.warn("节点执行失败：" + e.getMessage());
+            StaticLog.warn("render node execute failed：" + e.getMessage());
             if (failedHandleStrategy == FailedHandleStrategy.THROW_EXCEPTION) {
                 throw e;
             }

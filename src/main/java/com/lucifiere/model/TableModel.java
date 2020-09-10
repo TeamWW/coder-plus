@@ -69,12 +69,14 @@ public class TableModel extends Model {
 
     @Override
     public Map<String, Object> extractAttrs() {
+        // extract table attrs
         addBuiltInAttr(MODEL.key(), ofUlCode(name).toStyle(NamedStyle.CAMEL).toString())
                 .addBuiltInAttr(MODEL_DESC.key(), Optional.ofNullable(desc).orElse(""))
                 .addBuiltInAttr(MODEL_PREFIX.key(), Optional.ofNullable(bizPrefix).orElse(""))
                 .addBuiltInAttr(MODEL_CAPTAl_FIRST_NAME.key(), ofUlCode(name).toStyle(NamedStyle.CAMEL).toStyle(NamedStyle.CAP_FIRST).toString())
                 .addBuiltInAttr(MODEL_CAMEL_NAME.key(), ofUlCode(name).toStyle(NamedStyle.CAMEL).toString())
                 .addBuiltInAttr(MODEL_UNDERLINE_NAME.key(), ofUlCode(name).toString())
+                // extract table filed attrs
                 .addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields).stream().map(f -> {
                     Map<String, Object> fieldsAttrs = Maps.newHashMap();
                     fieldsAttrs.put(FIELD_CAMEL_NAME.key(), ofUlCode(f.getName()).toStyle(NamedStyle.CAMEL).toString());
