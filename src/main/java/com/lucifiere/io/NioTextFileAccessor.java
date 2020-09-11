@@ -80,6 +80,7 @@ final public class NioTextFileAccessor {
                 Files.createFile(path);
             }
             Files.write(path, text.getBytes());
+            StaticLog.info("export file -- {} -- completed!", fileName);
         } catch (IOException e) {
             StaticLog.error("external file create failed！！", e);
             throw ExceptionUtil.wrapRuntime(e);

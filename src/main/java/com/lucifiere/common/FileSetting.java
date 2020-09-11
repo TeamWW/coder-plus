@@ -12,11 +12,11 @@ public class FileSetting {
 
     private String suffix;
 
-    private String ext;
+    private String customizedFileName;
 
-    public static final FileSetting EMPTY = of(StrUtil.EMPTY, StrUtil.EMPTY, StrUtil.EMPTY);
+    private FileType fileType;
 
-    public static final FileSetting JAVA_FILE = of(StrUtil.EMPTY, StrUtil.EMPTY, ".java");
+    public static final FileSetting JAVA_FILE = of(StrUtil.EMPTY, StrUtil.EMPTY, StrUtil.EMPTY, FileType.JAVA);
 
     public String getPrefix() {
         return prefix;
@@ -34,19 +34,28 @@ public class FileSetting {
         this.suffix = suffix;
     }
 
-    public String getExt() {
-        return ext;
+    public FileType getFileType() {
+        return fileType;
     }
 
-    public void setExt(String ext) {
-        this.ext = ext;
+    public void setFileType(FileType fileType) {
+        this.fileType = fileType;
     }
 
-    public static FileSetting of(String prefix, String suffix, String ext) {
+    public String getCustomizedFileName() {
+        return customizedFileName;
+    }
+
+    public void setCustomizedFileName(String customizedFileName) {
+        this.customizedFileName = customizedFileName;
+    }
+
+    public static FileSetting of(String prefix, String suffix, String customizedFileName, FileType ext) {
         FileSetting setting = new FileSetting();
-        setting.setExt(ext);
+        setting.setFileType(ext);
         setting.setPrefix(prefix);
         setting.setSuffix(suffix);
+        setting.setCustomizedFileName(customizedFileName);
         return setting;
     }
 

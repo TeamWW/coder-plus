@@ -111,8 +111,8 @@ public class GlobalContext {
     private static final String TEMPLATES_EMBED = "com.lucifiere.templates.embed";
 
     private void registerTemplates() {
-        String customizedTPath = config.getTemplatesConfigScanPath();
-        Set<Class<?>> templates = ClassManager.getClazzByPath(customizedTPath, TEMPLATES_EMBED);
+        String customizedTplPath = config.getTemplatesConfigScanPath();
+        Set<Class<?>> templates = ClassManager.getClazzByPath(customizedTplPath, TEMPLATES_EMBED);
         templates.parallelStream().forEach(clazz -> {
             Templates ts = AnnotationUtil.getAnnotation(clazz, Templates.class);
             if (ts != null && !ts.skip()) {

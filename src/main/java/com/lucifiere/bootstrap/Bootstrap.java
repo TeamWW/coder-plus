@@ -49,7 +49,7 @@ public abstract class Bootstrap {
             context.doWithComponent(config.getExporter(), exporter -> exporter.export(views));
             StaticLog.info("generate content success! check your file at " + context.calByComponent(config.getExporter(), Exporter::getOutputPath));
         } catch (Exception e) {
-            StaticLog.error("generate content failed! ", e);
+            StaticLog.error(e, "generate content failed! ");
         }
     }
 
