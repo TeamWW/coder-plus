@@ -1,6 +1,8 @@
 package com.lucifiere.templates.embed;
 
+import cn.hutool.core.util.StrUtil;
 import com.lucifiere.common.FileSetting;
+import com.lucifiere.common.FileType;
 import com.lucifiere.templates.spec.Template;
 import com.lucifiere.templates.spec.TemplateSpec;
 import com.lucifiere.templates.spec.Templates;
@@ -16,6 +18,8 @@ public class BaseTemplatesConfig {
     private static final String SERVICE_IMPL_TPL_PATH = "/ftl/service-impl.ftl";
 
     private static final String SERVICE_POJO_TPL_PATH = "/ftl/pojo.ftl";
+
+    private static final String SERVICE_EXAMPLE_TPL_PATH = "/ftl/example.ftl";
 
     public static final String POJO = "pojo";
 
@@ -186,6 +190,17 @@ public class BaseTemplatesConfig {
         spec.addAttr("serviceType", "ThriftApiImpl");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
+        return spec;
+    }
+
+    public static final String EXAMPLE = "example";
+
+    @Template(EXAMPLE)
+    public TemplateSpec exampleTemplate() {
+        TemplateSpec spec = new TemplateSpec();
+        spec.setDescription("EXAMPLE");
+        spec.setPath(SERVICE_EXAMPLE_TPL_PATH);
+        spec.setFileSetting(FileSetting.JAVA_FILE);
         return spec;
     }
 }
