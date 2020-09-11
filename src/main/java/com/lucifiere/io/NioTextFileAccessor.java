@@ -46,7 +46,7 @@ final public class NioTextFileAccessor {
                 return loadResourceFromJarRoot(jarFile, fileName);
             } else {
                 Path path = Paths.get(url.getFile());
-                return Files.readString(path);
+                return String.join("\n", Files.readAllLines(path));
             }
         } catch (Exception e) {
             StaticLog.error("embed file load failed！", e);

@@ -11,6 +11,7 @@ import com.lucifiere.render.views.CodeView;
 import com.lucifiere.utils.CodeStyle;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 代码输出工具
@@ -26,8 +27,13 @@ public class CodeExporter implements Exporter, GlobalContextAware {
     @Override
     public void export(List<View> views) {
         checkViewType(views);
-        String outPath = context.getConfig().getWorkspacePath() + "/" + context.getConfig().getOutputDir();
+        String outPath = getOutputPath();
         views.parallelStream().map(view -> (CodeView) view).forEach(view -> NioTextFileAccessor.createFile(view.getContent(), outPath, createFileName(view)));
+    }
+
+    @Override
+    public String getOutputPath() {
+        return context.getConfig().getWorkspacePath() + "/" + context.getConfig().getOutputDir();
     }
 
     private void checkViewType(List<View> views) {

@@ -33,10 +33,11 @@ public abstract class AbstractRender implements Render {
     public View render(final Model model) {
         processModelBeforeRender(model);
         String content = doRender(model);
+        String templateId = templateInstant.getTemplateSpec().getId();
         if (content == null) {
-            throw new RuntimeException("模板渲染失败！");
+            throw new RuntimeException("render template -- " + templateId + " -- failed！");
         }
-        StaticLog.info("渲染内容 --> " + content);
+        StaticLog.info("rendering template -- {} -- completed!", templateId);
         return createView(content, model);
     }
 

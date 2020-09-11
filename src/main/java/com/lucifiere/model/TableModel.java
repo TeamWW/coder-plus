@@ -83,6 +83,7 @@ public class TableModel extends Model {
                     fieldsAttrs.put(FIELD_CAPTAl_FIRST_NAME.key(), f.getCfName());
                     fieldsAttrs.put(FIELD_DESC.key(), Optional.ofNullable(f.getComment()).orElse(""));
                     fieldsAttrs.put(FIELD_J_TYPE.key(), f.getType().getJavaType());
+                    fieldsAttrs.put(FIELD_UNDERLINE_NAME.key(), ofUlCode(f.getName()).toString());
                     return fieldsAttrs;
                 }).collect(Collectors.toList()));
         return super.extractAttrs();

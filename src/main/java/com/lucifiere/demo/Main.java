@@ -3,6 +3,8 @@ package com.lucifiere.demo;
 import com.lucifiere.bootstrap.CodeGenerator;
 import com.lucifiere.templates.embed.BaseTemplatesConfig;
 
+import static com.lucifiere.templates.embed.BaseTemplatesConfig.EXAMPLE;
+
 @SuppressWarnings("Duplicates")
 public class Main {
 
@@ -14,8 +16,8 @@ public class Main {
      */
     public static void main(String[] args) {
         CodeGenerator codeGenerator = new CodeGenerator();
-        codeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
-        codeGenerator.execute(BaseTemplatesConfig.BASE_POJO);
+        codeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wuhuilin/teamWW/coder-plus/sql");
+        codeGenerator.execute(EXAMPLE);
     }
 
 }

@@ -39,7 +39,7 @@ public class GlobalContext {
 
     @SuppressWarnings("unchecked")
     public <T> T getComponent(Class<T> clazz) {
-        return (T) componentMap.values().stream().filter(c -> Objects.equals(clazz, c.getClazz())).map(ManagedBeanSpec::getInstant).findAny().orElseThrow(() -> new ContainerException("不存在目标类型的组件！"));
+        return (T) componentMap.values().stream().filter(c -> Objects.equals(clazz, c.getClazz())).map(ManagedBeanSpec::getInstant).findAny().orElseThrow(() -> new ContainerException("manager bean not found!！"));
     }
 
     public <T, R> R calByComponent(Class<T> clazz, Function<T, R> function) {
@@ -54,7 +54,7 @@ public class GlobalContext {
 
     @SuppressWarnings("unchecked")
     public <T> T getComponent(String id) {
-        return (T) componentMap.values().stream().filter(c -> Objects.equals(id, c.getId())).findAny().orElseThrow(() -> new ContainerException("不存在目标类型的组件！"));
+        return (T) componentMap.values().stream().filter(c -> Objects.equals(id, c.getId())).findAny().orElseThrow(() -> new ContainerException("manager bean not found!！"));
     }
 
     public TemplateSpec getTemplateById(String id) {
