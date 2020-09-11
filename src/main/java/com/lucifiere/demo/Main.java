@@ -16,8 +16,22 @@ public class Main {
      */
     public static void main(String[] args) {
         CodeGenerator codeGenerator = new CodeGenerator();
+<<<<<<< HEAD
         codeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wuhuilin/teamWW/coder-plus/sql");
         codeGenerator.execute(EXAMPLE);
+=======
+        codeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
+        codeGenerator.execute(
+                BaseTemplatesConfig.POJO,
+                BaseTemplatesConfig.VALUE_POJO,
+                BaseTemplatesConfig.DTO_POJO,
+                BaseTemplatesConfig.DOMAIN_POJO,
+                BaseTemplatesConfig.SERVICE,
+                BaseTemplatesConfig.SER_REPOSITORY,
+                BaseTemplatesConfig.SER_MANAGER,
+                BaseTemplatesConfig.SER_THRIFT
+        );
+>>>>>>> df6bb567cac5b109896810ad9b4f7d5cdb557090
     }
 
 }

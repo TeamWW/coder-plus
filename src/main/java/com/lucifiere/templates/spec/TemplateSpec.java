@@ -34,14 +34,6 @@ public class TemplateSpec {
         return spec;
     }
 
-    public static TemplateSpec of(String prefix, String suffix, String ext, String path, String description) {
-        TemplateSpec spec = new TemplateSpec();
-        spec.setPath(path);
-        spec.setDescription(description);
-        spec.setFileSetting(FileSetting.of(prefix, suffix, ext));
-        return spec;
-    }
-
     public String getId() {
         return id;
     }
