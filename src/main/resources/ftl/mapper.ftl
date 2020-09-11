@@ -13,73 +13,48 @@ public interface ${_m_cf}Mapper {
     /**
     * 根据Example查询符合条件的结果列表
     *
-    * @param ${entityName}Example 查询条件
+    * @param ${_m_cf}Example 查询条件
     * @return 结果列表
     */
-List<${capitalFirstEntityName}> select${capitalFirstEntityName}ListByExample(${capitalFirstEntityName} ${entityName}Example);
+    List<${_m_cf}> select${_m_cf}ListByExample(${_m_cf} ${_m}Example);
 
-/**
-* 根据DO参数查询符合条件的结果列表(分页)
-*
-* @param ${entityName} 查询条件
-* @param pageInfo     分页
-* @return 结果列表
-*/
-List<${capitalFirstEntityName}> select${capitalFirstEntityName}ByParamAndPage(@Param("param") ${capitalFirstEntityName} ${entityName}, @Param("pageInfo") PageInfo pageInfo);
+    /**
+    * 根据DO参数查询符合条件的结果列表
+    *
+    * @param ${_m} 查询条件
+    * @return 结果列表
+    */
+    List<${_m_cf}> select${_m_cf}ListByParam(${_m_cf} ${_m});
 
-/**
-* 根据DO参数查询符合条件的结果列表(分页)
-*
-* @param ${entityName} 查询条件
-* @param pageInfo     分页
-* @return 结果列表
-*/
-Long select${capitalFirstEntityName}ListPageCount(@Param("param") ${capitalFirstEntityName} ${entityName}, @Param("pageInfo") PageInfo pageInfo);
+    /**
+    * 根据ID查询符合条件的结果
+    *
+    * @param id 查询条件
+    * @return 结果
+    */
+    ${_m_cf} select${_m_cf}ById(Long id);
 
-/**
-* 根据DO参数查询符合条件的结果列表
-*
-* @param ${entityName} 查询条件
-* @return 结果列表
-*/
-List<${capitalFirstEntityName}> select${capitalFirstEntityName}ListByParam(${capitalFirstEntityName} ${entityName});
+    /**
+    * 单条数据新增
+    *
+    * @param ${_m} 待入库数据
+    * @return 影响行数
+    */
+    Long insert${_m_cf}(${_m_cf} ${_m});
 
-/**
-* 根据ID查询符合条件的结果
-*
-* @param id 查询条件
-* @return 结果
-*/
-${capitalFirstEntityName} select${capitalFirstEntityName}ById(Long id);
+    /**
+    * 根据ID对单条数据更新
+    *
+    * @param ${_m} 待入库数据
+    * @return 影响行数
+    */
+    Long update${_m_cf}ById(${_m_cf} ${_m});
 
-/**
-* 单条数据新增
-*
-* @param ${entityName} 待入库数据
-* @return 影响行数
-*/
-Long insert${capitalFirstEntityName}(${capitalFirstEntityName} ${entityName});
+    /**
+    * 根据主键删除
+    *
+    * @param id 主键
+    */
+    void delete${_m_cf}ById(Long id);
 
-/**
-* 根据ID对单条数据更新
-*
-* @param ${entityName} 待入库数据
-* @return 影响行数
-*/
-Long update${capitalFirstEntityName}ById(${capitalFirstEntityName} ${entityName});
-
-/**
-* 根据主键删除
-*
-* @param id 主键
-*/
-void delete${capitalFirstEntityName}ById(Long id);
-"""
-}
-
-@Override
-protected String tailCode() {
-"""
-}
-"""
 }
