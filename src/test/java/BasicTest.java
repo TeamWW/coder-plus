@@ -13,7 +13,7 @@ public class BasicTest {
         CodeGenerator myBootstrap = new CodeGenerator();
         myBootstrap.setDdlName("ddl.sql")
                 .setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
-        myBootstrap.execute(BaseTemplatesConfig.BASE_POJO);
+        myBootstrap.execute(BaseTemplatesConfig.POJO);
     }
 
 }

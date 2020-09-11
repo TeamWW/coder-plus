@@ -15,7 +15,16 @@ public class Main {
     public static void main(String[] args) {
         CodeGenerator codeGenerator = new CodeGenerator();
         codeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
-        codeGenerator.execute(BaseTemplatesConfig.BASE_POJO);
+        codeGenerator.execute(
+                BaseTemplatesConfig.POJO,
+                BaseTemplatesConfig.VALUE_POJO,
+                BaseTemplatesConfig.DTO_POJO,
+                BaseTemplatesConfig.DOMAIN_POJO,
+                BaseTemplatesConfig.SERVICE,
+                BaseTemplatesConfig.SER_REPOSITORY,
+                BaseTemplatesConfig.SER_MANAGER,
+                BaseTemplatesConfig.SER_THRIFT
+        );
     }
 
 }

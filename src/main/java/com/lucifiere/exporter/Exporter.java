@@ -14,4 +14,6 @@ public interface Exporter {
 
     void export(List<View> views);
 
+    String getOutputPath();
+
 }

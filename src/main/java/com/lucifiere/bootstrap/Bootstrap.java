@@ -1,10 +1,12 @@
 package com.lucifiere.bootstrap;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.log.StaticLog;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.lucifiere.common.GlobalConfig;
 import com.lucifiere.container.GlobalContext;
+import com.lucifiere.exporter.Exporter;
 import com.lucifiere.extract.Extractor;
 import com.lucifiere.model.Model;
 import com.lucifiere.render.View;
@@ -36,13 +38,19 @@ public abstract class Bootstrap {
      * @param templateIds 模板ID
      */
     public void execute(List<String> templateIds) {
-        Preconditions.checkArgument(CollectionUtil.isNotEmpty(templateIds), "registered template id required！");
-        GlobalConfig config = configureContext();
-        contextCheckBeforeExecute(config);
-        GlobalContext context = GlobalContext.create(config);
-        Model model = context.calByComponent(config.getExtractor(), Extractor::extract);
-        List<View> views = renderViews(model, templateIds);
-        context.doWithComponent(config.getExporter(), exporter -> exporter.export(views));
+        try {
+            StaticLog.info("start to generate content, templateId -> {}", templateIds);
+            Preconditions.checkArgument(CollectionUtil.isNotEmpty(templateIds), "registered template id required！");
+            GlobalConfig config = configureContext();
+            contextCheckBeforeExecute(config);
+            GlobalContext context = GlobalContext.create(config);
+            Model model = context.calByComponent(config.getExtractor(), Extractor::extract);
+            List<View> views = renderViews(model, templateIds);
+            context.doWithComponent(config.getExporter(), exporter -> exporter.export(views));
+            StaticLog.info("generate content success! check your file at " + context.calByComponent(config.getExporter(), Exporter::getOutputPath));
+        } catch (Exception e) {
+            StaticLog.error("generate content failed! ", e);
+        }
     }
 
     /**

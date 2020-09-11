@@ -15,7 +15,7 @@ public interface ${_m_cf}${serviceType} {
     * @param ${_m} 查询条件
     * @return 结果列表
     */
-    List<${_m_cf}> query${_m_cf}ListByParam(${_m_cf} ${_m});
+    List<${_m_cf}${serviceOutSuf}> query${_m_cf}ListByParam(${_m_cf}${serviceInSuf} ${_m});
 
     /**
     * 根据ID查询符合条件的结果
@@ -23,7 +23,7 @@ public interface ${_m_cf}${serviceType} {
     * @param id 主键
     * @return 结果
     */
-    ${_m_cf} query${_m_cf}ById(Long id);
+    ${_m_cf}${serviceOutSuf} query${_m_cf}ById(Long id);
 
     /**
     * 单条数据新增
@@ -31,7 +31,7 @@ public interface ${_m_cf}${serviceType} {
     * @param ${_m} 待入库数据
     * @return 影响行数
     */
-    Long insert${_m_cf}(${_m_cf} ${_m});
+    Long insert${_m_cf}(${_m_cf}${serviceInSuf} ${_m});
 
     /**
     * 根据ID对单条数据更新
@@ -39,7 +39,7 @@ public interface ${_m_cf}${serviceType} {
     * @param ${_m} 待入库数据
     * @return 影响行数
     */
-    Long update${_m_cf}ById(${_m_cf} ${_m});
+    Long update${_m_cf}ById(${_m_cf}${serviceInSuf} ${_m});
     
     /**
     * 根据主键删除

@@ -84,11 +84,9 @@ public class ClassPathScanHandler {
                 URL url = dirs.nextElement();
                 String protocol = url.getProtocol();
                 if ("file".equals(protocol)) {
-                    StaticLog.debug("scan file....");
                     String filePath = URLDecoder.decode(url.getFile(), "UTF_8");
                     doScanPackageClassesByFile(classes, packageName, filePath, recursive);
                 } else if ("jar".equals(protocol)) {
-                    StaticLog.debug("scan jar....");
                     doScanPackageClassesByJar(packageName, url, recursive, classes);
                 }
             }
