@@ -1,8 +1,6 @@
 package com.lucifiere.templates.embed;
 
-import cn.hutool.core.util.StrUtil;
 import com.lucifiere.common.FileSetting;
-import com.lucifiere.common.FileType;
 import com.lucifiere.templates.spec.Template;
 import com.lucifiere.templates.spec.TemplateSpec;
 import com.lucifiere.templates.spec.Templates;
@@ -13,6 +11,7 @@ import com.lucifiere.templates.spec.Templates;
  */
 @Templates
 public class BaseTemplatesConfig {
+
     private static final String SERVICE_TPL_PATH = "/ftl/service.ftl";
 
     private static final String SERVICE_IMPL_TPL_PATH = "/ftl/service-impl.ftl";
@@ -29,7 +28,7 @@ public class BaseTemplatesConfig {
         spec.setDescription("POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "");
-        spec.setFileSetting(FileSetting.JAVA_FILE);
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
         return spec;
     }
 
@@ -41,7 +40,7 @@ public class BaseTemplatesConfig {
         spec.setDescription("MODEL_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "Model");
-        spec.setFileSetting(FileSetting.JAVA_FILE);
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
         return spec;
     }
 
@@ -53,7 +52,7 @@ public class BaseTemplatesConfig {
         spec.setDescription("DOMAIN_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "DO");
-        spec.setFileSetting(FileSetting.JAVA_FILE);
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
         return spec;
     }
 
@@ -65,7 +64,7 @@ public class BaseTemplatesConfig {
         spec.setDescription("DOMAIN_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "DTO");
-        spec.setFileSetting(FileSetting.JAVA_FILE);
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
         return spec;
     }
 
@@ -77,7 +76,7 @@ public class BaseTemplatesConfig {
         spec.setDescription("VALUE_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "VO");
-        spec.setFileSetting(FileSetting.JAVA_FILE);
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
         return spec;
     }
 
@@ -88,10 +87,10 @@ public class BaseTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("SERVICE");
         spec.setPath(SERVICE_TPL_PATH);
-        spec.setFileSetting(FileSetting.JAVA_FILE);
         spec.addAttr("serviceType", "Service");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
+        spec.setFileSetting(FileSetting.ofJavaFile("/service/", "", ""));
         return spec;
     }
 
@@ -102,10 +101,10 @@ public class BaseTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("SER_REPOSITORY");
         spec.setPath(SERVICE_TPL_PATH);
-        spec.setFileSetting(FileSetting.JAVA_FILE);
         spec.addAttr("serviceType", "Repository");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
+        spec.setFileSetting(FileSetting.ofJavaFile("/repository/", "", ""));
         return spec;
     }
 
@@ -116,10 +115,10 @@ public class BaseTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("SER_MANAGER");
         spec.setPath(SERVICE_TPL_PATH);
-        spec.setFileSetting(FileSetting.JAVA_FILE);
         spec.addAttr("serviceType", "Manager");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
+        spec.setFileSetting(FileSetting.ofJavaFile("/manager/", "", ""));
         return spec;
     }
 
@@ -130,10 +129,10 @@ public class BaseTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("SER_THRIFT");
         spec.setPath(SERVICE_TPL_PATH);
-        spec.setFileSetting(FileSetting.JAVA_FILE);
         spec.addAttr("serviceType", "ThriftApi");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
+        spec.setFileSetting(FileSetting.ofJavaFile("/api/", "", ""));
         return spec;
     }
 
@@ -142,12 +141,13 @@ public class BaseTemplatesConfig {
     @Template(SERVICE_IMPL)
     public TemplateSpec serviceImplTemplate() {
         TemplateSpec spec = new TemplateSpec();
-        spec.setDescription("SERVICE");
+        spec.setDescription("SERVICE_IMPL");
         spec.setPath(SERVICE_IMPL_TPL_PATH);
-        spec.setFileSetting(FileSetting.JAVA_FILE);
-        spec.addAttr("serviceType", "ServiceImpl");
+        spec.addAttr("subServiceType", "Repository");
+        spec.addAttr("serviceType", "Service");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
+        spec.setFileSetting(FileSetting.ofJavaFile("/service/impl/", "", ""));
         return spec;
     }
 
@@ -158,10 +158,11 @@ public class BaseTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("SER_IMPL_REPOSITORY");
         spec.setPath(SERVICE_IMPL_TPL_PATH);
-        spec.setFileSetting(FileSetting.JAVA_FILE);
-        spec.addAttr("serviceType", "RepositoryImpl");
+        spec.addAttr("subServiceType", "Mapper");
+        spec.addAttr("serviceType", "Repository");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
+        spec.setFileSetting(FileSetting.ofJavaFile("/repository/impl/", "", ""));
         return spec;
     }
 
@@ -172,24 +173,26 @@ public class BaseTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("SER_IMPL_MANAGER");
         spec.setPath(SERVICE_IMPL_TPL_PATH);
-        spec.setFileSetting(FileSetting.JAVA_FILE);
-        spec.addAttr("serviceType", "ManagerImpl");
+        spec.addAttr("serviceType", "Manager");
+        spec.addAttr("subServiceType", "Service");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
+        spec.setFileSetting(FileSetting.ofJavaFile("/manager/impl/", "", ""));
         return spec;
     }
 
     public static final String SER_IMPL_THRIFT = "ser_impl_thrift";
 
     @Template(SER_IMPL_THRIFT)
-    public TemplateSpec managerImplThrift() {
+    public TemplateSpec apiImplTemplate() {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("SER_IMPL_THRIFT");
         spec.setPath(SERVICE_IMPL_TPL_PATH);
-        spec.setFileSetting(FileSetting.JAVA_FILE);
-        spec.addAttr("serviceType", "ThriftApiImpl");
+        spec.addAttr("serviceType", "ThriftApi");
+        spec.addAttr("subServiceType", "Manager");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
+        spec.setFileSetting(FileSetting.ofJavaFile("/api/impl/", "", ""));
         return spec;
     }
 
@@ -203,4 +206,5 @@ public class BaseTemplatesConfig {
         spec.setFileSetting(FileSetting.JAVA_FILE);
         return spec;
     }
+
 }

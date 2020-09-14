@@ -12,11 +12,13 @@ public class FileSetting {
 
     private String suffix;
 
-    private String customizedFileName;
+    private String fileName;
 
     private FileType fileType;
 
-    public static final FileSetting JAVA_FILE = of(StrUtil.EMPTY, StrUtil.EMPTY, StrUtil.EMPTY, FileType.JAVA);
+    private String fileDir;
+
+    public static final FileSetting JAVA_FILE = of(StrUtil.EMPTY, StrUtil.EMPTY, StrUtil.EMPTY, StrUtil.EMPTY, FileType.JAVA);
 
     public String getPrefix() {
         return prefix;
@@ -42,20 +44,39 @@ public class FileSetting {
         this.fileType = fileType;
     }
 
-    public String getCustomizedFileName() {
-        return customizedFileName;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setCustomizedFileName(String customizedFileName) {
-        this.customizedFileName = customizedFileName;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public static FileSetting of(String prefix, String suffix, String customizedFileName, FileType ext) {
+    public String getFileDir() {
+        return fileDir;
+    }
+
+    public void setFileDir(String fileDir) {
+        this.fileDir = fileDir;
+    }
+
+    public static FileSetting of(String prefix, String suffix, String customizedFileName, String fileDir, FileType ext) {
         FileSetting setting = new FileSetting();
         setting.setFileType(ext);
         setting.setPrefix(prefix);
         setting.setSuffix(suffix);
-        setting.setCustomizedFileName(customizedFileName);
+        setting.setFileDir(fileDir);
+        setting.setFileName(customizedFileName);
+        return setting;
+    }
+
+    public static FileSetting ofJavaFile(String fileDir, String prefix, String suffix) {
+        FileSetting setting = new FileSetting();
+        setting.setFileType(FileType.JAVA);
+        setting.setPrefix(prefix);
+        setting.setSuffix(suffix);
+        setting.setFileDir(fileDir);
+        setting.setFileName(StrUtil.EMPTY);
         return setting;
     }
 

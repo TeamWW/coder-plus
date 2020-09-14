@@ -1,8 +1,7 @@
 package com.lucifiere.demo;
 
 import com.lucifiere.bootstrap.CodeGenerator;
-
-import static com.lucifiere.group.embed.BaseGroupsConfig.STANDARD_GROUP;
+import com.lucifiere.templates.embed.BaseTemplatesConfig;
 
 @SuppressWarnings("Duplicates")
 public class Main {
@@ -15,8 +14,21 @@ public class Main {
      */
     public static void main(String[] args) {
         CodeGenerator codeGenerator = new CodeGenerator();
-        codeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wuhuilin/teamWW/coder-plus/sql");
-        codeGenerator.executeByGroup(STANDARD_GROUP);
+        codeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
+        codeGenerator.execute(
+                BaseTemplatesConfig.POJO,
+                BaseTemplatesConfig.VALUE_POJO,
+                BaseTemplatesConfig.DTO_POJO,
+                BaseTemplatesConfig.DOMAIN_POJO,
+                BaseTemplatesConfig.SERVICE,
+                BaseTemplatesConfig.SER_REPOSITORY,
+                BaseTemplatesConfig.SER_MANAGER,
+                BaseTemplatesConfig.SER_THRIFT,
+                BaseTemplatesConfig.SERVICE_IMPL,
+                BaseTemplatesConfig.SER_IMPL_REPOSITORY,
+                BaseTemplatesConfig.SER_IMPL_MANAGER,
+                BaseTemplatesConfig.SER_IMPL_THRIFT
+        );
     }
 
 }
