@@ -34,7 +34,6 @@ public abstract class AbstractRender implements Render {
         processModelBeforeRender(model);
         String templateId = templateInstant.getTemplateSpec().getId();
         String content = doRender(model);
-        String templateId = templateInstant.getTemplateSpec().getId();
         if (content == null) {
             throw new RuntimeException("render template -- " + templateId + " -- failed！");
         }

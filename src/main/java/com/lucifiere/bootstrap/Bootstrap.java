@@ -3,6 +3,7 @@ package com.lucifiere.bootstrap;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.log.StaticLog;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.lucifiere.common.GlobalConfig;
 import com.lucifiere.container.GlobalContext;
@@ -11,6 +12,7 @@ import com.lucifiere.extract.Extractor;
 import com.lucifiere.model.Model;
 import com.lucifiere.render.View;
 import com.lucifiere.render.executor.*;
+import com.lucifiere.utils.JmonitorGlobalContextUtil;
 
 import java.util.List;
 
@@ -30,6 +32,23 @@ public abstract class Bootstrap {
      */
     public void execute(String... templateIds) {
         execute(Lists.newArrayList(templateIds));
+    }
+
+    @SuppressWarnings("Duplicates")
+    public void executeByGroup(String groupId) {
+        try {
+            StaticLog.info("start to generate content, groupId -> {}", groupId);
+            Preconditions.checkArgument(!Strings.isNullOrEmpty(groupId), "registered group id required！");
+            GlobalConfig config = configureContext();
+            contextCheckBeforeExecute(config);
+            GlobalContext context = GlobalContext.create(config);
+            Model model = context.calByComponent(config.getExtractor(), Extractor::extract);
+            List<View> views = renderViews(model, context.getTemplateIdsByGroupId(groupId));
+            context.doWithComponent(config.getExporter(), exporter -> exporter.export(views));
+            StaticLog.info("generate content success! check your file at " + context.calByComponent(config.getExporter(), Exporter::getOutputPath));
+        } catch (Exception e) {
+            StaticLog.error(e, "generate content failed! ");
+        }
     }
 
     /**
