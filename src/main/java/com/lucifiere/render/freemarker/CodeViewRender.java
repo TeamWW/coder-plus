@@ -25,8 +25,7 @@ public class CodeViewRender extends FreemarkerRender {
         CodeView codeView = new CodeView();
         codeView.setContent(content);
         codeView.setFileSetting(templateInstant.getTemplateSpec().getFileSetting());
-        TableModel tableModel = (TableModel) model;
-        codeView.setName(tableModel.getName());
+        codeView.setName(model.getName());
         return codeView;
     }
 

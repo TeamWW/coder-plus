@@ -8,4 +8,6 @@ public interface Cons {
 
     String AUTHOR = "XD.Wang";
 
+    String CUSTOMIZED_MODEL_NAME = "trade";
+
 }

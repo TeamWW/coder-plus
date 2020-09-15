@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public abstract class Model {
 
+    protected String name;
+
     protected LinkedHashMap<String, Object> attrs = Maps.newLinkedHashMap();
 
     public Model addAttr(String attrName, Object attrVal) {
@@ -24,6 +26,14 @@ public abstract class Model {
         Preconditions.checkArgument(!TableModelBuiltInAttr.contain(attrName), "不能使用内建属性名称！");
         attrs.put(attrName, attrVal);
         return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Map<String, Object> getAttrs() {

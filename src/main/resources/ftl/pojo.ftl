@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * POJO FOR ${_m_comment}

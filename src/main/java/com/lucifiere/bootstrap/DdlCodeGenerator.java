@@ -10,26 +10,26 @@ import com.lucifiere.resovler.antlr.AntlrResolver;
  *
  * @author XD.Wang
  */
-public class CodeGenerator extends Bootstrap {
+public class DdlCodeGenerator extends Bootstrap {
 
-    private final GlobalConfig.Creator creator = new GlobalConfig.Creator();
+    protected final GlobalConfig.Creator creator = new GlobalConfig.Creator();
 
-    public CodeGenerator setWorkspacePath(String workspacePath) {
+    public DdlCodeGenerator setWorkspacePath(String workspacePath) {
         creator.setWorkspacePath(workspacePath);
         return this;
     }
 
-    public CodeGenerator setOutputDir(String outputPath) {
+    public DdlCodeGenerator setOutputDir(String outputPath) {
         creator.setOutputDir(outputPath);
         return this;
     }
 
-    public CodeGenerator setDdlName(String ddlName) {
+    public DdlCodeGenerator setDdlName(String ddlName) {
         creator.setDdlName(ddlName);
         return this;
     }
 
-    public CodeGenerator setTemplatesPath(String templatesPath) {
+    public DdlCodeGenerator setTemplatesPath(String templatesPath) {
         creator.setTemplatesPath(templatesPath);
         return this;
     }

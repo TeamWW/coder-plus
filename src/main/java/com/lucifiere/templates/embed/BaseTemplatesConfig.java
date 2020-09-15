@@ -18,6 +18,8 @@ public class BaseTemplatesConfig {
 
     private static final String SERVICE_POJO_TPL_PATH = "/ftl/pojo.ftl";
 
+    private static final String MYBATIS_MAPPER_TPL_PATH = "/ftl/mapper.ftl";
+
     private static final String SERVICE_EXAMPLE_TPL_PATH = "/ftl/example.ftl";
 
     public static final String POJO = "pojo";
@@ -32,14 +34,14 @@ public class BaseTemplatesConfig {
         return spec;
     }
 
-    public static final String MODEL_POJO = "model-pojo";
+    public static final String PO_POJO = "po-pojo";
 
-    @Template(MODEL_POJO)
+    @Template(PO_POJO)
     public TemplateSpec modelTemplate() {
         TemplateSpec spec = new TemplateSpec();
-        spec.setDescription("MODEL_POJO");
+        spec.setDescription("PO-POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
-        spec.addAttr("modelType", "Model");
+        spec.addAttr("modelType", "PO");
         spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
         return spec;
     }
@@ -56,14 +58,14 @@ public class BaseTemplatesConfig {
         return spec;
     }
 
-    public static final String DTO_POJO = "dto-pojo";
+    public static final String PARAM_POJO = "param-pojo";
 
-    @Template(DTO_POJO)
-    public TemplateSpec dtoTemplate() {
+    @Template(PARAM_POJO)
+    public TemplateSpec paramTemplate() {
         TemplateSpec spec = new TemplateSpec();
-        spec.setDescription("DOMAIN_POJO");
+        spec.setDescription("PARAM_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
-        spec.addAttr("modelType", "DTO");
+        spec.addAttr("modelType", "Param");
         spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
         return spec;
     }
@@ -88,8 +90,8 @@ public class BaseTemplatesConfig {
         spec.setDescription("SERVICE");
         spec.setPath(SERVICE_TPL_PATH);
         spec.addAttr("serviceType", "Service");
-        spec.addAttr("serviceOutSuf", "");
-        spec.addAttr("serviceInSuf", "");
+        spec.addAttr("serviceOutSuf", "DO");
+        spec.addAttr("serviceInSuf", "Param");
         spec.setFileSetting(FileSetting.ofJavaFile("/service/", "", ""));
         return spec;
     }
@@ -102,8 +104,8 @@ public class BaseTemplatesConfig {
         spec.setDescription("SER_REPOSITORY");
         spec.setPath(SERVICE_TPL_PATH);
         spec.addAttr("serviceType", "Repository");
-        spec.addAttr("serviceOutSuf", "");
-        spec.addAttr("serviceInSuf", "");
+        spec.addAttr("serviceOutSuf", "PO");
+        spec.addAttr("serviceInSuf", "Param");
         spec.setFileSetting(FileSetting.ofJavaFile("/repository/", "", ""));
         return spec;
     }
@@ -117,7 +119,7 @@ public class BaseTemplatesConfig {
         spec.setPath(SERVICE_TPL_PATH);
         spec.addAttr("serviceType", "Manager");
         spec.addAttr("serviceOutSuf", "");
-        spec.addAttr("serviceInSuf", "");
+        spec.addAttr("serviceInSuf", "Param");
         spec.setFileSetting(FileSetting.ofJavaFile("/manager/", "", ""));
         return spec;
     }
@@ -145,8 +147,8 @@ public class BaseTemplatesConfig {
         spec.setPath(SERVICE_IMPL_TPL_PATH);
         spec.addAttr("subServiceType", "Repository");
         spec.addAttr("serviceType", "Service");
-        spec.addAttr("serviceOutSuf", "");
-        spec.addAttr("serviceInSuf", "");
+        spec.addAttr("serviceOutSuf", "DO");
+        spec.addAttr("serviceInSuf", "Param");
         spec.setFileSetting(FileSetting.ofJavaFile("/service/impl/", "", ""));
         return spec;
     }
@@ -160,8 +162,8 @@ public class BaseTemplatesConfig {
         spec.setPath(SERVICE_IMPL_TPL_PATH);
         spec.addAttr("subServiceType", "Mapper");
         spec.addAttr("serviceType", "Repository");
-        spec.addAttr("serviceOutSuf", "");
-        spec.addAttr("serviceInSuf", "");
+        spec.addAttr("serviceOutSuf", "PO");
+        spec.addAttr("serviceInSuf", "Param");
         spec.setFileSetting(FileSetting.ofJavaFile("/repository/impl/", "", ""));
         return spec;
     }
@@ -193,6 +195,19 @@ public class BaseTemplatesConfig {
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
         spec.setFileSetting(FileSetting.ofJavaFile("/api/impl/", "", ""));
+        return spec;
+    }
+
+    public static final String MYBATIS_MAPPER = "ser_impl_thrift";
+
+    @Template(MYBATIS_MAPPER)
+    public TemplateSpec mapperImplTemplate() {
+        TemplateSpec spec = new TemplateSpec();
+        spec.setDescription("MYBATIS_MAPPER");
+        spec.setPath(MYBATIS_MAPPER_TPL_PATH);
+        spec.addAttr("serviceOutSuf", "PO");
+        spec.addAttr("serviceInSuf", "Param");
+        spec.setFileSetting(FileSetting.ofJavaFile("/mapper/", "", ""));
         return spec;
     }
 

@@ -1,6 +1,7 @@
 package com.lucifiere.demo;
 
-import com.lucifiere.bootstrap.CodeGenerator;
+import com.lucifiere.bootstrap.CustomizedNamedCodeGenerator;
+import com.lucifiere.bootstrap.DdlCodeGenerator;
 import com.lucifiere.templates.embed.BaseTemplatesConfig;
 
 @SuppressWarnings("Duplicates")
@@ -13,12 +14,11 @@ public class Main {
      * @param args args
      */
     public static void main(String[] args) {
-        CodeGenerator codeGenerator = new CodeGenerator();
-        codeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
-        codeGenerator.execute(
-                BaseTemplatesConfig.POJO,
+        CustomizedNamedCodeGenerator ddlCodeGenerator = new CustomizedNamedCodeGenerator();
+        ddlCodeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
+        ddlCodeGenerator.execute(
                 BaseTemplatesConfig.VALUE_POJO,
-                BaseTemplatesConfig.DTO_POJO,
+                BaseTemplatesConfig.PARAM_POJO,
                 BaseTemplatesConfig.DOMAIN_POJO,
                 BaseTemplatesConfig.SERVICE,
                 BaseTemplatesConfig.SER_REPOSITORY,
@@ -26,8 +26,12 @@ public class Main {
                 BaseTemplatesConfig.SER_THRIFT,
                 BaseTemplatesConfig.SERVICE_IMPL,
                 BaseTemplatesConfig.SER_IMPL_REPOSITORY,
-                BaseTemplatesConfig.SER_IMPL_MANAGER,
-                BaseTemplatesConfig.SER_IMPL_THRIFT
+                BaseTemplatesConfig.SER_IMPL_MANAGER
+        );
+        DdlCodeGenerator ddlCodeGenerator1 = new DdlCodeGenerator();
+        ddlCodeGenerator1.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
+        ddlCodeGenerator1.execute(
+                BaseTemplatesConfig.MYBATIS_MAPPER
         );
     }
 

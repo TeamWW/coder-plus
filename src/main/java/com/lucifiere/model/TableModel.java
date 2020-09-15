@@ -22,8 +22,6 @@ import static com.lucifiere.utils.CodeStyle.*;
  */
 public class TableModel extends Model {
 
-    private String name;
-
     private String desc;
 
     private String bizPrefix;
@@ -36,14 +34,6 @@ public class TableModel extends Model {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getBizPrefix() {

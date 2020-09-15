@@ -34,7 +34,6 @@ public abstract class Bootstrap {
         execute(Lists.newArrayList(templateIds));
     }
 
-    @SuppressWarnings("Duplicates")
     public void executeByGroup(String groupId) {
         try {
             StaticLog.info("start to generate content, groupId -> {}", groupId);
