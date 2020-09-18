@@ -13,10 +13,10 @@ public class ${_m_cf}Example {
 
     protected boolean distinct;
 
-    protected List<Criteria> orCriteria;
+    protected List<Criteria> oredCriteria;
 
     public ${_m_cf}Example() {
-        orCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -35,24 +35,24 @@ public class ${_m_cf}Example {
         return distinct;
     }
 
-    public List<Criteria> getOrCriteria() {
-        return orCriteria;
+    public List<Criteria> getOredCriteria() {
+        return oredCriteria;
     }
 
     public void or(Criteria criteria) {
-        orCriteria.add(criteria);
+        oredCriteria.add(criteria);
     }
 
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
-        orCriteria.add(criteria);
+        oredCriteria.add(criteria);
         return criteria;
     }
 
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
-        if (orCriteria.size() == 0) {
-            orCriteria.add(criteria);
+        if (oredCriteria.size() == 0) {
+            oredCriteria.add(criteria);
         }
         return criteria;
     }
@@ -62,7 +62,7 @@ public class ${_m_cf}Example {
     }
 
     public void clear() {
-        orCriteria.clear();
+        oredCriteria.clear();
         orderByClause = null;
         distinct = false;
     }
