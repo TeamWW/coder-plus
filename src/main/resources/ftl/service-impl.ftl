@@ -23,7 +23,7 @@ public class ${_m_cf}${serviceType}Impl implements ${_m_cf}${serviceType} {
      * @return 结果列表
      */
     @Override
-    public List<${_m_cf}> select${_m_cf}ListByParam(${_m_cf} ${_m}) {
+    public List<${_m_cf}${serviceOutSuf}> select${_m_cf}ListByParam(${_m_cf}${serviceInSuf} ${_m}) {
         return ${_m}${subServiceType}.select${_m_cf}ListByParam(${_m});
     }
 
@@ -34,7 +34,7 @@ public class ${_m_cf}${serviceType}Impl implements ${_m_cf}${serviceType} {
      * @return 结果
      */
     @Override
-    public ${_m_cf} select${_m_cf}ById(Long id) {
+    public ${_m_cf}${serviceOutSuf} select${_m_cf}ById(Long id) {
         return ${_m}${subServiceType}.select${_m_cf}ById(id);
     }
 
@@ -45,7 +45,7 @@ public class ${_m_cf}${serviceType}Impl implements ${_m_cf}${serviceType} {
      * @return 影响行数
      */
     @Override
-    public Long insert${_m_cf}(${_m_cf} ${_m}) {
+    public Long insert${_m_cf}(${_m_cf}${serviceInSuf} ${_m}) {
         return ${_m}${subServiceType}.insert${_m_cf}(${_m});
     }
 
@@ -56,7 +56,7 @@ public class ${_m_cf}${serviceType}Impl implements ${_m_cf}${serviceType} {
      * @return 影响行数
      */
     @Override
-    public Long update${_m_cf}ById(${_m_cf} ${_m}) {
+    public Long update${_m_cf}ById(${_m_cf}${serviceInSuf} ${_m}) {
         return ${_m}${subServiceType}.update${_m_cf}ById(${_m});
     }
 

@@ -12,14 +12,6 @@ import org.apache.ibatis.annotations.Param;
 public interface ${_m_cf}Mapper {
 
     /**
-     * 根据Example查询符合条件的结果列表
-     *
-     * @param ${_m_cf}Example 查询条件
-     * @return 结果列表
-     */
-    List<${_m_cf}${serviceOutSuf}> select${_m_cf}ListByExample(${_m_cf}${serviceInSuf} ${_m}Example);
-
-    /**
      * 根据DO参数查询符合条件的结果列表
      *
      * @param ${_m} 查询条件

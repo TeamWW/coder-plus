@@ -12,7 +12,6 @@ import com.lucifiere.extract.Extractor;
 import com.lucifiere.model.Model;
 import com.lucifiere.render.View;
 import com.lucifiere.render.executor.*;
-import com.lucifiere.utils.JmonitorGlobalContextUtil;
 
 import java.util.List;
 

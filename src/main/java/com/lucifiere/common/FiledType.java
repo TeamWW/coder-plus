@@ -29,6 +29,7 @@ public enum FiledType {
     STR_CHAR(String.class.getSimpleName(), "CHAR", "CHAR"),
     STR_VARCHAR(String.class.getSimpleName(), "VARCHAR", "VARCHAR"),
     STR_TEXT(String.class.getSimpleName(), "TEXT", "VARCHAR"),
+    LONG_TEXT(String.class.getSimpleName(), "LONGTEXT", "VARCHAR"),
     BYTE_BLOB(Byte[].class.getSimpleName(), "BLOB", "BLOB");
 
     private final String javaType;

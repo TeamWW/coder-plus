@@ -34,50 +34,50 @@ public class BaseTemplatesConfig {
         return spec;
     }
 
-    public static final String PO_POJO = "po-pojo";
+    public static final String DO_POJO = "do_pojo";
 
-    @Template(PO_POJO)
+    @Template(DO_POJO)
     public TemplateSpec modelTemplate() {
         TemplateSpec spec = new TemplateSpec();
-        spec.setDescription("PO-POJO");
-        spec.setPath(SERVICE_POJO_TPL_PATH);
-        spec.addAttr("modelType", "PO");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
-        return spec;
-    }
-
-    public static final String DOMAIN_POJO = "domain-pojo";
-
-    @Template(DOMAIN_POJO)
-    public TemplateSpec domainTemplate() {
-        TemplateSpec spec = new TemplateSpec();
-        spec.setDescription("DOMAIN_POJO");
+        spec.setDescription("DO-POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "DO");
         spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
         return spec;
     }
 
-    public static final String PARAM_POJO = "param-pojo";
+    public static final String BIZ_POJO = "biz-pojo";
 
-    @Template(PARAM_POJO)
-    public TemplateSpec paramTemplate() {
+    @Template(BIZ_POJO)     
+    public TemplateSpec bizTemplate() {
         TemplateSpec spec = new TemplateSpec();
-        spec.setDescription("PARAM_POJO");
+        spec.setDescription("BIZ_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
-        spec.addAttr("modelType", "Param");
+        spec.addAttr("modelType", "BO");
         spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
         return spec;
     }
 
-    public static final String VALUE_POJO = "vo-pojo";
+    public static final String QUERY_POJO = "query_pojo";
 
-    @Template(VALUE_POJO)
-    public TemplateSpec voTemplate() {
+    @Template(QUERY_POJO)
+    public TemplateSpec queryTemplate() {
         TemplateSpec spec = new TemplateSpec();
-        spec.setDescription("VALUE_POJO");
+        spec.setDescription("QUERY_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
-        spec.addAttr("modelType", "VO");
+        spec.addAttr("modelType", "Query");
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
+        return spec;
+    }
+
+    public static final String DTO_POJO = "dto-pojo";
+
+    @Template(DTO_POJO)
+    public TemplateSpec dtoTemplate() {
+        TemplateSpec spec = new TemplateSpec();
+        spec.setDescription("DTO_POJO");
+        spec.setPath(SERVICE_POJO_TPL_PATH);
+        spec.addAttr("modelType", "DTO");
         spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
         return spec;
     }
@@ -90,8 +90,8 @@ public class BaseTemplatesConfig {
         spec.setDescription("SERVICE");
         spec.setPath(SERVICE_TPL_PATH);
         spec.addAttr("serviceType", "Service");
-        spec.addAttr("serviceOutSuf", "DO");
-        spec.addAttr("serviceInSuf", "Param");
+        spec.addAttr("serviceOutSuf", "BO");
+        spec.addAttr("serviceInSuf", "Query");
         spec.setFileSetting(FileSetting.ofJavaFile("/service/", "", ""));
         return spec;
     }
@@ -104,8 +104,8 @@ public class BaseTemplatesConfig {
         spec.setDescription("SER_REPOSITORY");
         spec.setPath(SERVICE_TPL_PATH);
         spec.addAttr("serviceType", "Repository");
-        spec.addAttr("serviceOutSuf", "PO");
-        spec.addAttr("serviceInSuf", "Param");
+        spec.addAttr("serviceOutSuf", "DO");
+        spec.addAttr("serviceInSuf", "Query");
         spec.setFileSetting(FileSetting.ofJavaFile("/repository/", "", ""));
         return spec;
     }
@@ -118,23 +118,9 @@ public class BaseTemplatesConfig {
         spec.setDescription("SER_MANAGER");
         spec.setPath(SERVICE_TPL_PATH);
         spec.addAttr("serviceType", "Manager");
-        spec.addAttr("serviceOutSuf", "");
-        spec.addAttr("serviceInSuf", "Param");
+        spec.addAttr("serviceOutSuf", "DTO");
+        spec.addAttr("serviceInSuf", "Query");
         spec.setFileSetting(FileSetting.ofJavaFile("/manager/", "", ""));
-        return spec;
-    }
-
-    public static final String SER_THRIFT = "ser_thrift";
-
-    @Template(SER_THRIFT)
-    public TemplateSpec thriftTemplate() {
-        TemplateSpec spec = new TemplateSpec();
-        spec.setDescription("SER_THRIFT");
-        spec.setPath(SERVICE_TPL_PATH);
-        spec.addAttr("serviceType", "ThriftApi");
-        spec.addAttr("serviceOutSuf", "");
-        spec.addAttr("serviceInSuf", "");
-        spec.setFileSetting(FileSetting.ofJavaFile("/api/", "", ""));
         return spec;
     }
 
@@ -147,8 +133,8 @@ public class BaseTemplatesConfig {
         spec.setPath(SERVICE_IMPL_TPL_PATH);
         spec.addAttr("subServiceType", "Repository");
         spec.addAttr("serviceType", "Service");
-        spec.addAttr("serviceOutSuf", "DO");
-        spec.addAttr("serviceInSuf", "Param");
+        spec.addAttr("serviceOutSuf", "BO");
+        spec.addAttr("serviceInSuf", "Query");
         spec.setFileSetting(FileSetting.ofJavaFile("/service/impl/", "", ""));
         return spec;
     }
@@ -162,8 +148,8 @@ public class BaseTemplatesConfig {
         spec.setPath(SERVICE_IMPL_TPL_PATH);
         spec.addAttr("subServiceType", "Mapper");
         spec.addAttr("serviceType", "Repository");
-        spec.addAttr("serviceOutSuf", "PO");
-        spec.addAttr("serviceInSuf", "Param");
+        spec.addAttr("serviceOutSuf", "DO");
+        spec.addAttr("serviceInSuf", "Query");
         spec.setFileSetting(FileSetting.ofJavaFile("/repository/impl/", "", ""));
         return spec;
     }
@@ -177,8 +163,8 @@ public class BaseTemplatesConfig {
         spec.setPath(SERVICE_IMPL_TPL_PATH);
         spec.addAttr("serviceType", "Manager");
         spec.addAttr("subServiceType", "Service");
-        spec.addAttr("serviceOutSuf", "");
-        spec.addAttr("serviceInSuf", "");
+        spec.addAttr("serviceOutSuf", "DTO");
+        spec.addAttr("serviceInSuf", "Req");
         spec.setFileSetting(FileSetting.ofJavaFile("/manager/impl/", "", ""));
         return spec;
     }
@@ -205,8 +191,8 @@ public class BaseTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("MYBATIS_MAPPER");
         spec.setPath(MYBATIS_MAPPER_TPL_PATH);
-        spec.addAttr("serviceOutSuf", "PO");
-        spec.addAttr("serviceInSuf", "Param");
+        spec.addAttr("serviceOutSuf", "DO");
+        spec.addAttr("serviceInSuf", "Query");
         spec.setFileSetting(FileSetting.ofJavaFile("/mapper/", "", ""));
         return spec;
     }

@@ -17,13 +17,13 @@ public class Main {
         CustomizedNamedCodeGenerator ddlCodeGenerator = new CustomizedNamedCodeGenerator();
         ddlCodeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
         ddlCodeGenerator.execute(
-                BaseTemplatesConfig.VALUE_POJO,
-                BaseTemplatesConfig.PARAM_POJO,
-                BaseTemplatesConfig.DOMAIN_POJO,
+                BaseTemplatesConfig.DTO_POJO,
+                BaseTemplatesConfig.QUERY_POJO,
+                BaseTemplatesConfig.BIZ_POJO,
+                BaseTemplatesConfig.DO_POJO,
                 BaseTemplatesConfig.SERVICE,
                 BaseTemplatesConfig.SER_REPOSITORY,
                 BaseTemplatesConfig.SER_MANAGER,
-                BaseTemplatesConfig.SER_THRIFT,
                 BaseTemplatesConfig.SERVICE_IMPL,
                 BaseTemplatesConfig.SER_IMPL_REPOSITORY,
                 BaseTemplatesConfig.SER_IMPL_MANAGER
@@ -31,6 +31,8 @@ public class Main {
         DdlCodeGenerator ddlCodeGenerator1 = new DdlCodeGenerator();
         ddlCodeGenerator1.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
         ddlCodeGenerator1.execute(
+                BaseTemplatesConfig.QUERY_POJO,
+                BaseTemplatesConfig.DO_POJO,
                 BaseTemplatesConfig.MYBATIS_MAPPER
         );
     }
