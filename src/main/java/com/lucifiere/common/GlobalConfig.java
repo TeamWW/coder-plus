@@ -12,25 +12,60 @@ import java.util.Optional;
  * @author created by XD.Wang
  * Date 2020/7/12.
  */
-public record GlobalConfig(
-        String workspacePath,
-        String outputDir,
-        String ddlName,
-        String templatesConfigScanPath,
-        Class<? extends Resolver>resolver,
-        Class<? extends Extractor>extractor,
-        Class<? extends Exporter>exporter) {
+public class GlobalConfig {
 
-    public GlobalConfig {
+    private final String workspacePath;
+    private final String outputDir;
+    private final String ddlName;
+    private final String templatesConfigScanPath;
+    private final String groupsConfigScanPath;
+    private final Class<? extends Resolver> resolver;
+    private final Class<? extends Extractor> extractor;
+    private final Class<? extends Exporter> exporter;
+
+    public GlobalConfig(String workspacePath, String outputDir, String ddlName, String templatesConfigScanPath, Class<? extends Resolver> resolver, Class<? extends Extractor> extractor, Class<? extends Exporter> exporter, String groupsConfigScanPath) {
         // 可默认的配置
         this.outputDir = Optional.ofNullable(outputDir).orElse("output");
         this.ddlName = Optional.ofNullable(outputDir).orElse("ddl.sql");
         this.templatesConfigScanPath = Optional.ofNullable(templatesConfigScanPath).orElse(null);
-        this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow();
+        this.groupsConfigScanPath = Optional.ofNullable(groupsConfigScanPath).orElse(null);
+        this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow(() -> new RuntimeException("work space required！"));
         // 可扩展的配置
-        this.resolver = Optional.ofNullable(resolver).orElseThrow();
-        this.extractor = Optional.ofNullable(extractor).orElseThrow();
-        this.exporter = Optional.ofNullable(exporter).orElseThrow();
+        this.resolver = Optional.ofNullable(resolver).orElseThrow(() -> new RuntimeException("resolver required！！"));
+        this.extractor = Optional.ofNullable(extractor).orElseThrow(() -> new RuntimeException("extractor required！！"));
+        this.exporter = Optional.ofNullable(exporter).orElseThrow(() -> new RuntimeException("exporter required！！"));
+    }
+
+    public String getWorkspacePath() {
+        return workspacePath;
+    }
+
+    public String getOutputDir() {
+        return outputDir;
+    }
+
+    public String getDdlName() {
+        return ddlName;
+    }
+
+    public String getTemplatesConfigScanPath() {
+        return templatesConfigScanPath;
+    }
+
+    public String getGroupsConfigScanPath() {
+        return groupsConfigScanPath;
+    }
+
+    public Class<? extends Resolver> getResolver() {
+        return resolver;
+    }
+
+    public Class<? extends Extractor> getExtractor() {
+        return extractor;
+    }
+
+    public Class<? extends Exporter> getExporter() {
+        return exporter;
     }
 
     /**
@@ -45,6 +80,7 @@ public record GlobalConfig(
         private String outputDir;
         private String ddlName;
         private String templatesPath;
+        private String groupsConfigScanPath;
         private Class<? extends Resolver> resolver;
         private Class<? extends Extractor> extractor;
         private Class<? extends Exporter> exporter;
@@ -80,8 +116,12 @@ public record GlobalConfig(
             return this;
         }
 
+        public void setGroupsConfigScanPath(String groupsConfigScanPath) {
+            this.groupsConfigScanPath = groupsConfigScanPath;
+        }
+
         public GlobalConfig init() {
-            return new GlobalConfig(workspacePath, outputDir, ddlName, templatesPath, resolver, extractor, exporter);
+            return new GlobalConfig(workspacePath, outputDir, ddlName, templatesPath, resolver, extractor, exporter, groupsConfigScanPath);
         }
     }
 }

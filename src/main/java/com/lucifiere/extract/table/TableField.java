@@ -60,7 +60,7 @@ public class TableField {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        var that = (TableField) o;
+        TableField that = (TableField) o;
         return Objects.equals(name, that.name) &&
                 type == that.type &&
                 Objects.equals(comment, that.comment);

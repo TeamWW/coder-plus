@@ -1,7 +1,9 @@
 package com.lucifiere.templates.spec;
 
+import com.google.common.collect.Maps;
 import com.lucifiere.common.FileSetting;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -18,23 +20,17 @@ public class TemplateSpec {
 
     private String path;
 
+    private final Map<String, Object> attrs = Maps.newHashMap();
+
     private String description;
 
     private boolean isEmbed = false;
 
     public static TemplateSpec of(FileSetting fileSetting, String path, String description) {
-        var spec = new TemplateSpec();
+        TemplateSpec spec = new TemplateSpec();
         spec.setPath(path);
         spec.setDescription(description);
         spec.setFileSetting(fileSetting);
-        return spec;
-    }
-
-    public static TemplateSpec of(String prefix, String suffix, String ext, String path, String description) {
-        var spec = new TemplateSpec();
-        spec.setPath(path);
-        spec.setDescription(description);
-        spec.setFileSetting(FileSetting.of(prefix, suffix, ext));
         return spec;
     }
 
@@ -78,11 +74,20 @@ public class TemplateSpec {
         isEmbed = embed;
     }
 
+    public TemplateSpec addAttr(String name, Object val) {
+        attrs.put(name, val);
+        return this;
+    }
+
+    public Map<String, Object> getAttrs() {
+        return attrs;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        var that = (TemplateSpec) o;
+        TemplateSpec that = (TemplateSpec) o;
         return Objects.equals(id, that.id);
     }
 

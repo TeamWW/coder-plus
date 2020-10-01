@@ -1,17 +1,17 @@
 package com.lucifiere.bootstrap;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.log.StaticLog;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.lucifiere.common.GlobalConfig;
 import com.lucifiere.container.GlobalContext;
+import com.lucifiere.exporter.Exporter;
 import com.lucifiere.extract.Extractor;
 import com.lucifiere.model.Model;
 import com.lucifiere.render.View;
-import com.lucifiere.render.executor.CodeRendersChainManager;
-import com.lucifiere.render.executor.ConfigurableRendersExecutor;
-import com.lucifiere.render.executor.HandlerRequest;
-import com.lucifiere.render.executor.HandlerResponse;
+import com.lucifiere.render.executor.*;
 
 import java.util.List;
 
@@ -33,19 +33,41 @@ public abstract class Bootstrap {
         execute(Lists.newArrayList(templateIds));
     }
 
+    public void executeByGroup(String groupId) {
+        try {
+            StaticLog.info("start to generate content, groupId -> {}", groupId);
+            Preconditions.checkArgument(!Strings.isNullOrEmpty(groupId), "registered group id required！");
+            GlobalConfig config = configureContext();
+            contextCheckBeforeExecute(config);
+            GlobalContext context = GlobalContext.create(config);
+            Model model = context.calByComponent(config.getExtractor(), Extractor::extract);
+            List<View> views = renderViews(model, context.getTemplateIdsByGroupId(groupId));
+            context.doWithComponent(config.getExporter(), exporter -> exporter.export(views));
+            StaticLog.info("generate content success! check your file at " + context.calByComponent(config.getExporter(), Exporter::getOutputPath));
+        } catch (Exception e) {
+            StaticLog.error(e, "generate content failed! ");
+        }
+    }
+
     /**
      * 基于模板来生成内容
      *
      * @param templateIds 模板ID
      */
     public void execute(List<String> templateIds) {
-        Preconditions.checkArgument(CollectionUtil.isNotEmpty(templateIds), "模板ID不能为空！");
-        var config = configureContext();
-        contextCheckBeforeExecute(config);
-        var context = GlobalContext.create(config);
-        var model = context.calByComponent(config.extractor(), Extractor::extract);
-        var views = renderViews(model, templateIds);
-        context.doWithComponent(config.exporter(), exporter -> exporter.export(views));
+        try {
+            StaticLog.info("start to generate content, templateId -> {}", templateIds);
+            Preconditions.checkArgument(CollectionUtil.isNotEmpty(templateIds), "registered template id required！");
+            GlobalConfig config = configureContext();
+            contextCheckBeforeExecute(config);
+            GlobalContext context = GlobalContext.create(config);
+            Model model = context.calByComponent(config.getExtractor(), Extractor::extract);
+            List<View> views = renderViews(model, templateIds);
+            context.doWithComponent(config.getExporter(), exporter -> exporter.export(views));
+            StaticLog.info("generate content success! check your file at " + context.calByComponent(config.getExporter(), Exporter::getOutputPath));
+        } catch (Exception e) {
+            StaticLog.error(e, "generate content failed! ");
+        }
     }
 
     /**
@@ -55,21 +77,21 @@ public abstract class Bootstrap {
      * @return 模型
      */
     private List<View> renderViews(Model model, List<String> templateIds) {
-        var renderHeader = CodeRendersChainManager.getManager().chaining(templateIds);
-        var rendersExecutor = new ConfigurableRendersExecutor(renderHeader);
-        var req = new HandlerRequest();
+        RenderWrapper renderHeader = CodeRendersChainManager.getManager().chaining(templateIds);
+        ConfigurableRendersExecutor rendersExecutor = new ConfigurableRendersExecutor(renderHeader);
+        HandlerRequest req = new HandlerRequest();
         req.setModel(model);
-        var resp = new HandlerResponse();
+        HandlerResponse resp = new HandlerResponse();
         rendersExecutor.execute(req, resp);
         return resp.getViews();
     }
 
     private void contextCheckBeforeExecute(GlobalConfig config) {
-        Preconditions.checkNotNull(config, "上下文信息不能为空！");
-        Preconditions.checkNotNull(config.workspacePath(), "工作目录不能为空！");
-        Preconditions.checkNotNull(config.exporter(), "输出工具不能为空！");
-        Preconditions.checkNotNull(config.extractor(), "提取工具不能为空！");
-        Preconditions.checkNotNull(config.resolver(), "解析工具不能为空！");
+        Preconditions.checkNotNull(config, "global config cant be null！");
+        Preconditions.checkNotNull(config.getWorkspacePath(), "work space path must be set！");
+        Preconditions.checkNotNull(config.getExporter(), "require a exporter！");
+        Preconditions.checkNotNull(config.getExtractor(), "require a extractor！");
+        Preconditions.checkNotNull(config.getResolver(), "require a resolver！");
     }
 
     /**

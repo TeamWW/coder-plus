@@ -12,11 +12,13 @@ public class FileSetting {
 
     private String suffix;
 
-    private String ext;
+    private String fileName;
 
-    public static final FileSetting EMPTY = of(StrUtil.EMPTY, StrUtil.EMPTY, StrUtil.EMPTY);
+    private FileType fileType;
 
-    public static final FileSetting JAVA_FILE = of(StrUtil.EMPTY, StrUtil.EMPTY, ".java");
+    private String fileDir;
+
+    public static final FileSetting JAVA_FILE = of(StrUtil.EMPTY, StrUtil.EMPTY, StrUtil.EMPTY, StrUtil.EMPTY, FileType.JAVA);
 
     public String getPrefix() {
         return prefix;
@@ -34,19 +36,47 @@ public class FileSetting {
         this.suffix = suffix;
     }
 
-    public String getExt() {
-        return ext;
+    public FileType getFileType() {
+        return fileType;
     }
 
-    public void setExt(String ext) {
-        this.ext = ext;
+    public void setFileType(FileType fileType) {
+        this.fileType = fileType;
     }
 
-    public static FileSetting of(String prefix, String suffix, String ext) {
-        var setting = new FileSetting();
-        setting.setExt(ext);
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileDir() {
+        return fileDir;
+    }
+
+    public void setFileDir(String fileDir) {
+        this.fileDir = fileDir;
+    }
+
+    public static FileSetting of(String prefix, String suffix, String customizedFileName, String fileDir, FileType ext) {
+        FileSetting setting = new FileSetting();
+        setting.setFileType(ext);
         setting.setPrefix(prefix);
         setting.setSuffix(suffix);
+        setting.setFileDir(fileDir);
+        setting.setFileName(customizedFileName);
+        return setting;
+    }
+
+    public static FileSetting ofJavaFile(String fileDir, String prefix, String suffix) {
+        FileSetting setting = new FileSetting();
+        setting.setFileType(FileType.JAVA);
+        setting.setPrefix(prefix);
+        setting.setSuffix(suffix);
+        setting.setFileDir(fileDir);
+        setting.setFileName(StrUtil.EMPTY);
         return setting;
     }
 

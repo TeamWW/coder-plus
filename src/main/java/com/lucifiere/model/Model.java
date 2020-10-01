@@ -9,12 +9,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 存放自定义属性值
- * <p>
+ * 业务数据的表示模型
+ *
  * Created By XD.Wang
  * Date：2020-24
  */
 public abstract class Model {
+
+    protected String name;
 
     protected LinkedHashMap<String, Object> attrs = Maps.newLinkedHashMap();
 
@@ -24,6 +26,14 @@ public abstract class Model {
         Preconditions.checkArgument(!TableModelBuiltInAttr.contain(attrName), "不能使用内建属性名称！");
         attrs.put(attrName, attrVal);
         return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Map<String, Object> getAttrs() {

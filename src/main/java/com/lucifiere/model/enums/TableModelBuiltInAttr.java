@@ -36,25 +36,29 @@ public enum TableModelBuiltInAttr {
      */
     MODEL_UNDERLINE_NAME("_m_u"),
     /**
-     * 业务实体域
+     * 属性
      */
     FIELD("_f"),
     /**
-     * 业务实体域-驼峰
+     * 属性名称-驼峰
      */
     FIELD_CAMEL_NAME("_f_c"),
     /**
-     * 业务实体域-首字母大写
+     * 属性名称-首字母大写
      */
     FIELD_CAPTAl_FIRST_NAME("_f_cf"),
     /**
-     * 业务实体域-字段说明
+     * 属性名称-字段说明
      */
     FIELD_DESC("_f_comment"),
     /**
-     * 业务实体域的java类型
+     * 属性的java类型
      */
     FIELD_J_TYPE("_f_jt"),
+    /**
+     * 属性名称-下划线
+     */
+    FIELD_UNDERLINE_NAME("_f_u"),
     ;
 
     private final String key;

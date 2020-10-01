@@ -9,6 +9,7 @@ import com.lucifiere.model.Model;
 import com.lucifiere.extract.table.TableField;
 import com.lucifiere.model.TableModel;
 import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -52,8 +53,8 @@ public class AntlrResolver extends MySqlParserBaseListener {
 
     @Override
     public void enterColumnDeclaration(MySqlParser.ColumnDeclarationContext ctx) {
-        var currentFiled = getCursor();
-        var nameNode = ctx.getChild(MySqlParser.UidContext.class, 0);
+        TableField currentFiled = getCursor();
+        ParseTree nameNode = ctx.getChild(MySqlParser.UidContext.class, 0);
         currentFiled.setName(extractContent(nameNode));
     }
 
@@ -65,11 +66,11 @@ public class AntlrResolver extends MySqlParserBaseListener {
 
     @Override
     public void enterColumnDefinition(MySqlParser.ColumnDefinitionContext ctx) {
-        var currentFiled = getCursor();
-        var dataTypeNode = ctx.getChild(MySqlParser.DataTypeContext.class, 0);
-        var dataTypeNameNode = dataTypeNode.getChild(0);
+        TableField currentFiled = getCursor();
+        ParseTree dataTypeNode = ctx.getChild(MySqlParser.DataTypeContext.class, 0);
+        ParseTree dataTypeNameNode = dataTypeNode.getChild(0);
         Optional.ofNullable(dataTypeNameNode).ifPresent(node -> currentFiled.setType(FiledType.getBySqlType(extractContent(node))));
-        var commentNode = ctx.getChild(MySqlParser.CommentColumnConstraintContext.class, 0);
+        ParseTree commentNode = ctx.getChild(MySqlParser.CommentColumnConstraintContext.class, 0);
         Optional.ofNullable(commentNode).ifPresent(node -> currentFiled.setComment(extractContent(node.getChild(1))));
     }
 
@@ -95,13 +96,13 @@ public class AntlrResolver extends MySqlParserBaseListener {
 
     @Override
     public Model resolve(String sourceCode) {
-        var input = CharStreams.fromString(sourceCode.toUpperCase());
-        var lexer = new MySqlLexer(input);
-        var tokens = new CommonTokenStream(lexer);
-        var parser = new MySqlParser(tokens);
+        CodePointCharStream input = CharStreams.fromString(sourceCode.toUpperCase());
+        MySqlLexer lexer = new MySqlLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        MySqlParser parser = new MySqlParser(tokens);
         MySqlParser.CreateTableContext ctDdlTree = parser.createTable();
-        var walker = new ParseTreeWalker();
-        var model = new TableModel();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        TableModel model = new TableModel();
         this.setTableModel(model);
         walker.walk(this, ctDdlTree);
         return model;

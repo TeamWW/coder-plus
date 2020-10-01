@@ -6,7 +6,6 @@ import com.lucifiere.model.Model;
 import com.lucifiere.model.TableModel;
 import com.lucifiere.render.View;
 import com.lucifiere.render.views.CodeView;
-import com.lucifiere.utils.CodeStyle;
 
 public class CodeViewRender extends FreemarkerRender {
 
@@ -23,11 +22,10 @@ public class CodeViewRender extends FreemarkerRender {
     protected View createView(String content, Model model) {
         Preconditions.checkArgument(StrUtil.isNotBlank(content));
         Preconditions.checkArgument(model instanceof TableModel);
-        var codeView = new CodeView();
+        CodeView codeView = new CodeView();
         codeView.setContent(content);
-        codeView.setFileSetting(template.getTemplateSpec().getFileSetting());
-        var tableModel = (TableModel) model;
-        codeView.setName(tableModel.getName());
+        codeView.setFileSetting(templateInstant.getTemplateSpec().getFileSetting());
+        codeView.setName(model.getName());
         return codeView;
     }
 

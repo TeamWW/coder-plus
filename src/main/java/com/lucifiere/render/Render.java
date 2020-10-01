@@ -14,7 +14,6 @@ public interface Render {
      * 渲染
      *
      * @param model
-     * @param template
      * @return
      */
     View render(Model model);

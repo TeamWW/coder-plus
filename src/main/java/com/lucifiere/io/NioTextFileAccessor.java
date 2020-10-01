@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -24,10 +25,10 @@ final public class NioTextFileAccessor {
 
     public static String loadFile(String pathStr) {
         try {
-            var path = Paths.get(pathStr);
-            return Files.readString(path);
+            Path path = Paths.get(pathStr);
+            return String.join("\n", Files.readAllLines(path));
         } catch (IOException e) {
-            StaticLog.error("外部文件加载失败！", e);
+            StaticLog.error("external file load failed！", e);
             throw ExceptionUtil.wrapRuntime(e);
         }
     }
@@ -44,11 +45,11 @@ final public class NioTextFileAccessor {
                 JarFile jarFile = URLUtil.getJarFile(URLUtil.url(jarPath));
                 return loadResourceFromJarRoot(jarFile, fileName);
             } else {
-                var path = Paths.get(url.getFile());
-                return Files.readString(path);
+                Path path = Paths.get(url.getFile());
+                return String.join("\n", Files.readAllLines(path));
             }
         } catch (Exception e) {
-            StaticLog.error("外部文件加载失败！", e);
+            StaticLog.error("embed file load failed！", e);
             throw ExceptionUtil.wrapRuntime(e);
         }
     }
@@ -64,23 +65,24 @@ final public class NioTextFileAccessor {
 
     public static void writeText(String text, String pathStr) {
         try {
-            var path = Paths.get(pathStr);
+            Path path = Paths.get(pathStr);
             Files.write(path, text.getBytes());
         } catch (IOException e) {
-            StaticLog.error("写入外部文件失败！", e);
+            StaticLog.error("external file write failed！", e);
             throw ExceptionUtil.wrapRuntime(e);
         }
     }
 
     public static void createFile(String text, String pathStr, String fileName) {
         try {
-            var path = Paths.get(pathStr + "/" + fileName);
+            Path path = Paths.get(pathStr + "/" + fileName);
             if (!Files.exists(path)) {
                 Files.createFile(path);
             }
             Files.write(path, text.getBytes());
+            StaticLog.info("export file -- {} -- completed!", fileName);
         } catch (IOException e) {
-            StaticLog.error("写入外部文件失败！", e);
+            StaticLog.error("external file create failed！！", e);
             throw ExceptionUtil.wrapRuntime(e);
         }
     }

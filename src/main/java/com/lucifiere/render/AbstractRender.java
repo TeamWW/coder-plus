@@ -3,13 +3,14 @@ package com.lucifiere.render;
 import cn.hutool.log.StaticLog;
 import com.lucifiere.model.Model;
 import com.lucifiere.templates.TemplateInstant;
+import com.lucifiere.templates.spec.TemplateSpec;
 import com.lucifiere.utils.GlobalContextHolder;
 
 import java.util.function.Function;
 
 public abstract class AbstractRender implements Render {
 
-    protected final TemplateInstant template;
+    protected final TemplateInstant templateInstant;
 
     protected static Function<Model, Model> MODEL_ATTR_PROCESSOR = (m) -> m;
 
@@ -18,12 +19,12 @@ public abstract class AbstractRender implements Render {
     }
 
     public AbstractRender(String templateId) {
-        this.template = getTemplate(templateId);
+        this.templateInstant = getTemplate(templateId);
     }
 
     private TemplateInstant getTemplate(String templateId) {
-        var spec = GlobalContextHolder.globalContext.getTemplateById(templateId);
-        var instant = new TemplateInstant();
+        TemplateSpec spec = GlobalContextHolder.globalContext.getTemplateById(templateId);
+        TemplateInstant instant = new TemplateInstant();
         instant.setTemplateSpec(spec);
         return instant;
     }
@@ -31,11 +32,12 @@ public abstract class AbstractRender implements Render {
     @Override
     public View render(final Model model) {
         processModelBeforeRender(model);
-        var content = doRender(model);
+        String templateId = templateInstant.getTemplateSpec().getId();
+        String content = doRender(model);
         if (content == null) {
-            throw new RuntimeException("模板渲染失败！");
+            throw new RuntimeException("render template -- " + templateId + " -- failed！");
         }
-        StaticLog.info("渲染内容 --> " + content);
+        StaticLog.info("rendering template -- {} -- completed!", templateId);
         return createView(content, model);
     }
 

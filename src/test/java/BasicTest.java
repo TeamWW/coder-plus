@@ -1,4 +1,4 @@
-import com.lucifiere.bootstrap.CodeGenerator;
+import com.lucifiere.bootstrap.DdlCodeGenerator;
 import com.lucifiere.templates.embed.BaseTemplatesConfig;
 import org.junit.Test;
 
@@ -10,10 +10,10 @@ public class BasicTest {
 
     @Test
     public void testBootstrap() {
-        var myBootstrap = new CodeGenerator();
+        DdlCodeGenerator myBootstrap = new DdlCodeGenerator();
         myBootstrap.setDdlName("ddl.sql")
                 .setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
-        myBootstrap.execute(BaseTemplatesConfig.BASE_POJO);
+        myBootstrap.execute(BaseTemplatesConfig.POJO);
     }
 
 }

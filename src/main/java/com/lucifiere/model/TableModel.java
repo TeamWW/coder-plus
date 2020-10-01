@@ -22,8 +22,6 @@ import static com.lucifiere.utils.CodeStyle.*;
  */
 public class TableModel extends Model {
 
-    private String name;
-
     private String desc;
 
     private String bizPrefix;
@@ -36,14 +34,6 @@ public class TableModel extends Model {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getBizPrefix() {
@@ -69,18 +59,21 @@ public class TableModel extends Model {
 
     @Override
     public Map<String, Object> extractAttrs() {
+        // extract table attrs
         addBuiltInAttr(MODEL.key(), ofUlCode(name).toStyle(NamedStyle.CAMEL).toString())
                 .addBuiltInAttr(MODEL_DESC.key(), Optional.ofNullable(desc).orElse(""))
                 .addBuiltInAttr(MODEL_PREFIX.key(), Optional.ofNullable(bizPrefix).orElse(""))
                 .addBuiltInAttr(MODEL_CAPTAl_FIRST_NAME.key(), ofUlCode(name).toStyle(NamedStyle.CAMEL).toStyle(NamedStyle.CAP_FIRST).toString())
                 .addBuiltInAttr(MODEL_CAMEL_NAME.key(), ofUlCode(name).toStyle(NamedStyle.CAMEL).toString())
                 .addBuiltInAttr(MODEL_UNDERLINE_NAME.key(), ofUlCode(name).toString())
+                // extract table filed attrs
                 .addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields).stream().map(f -> {
-                    var fieldsAttrs = Maps.newHashMap();
+                    Map<String, Object> fieldsAttrs = Maps.newHashMap();
                     fieldsAttrs.put(FIELD_CAMEL_NAME.key(), ofUlCode(f.getName()).toStyle(NamedStyle.CAMEL).toString());
                     fieldsAttrs.put(FIELD_CAPTAl_FIRST_NAME.key(), f.getCfName());
                     fieldsAttrs.put(FIELD_DESC.key(), Optional.ofNullable(f.getComment()).orElse(""));
                     fieldsAttrs.put(FIELD_J_TYPE.key(), f.getType().getJavaType());
+                    fieldsAttrs.put(FIELD_UNDERLINE_NAME.key(), ofUlCode(f.getName()).toString());
                     return fieldsAttrs;
                 }).collect(Collectors.toList()));
         return super.extractAttrs();
