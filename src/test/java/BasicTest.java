@@ -1,5 +1,5 @@
-import com.lucifiere.bootstrap.DdlCodeGenerator;
-import com.lucifiere.templates.embed.BaseTemplatesConfig;
+import com.dlin.bootstrap.DdlCodeGenerator;
+import com.dlin.templates.embed.BaseTemplatesConfig;
 import org.junit.Test;
 
 /**

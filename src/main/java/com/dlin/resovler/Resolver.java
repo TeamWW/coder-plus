@@ -1,0 +1,15 @@
+package com.dlin.resovler;
+
+import com.dlin.model.Model;
+
+/**
+ * 属性值解析工具
+ *
+ * @author XD.Wang
+ * Date 2020-7-25.
+ */
+public interface Resolver {
+
+    Model resolve(String sourceCode);
+
+}
