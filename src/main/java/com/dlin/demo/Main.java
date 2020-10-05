@@ -31,7 +31,7 @@ public class Main {
         DdlCodeGenerator ddlCodeGenerator1 = new DdlCodeGenerator();
         ddlCodeGenerator1.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
         ddlCodeGenerator1.execute(
-                BaseTemplatesConfig.QUERY_POJO,
+                BaseTemplatesConfig.MYBATIS_XML_MAPPER,
                 BaseTemplatesConfig.DO_POJO,
                 BaseTemplatesConfig.MYBATIS_MAPPER
         );

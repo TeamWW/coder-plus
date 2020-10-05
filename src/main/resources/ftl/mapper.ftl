@@ -1,6 +1,8 @@
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import ${_base_pk}.model.${_m_cf}${serviceInSuf}
+import ${_base_pk}.model.${_m_cf}${serviceOutSuf}
 
 /**
  * Mapper FOR ${_m_comment}
@@ -34,6 +36,14 @@ public interface ${_m_cf}Mapper {
      * @return 影响行数
      */
     Long insert${_m_cf}(${_m_cf}${serviceInSuf} ${_m});
+
+    /**
+     * 批量数据新增
+     *
+     * @param ${_m} 待入库数据
+     * @return 影响行数
+     */
+    Long batchInsert${_m_cf}(${_m_cf}${serviceInSuf} ${_m});
 
     /**
      * 根据ID对单条数据更新

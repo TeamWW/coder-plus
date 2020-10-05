@@ -152,7 +152,7 @@ public class GlobalContext {
         });
     }
 
-    private static String GROUPS_EMBED = "com.dlin.group.embed";
+    private static final String GROUPS_EMBED = "com.dlin.group.embed";
 
     private void registerGroups() {
         String customizedTplPath = config.getGroupsConfigScanPath();

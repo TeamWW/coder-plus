@@ -20,6 +20,8 @@ public class BaseTemplatesConfig {
 
     private static final String MYBATIS_MAPPER_TPL_PATH = "/ftl/mapper.ftl";
 
+    private static final String MYBATIS_MAPPER_XML_TPL_PATH = "/ftl/mapper-xml.ftl";
+
     private static final String SERVICE_EXAMPLE_TPL_PATH = "/ftl/example.ftl";
 
     public static final String POJO = "pojo";
@@ -30,7 +32,7 @@ public class BaseTemplatesConfig {
         spec.setDescription("POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/"));
         return spec;
     }
 
@@ -42,19 +44,19 @@ public class BaseTemplatesConfig {
         spec.setDescription("DO-POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "DO");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/"));
         return spec;
     }
 
     public static final String BIZ_POJO = "biz-pojo";
 
-    @Template(BIZ_POJO)     
+    @Template(BIZ_POJO)
     public TemplateSpec bizTemplate() {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("BIZ_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "BO");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/"));
         return spec;
     }
 
@@ -66,7 +68,7 @@ public class BaseTemplatesConfig {
         spec.setDescription("QUERY_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/"));
         return spec;
     }
 
@@ -78,7 +80,7 @@ public class BaseTemplatesConfig {
         spec.setDescription("DTO_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "DTO");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/model/"));
         return spec;
     }
 
@@ -92,7 +94,7 @@ public class BaseTemplatesConfig {
         spec.addAttr("serviceType", "Service");
         spec.addAttr("serviceOutSuf", "BO");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/service/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/service/"));
         return spec;
     }
 
@@ -106,7 +108,7 @@ public class BaseTemplatesConfig {
         spec.addAttr("serviceType", "Repository");
         spec.addAttr("serviceOutSuf", "DO");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/repository/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/repository/"));
         return spec;
     }
 
@@ -120,7 +122,7 @@ public class BaseTemplatesConfig {
         spec.addAttr("serviceType", "Manager");
         spec.addAttr("serviceOutSuf", "DTO");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/manager/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/manager/"));
         return spec;
     }
 
@@ -135,7 +137,7 @@ public class BaseTemplatesConfig {
         spec.addAttr("serviceType", "Service");
         spec.addAttr("serviceOutSuf", "BO");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/service/impl/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/service/impl/"));
         return spec;
     }
 
@@ -150,7 +152,7 @@ public class BaseTemplatesConfig {
         spec.addAttr("serviceType", "Repository");
         spec.addAttr("serviceOutSuf", "DO");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/repository/impl/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/repository/impl/"));
         return spec;
     }
 
@@ -165,7 +167,7 @@ public class BaseTemplatesConfig {
         spec.addAttr("subServiceType", "Service");
         spec.addAttr("serviceOutSuf", "DTO");
         spec.addAttr("serviceInSuf", "Req");
-        spec.setFileSetting(FileSetting.ofJavaFile("/manager/impl/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/manager/impl/"));
         return spec;
     }
 
@@ -180,20 +182,31 @@ public class BaseTemplatesConfig {
         spec.addAttr("subServiceType", "Manager");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
-        spec.setFileSetting(FileSetting.ofJavaFile("/api/impl/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/api/impl/"));
         return spec;
     }
 
-    public static final String MYBATIS_MAPPER = "ser_impl_thrift";
+    public static final String MYBATIS_MAPPER = "mybatis_mapper_thrift";
 
     @Template(MYBATIS_MAPPER)
-    public TemplateSpec mapperImplTemplate() {
+    public TemplateSpec mapperTemplate() {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("MYBATIS_MAPPER");
         spec.setPath(MYBATIS_MAPPER_TPL_PATH);
         spec.addAttr("serviceOutSuf", "DO");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/mapper/", "", ""));
+        spec.setFileSetting(FileSetting.ofJavaFile("/mapper/"));
+        return spec;
+    }
+
+    public static final String MYBATIS_XML_MAPPER = "mybatis_mapper_xml_thrift";
+
+    @Template(MYBATIS_XML_MAPPER)
+    public TemplateSpec mapperXmlTemplate() {
+        TemplateSpec spec = new TemplateSpec();
+        spec.setDescription("MYBATIS_XML_MAPPER");
+        spec.setPath(MYBATIS_MAPPER_XML_TPL_PATH);
+        spec.setFileSetting(FileSetting.ofMyBatisXmlFile("/mapper/gen/", "", "Mapper.xml"));
         return spec;
     }
 
@@ -204,7 +217,7 @@ public class BaseTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("EXAMPLE");
         spec.setPath(SERVICE_EXAMPLE_TPL_PATH);
-        spec.setFileSetting(FileSetting.JAVA_FILE);
+        spec.setFileSetting(FileSetting.ofJavaFile("/example/"));
         return spec;
     }
 

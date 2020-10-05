@@ -12,7 +12,11 @@ public enum BaseBuiltInAttr {
     /**
      * 作者
      */
-    BASE_AUTHOR("_au");
+    BASE_AUTHOR("_au"),
+    /**
+     * 用户包路径
+     */
+    BASE_PACKAGE("_base_pk");
 
     private final String key;
 
