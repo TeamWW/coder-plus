@@ -1,4 +1,6 @@
 import java.util.List;
+import ${_base_pk}.model.${_m_cf}${serviceInSuf}
+import ${_base_pk}.model.${_m_cf}${serviceOutSuf}
 
 /**
  * ${serviceType} FOR ${_m_comment}

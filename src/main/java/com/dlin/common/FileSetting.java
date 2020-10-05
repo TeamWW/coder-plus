@@ -70,9 +70,19 @@ public class FileSetting {
         return setting;
     }
 
-    public static FileSetting ofJavaFile(String fileDir, String prefix, String suffix) {
+    public static FileSetting ofJavaFile(String fileDir) {
         FileSetting setting = new FileSetting();
         setting.setFileType(FileType.JAVA);
+        setting.setPrefix(StrUtil.EMPTY);
+        setting.setSuffix(StrUtil.EMPTY);
+        setting.setFileDir(fileDir);
+        setting.setFileName(StrUtil.EMPTY);
+        return setting;
+    }
+
+    public static FileSetting ofMyBatisXmlFile(String fileDir, String prefix, String suffix) {
+        FileSetting setting = new FileSetting();
+        setting.setFileType(FileType.MYBATIS_XML);
         setting.setPrefix(prefix);
         setting.setSuffix(suffix);
         setting.setFileDir(fileDir);

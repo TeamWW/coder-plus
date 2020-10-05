@@ -1,5 +1,6 @@
 package com.dlin.exporter;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Preconditions;
 import com.dlin.common.FileSetting;
@@ -40,7 +41,7 @@ public class CodeExporter implements Exporter, GlobalContextAware {
             if (StrUtil.isNotBlank(view.getFileSetting().getFileDir())) {
                 Path path = Paths.get(getOutputPath() + view.getFileSetting().getFileDir());
                 if (!Files.exists(path)) {
-                    Files.createDirectory(path);
+                    FileUtil.mkdir(FileUtil.newFile(getOutputPath() + view.getFileSetting().getFileDir()));
                 }
             }
             NioTextFileAccessor.createFile(view.getContent(), outPath, createFilePath(view));

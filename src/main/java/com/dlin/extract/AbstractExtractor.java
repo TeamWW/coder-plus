@@ -1,11 +1,12 @@
 package com.dlin.extract;
 
+import com.dlin.model.loader.PropertiesAttrLoader;
 import com.google.common.collect.Lists;
 import com.dlin.container.GlobalContext;
 import com.dlin.container.GlobalContextAware;
 import com.dlin.model.Model;
 import com.dlin.model.loader.ModelAttrLoader;
-import com.dlin.model.loader.UserAttrLoader;
+import com.dlin.model.loader.DefaultGlobalAttrLoader;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public abstract class AbstractExtractor implements Extractor, GlobalContextAware
     }
 
     private final List<ModelAttrLoader> modelAttrLoaderList = Lists.newArrayList(
-            new UserAttrLoader()
+            PropertiesAttrLoader.getLoader()
     );
 
     protected void loadCustomizedAttrs(Model model) {

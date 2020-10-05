@@ -1,5 +1,7 @@
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ${_base_pk}.model.${_m_cf}${serviceInSuf}
+import ${_base_pk}.model.${_m_cf}${serviceOutSuf}
 
 import java.util.List;
 

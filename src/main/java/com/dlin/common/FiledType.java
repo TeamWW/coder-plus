@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public enum FiledType {
 
-    NUM_TINYINT(Short.class.getSimpleName(), "TINYINT", "TINYINT"),
+    NUM_TINYINT(Integer.class.getSimpleName(), "TINYINT", "TINYINT"),
     NUM_SMALLINT(Integer.class.getSimpleName(), "SMALLINT", "SMALLINT"),
     NUM_MEDIUMINT(Integer.class.getSimpleName(), "MEDIUMINT", "INTEGER"),
     NUM_INT(Integer.class.getSimpleName(), "INT", "INTEGER"),
