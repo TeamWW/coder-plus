@@ -13,7 +13,7 @@ public abstract class DefaultGlobalAttrLoader implements ModelAttrLoader {
 
     public static final String DEFAULT_AUTHOR = "XD.Wang";
 
-    public static final String DEFAULT_CUSTOMIZED_MODEL_NAME = "record";
+    public static final String DEFAULT_CUSTOMIZED_MODEL_NAME = null;
 
     public static final String DEFAULT_BASE_PACKAGE = "com.sankuai.meituan.waimai.service.decoration.domain";
 

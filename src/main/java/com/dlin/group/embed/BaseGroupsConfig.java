@@ -4,7 +4,7 @@ import com.dlin.group.spec.Group;
 import com.dlin.group.spec.GroupSpec;
 import com.dlin.group.spec.Groups;
 
-import static com.dlin.templates.embed.BaseTemplatesConfig.*;
+import static com.dlin.templates.embed.EmbedTemplates.*;
 
 /**
  * @author created by wuhuilin
@@ -19,7 +19,7 @@ public class BaseGroupsConfig {
     public GroupSpec standardGroup() {
         GroupSpec g = new GroupSpec();
         g.addTemplate(EXAMPLE);
-        g.addTemplate(POJO);
+        g.addTemplate(MODEL);
         return g;
     }
 }

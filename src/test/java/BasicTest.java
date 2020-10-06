@@ -1,5 +1,6 @@
 import com.dlin.bootstrap.DdlCodeGenerator;
-import com.dlin.templates.embed.BaseTemplatesConfig;
+import com.dlin.templates.embed.BaseModelTemplatesConfig;
+import com.dlin.templates.embed.EmbedTemplates;
 import org.junit.Test;
 
 /**
@@ -13,7 +14,7 @@ public class BasicTest {
         DdlCodeGenerator myBootstrap = new DdlCodeGenerator();
         myBootstrap.setDdlName("ddl.sql")
                 .setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
-        myBootstrap.execute(BaseTemplatesConfig.POJO);
+        myBootstrap.execute(EmbedTemplates.MODEL);
     }
 
 }
