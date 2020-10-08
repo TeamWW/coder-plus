@@ -36,7 +36,7 @@ public class ${_m_cf}${serviceType}Impl implements ${_m_cf}${serviceType} {
      * @return 结果
      */
     @Override
-    public ${_m_cf}${serviceOutSuf} select${_m_cf}ById(Long id) {
+    public ${_m_cf}${serviceOutSuf} select${_m_cf}ById(${_pk._f_jt} id) {
         return ${_m}${subServiceType}.select${_m_cf}ById(id);
     }
 
@@ -68,7 +68,7 @@ public class ${_m_cf}${serviceType}Impl implements ${_m_cf}${serviceType} {
      * @param id 主键
      */
     @Override
-    public void delete${_m_cf}ById(Long id) {
+    public void delete${_m_cf}ById(${_pk._f_jt} id) {
         ${_m}${subServiceType}.delete${_m_cf}ById(id);
     }
 

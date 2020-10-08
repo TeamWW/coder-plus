@@ -25,7 +25,7 @@ public interface ${_m_cf}${serviceType} {
      * @param id 主键
      * @return 结果
      */
-    ${_m_cf}${serviceOutSuf} select${_m_cf}ById(Long id);
+    ${_m_cf}${serviceOutSuf} select${_m_cf}ById(${_pk._f_jt} id);
 
     /**
      * 单条数据新增
@@ -48,6 +48,6 @@ public interface ${_m_cf}${serviceType} {
      *
      * @param id 主键
      */
-    void delete${_m_cf}ById(Long id);
+    void delete${_m_cf}ById(${_pk._f_jt} id);
 
 }

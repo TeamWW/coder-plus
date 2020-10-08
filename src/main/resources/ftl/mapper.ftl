@@ -1,5 +1,4 @@
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 import ${_base_pk}.model.${_m_cf}${serviceInSuf}
 import ${_base_pk}.model.${_m_cf}${serviceOutSuf}
@@ -27,7 +26,7 @@ public interface ${_m_cf}Mapper {
      * @param id 查询条件
      * @return 结果
      */
-    ${_m_cf}${serviceOutSuf} select${_m_cf}ById(Long id);
+    ${_m_cf}${serviceOutSuf} select${_m_cf}ById(${_pk._f_jt} id);
 
     /**
      * 单条数据新增
@@ -58,6 +57,6 @@ public interface ${_m_cf}Mapper {
      *
      * @param id 主键
      */
-    void delete${_m_cf}ById(Long id);
+    void delete${_m_cf}ById(${_pk._f_jt} id);
 
 }

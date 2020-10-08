@@ -4,14 +4,14 @@ import java.util.*;
 import java.util.function.Function;
 
 /**
- * 映射工具类
+ * 简单工具
  *
  * @author XD.Wang
  * Date 2017/3/31.
  */
-final public class MyMapUtils {
+final public class CommonUtils {
 
-    private MyMapUtils() {
+    private CommonUtils() {
     }
 
     public static <K, V> Map<K, List<V>> multiGroupBy(List<V> list, Function<V, K> func) {
@@ -37,4 +37,12 @@ final public class MyMapUtils {
         }
         return Collections.emptyMap();
     }
+
+    public static <V> V getOne(Collection<V> c) {
+        if (c == null || c.size() == 0) {
+            return null;
+        }
+        return c.stream().findFirst().orElse(null);
+    }
+
 }

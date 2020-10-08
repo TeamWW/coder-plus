@@ -75,10 +75,23 @@ public class AntlrResolver extends MySqlParserBaseListener {
     }
 
     @Override
-    public void exitColumnDefinition(MySqlParser.ColumnDefinitionContext ctx) {
+    public void enterTableOptionComment(MySqlParser.TableOptionCommentContext ctx) {
+        ParseTree tbCommentNode = ctx.getChild(2);
+        Optional.ofNullable(tbCommentNode).ifPresent(node -> tableModel.setDesc(extractContent(node)));
     }
 
-    private String extractContent(ParseTree treeNode) {
+    @Override
+    public void enterPrimaryKeyColumnConstraint(MySqlParser.PrimaryKeyColumnConstraintContext ctx) {
+        super.enterPrimaryKeyColumnConstraint(ctx);
+    }
+
+    @Override
+    public void enterPrimaryKeyTableConstraint(MySqlParser.PrimaryKeyTableConstraintContext ctx) {
+        MySqlParser.IndexColumnNamesContext pkContext = ctx.getChild(MySqlParser.IndexColumnNamesContext.class, 0);
+        Optional.ofNullable(pkContext).ifPresent(c -> tableModel.addTablePrimaryKey(extractContent(c.getChild(MySqlParser.IndexColumnNameContext.class, 0))));
+    }
+
+    private static String extractContent(ParseTree treeNode) {
         String field = treeNode == null ? null : treeNode.getText().toLowerCase();
         if (field == null) {
             return null;

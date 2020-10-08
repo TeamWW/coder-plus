@@ -63,6 +63,10 @@ public enum TableModelBuiltInAttr {
      * 属性名称-下划线
      */
     FIELD_UNDERLINE_NAME("_f_u"),
+    /**
+     * 单主键
+     */
+    SINGLE_PRIMARY_KEY("_pk"),
     ;
 
     private final String key;

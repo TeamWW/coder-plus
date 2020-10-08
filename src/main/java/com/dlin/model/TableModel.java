@@ -1,14 +1,12 @@
 package com.dlin.model;
 
+import com.dlin.utils.CommonUtils;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.dlin.extract.table.TableField;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.dlin.model.enums.TableModelBuiltInAttr.*;
@@ -26,7 +24,9 @@ public class TableModel extends Model {
 
     private String bizPrefix;
 
-    private final Set<TableField> fields = Sets.newHashSet();
+    private final Map<String, TableField> fields = new HashMap<>();
+
+    private final Set<String> primaryKeys = Sets.newHashSet();
 
     public String getDesc() {
         return desc;
@@ -45,16 +45,24 @@ public class TableModel extends Model {
     }
 
     public void addTableFiled(TableField field) {
-        fields.add(field);
+        fields.put(field.getName(), field);
     }
 
     public Set<TableField> getFields() {
-        return fields;
+        return new HashSet<>(fields.values());
+    }
+
+    public void addTablePrimaryKey(String field) {
+        primaryKeys.add(field);
+    }
+
+    public Set<String> getPrimaryKey() {
+        return primaryKeys;
     }
 
     @Override
     public String toString() {
-        return Joiner.on("\n").join(fields.stream().map(TableField::toString).collect(Collectors.toList()));
+        return Joiner.on("\n").join(fields.values().stream().map(TableField::toString).collect(Collectors.toList()));
     }
 
     @Override
@@ -67,16 +75,22 @@ public class TableModel extends Model {
                 .addBuiltInAttr(MODEL_CAMEL_NAME.key(), ofUlCode(name).toStyle(NamedStyle.CAMEL).toString())
                 .addBuiltInAttr(MODEL_UNDERLINE_NAME.key(), ofUlCode(name).toString())
                 // extract table filed attrs
-                .addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields).stream().map(f -> {
-                    Map<String, Object> fieldsAttrs = Maps.newHashMap();
-                    fieldsAttrs.put(FIELD_CAMEL_NAME.key(), ofUlCode(f.getName()).toStyle(NamedStyle.CAMEL).toString());
-                    fieldsAttrs.put(FIELD_CAPTAl_FIRST_NAME.key(), f.getCfName());
-                    fieldsAttrs.put(FIELD_DESC.key(), Optional.ofNullable(f.getComment()).orElse(""));
-                    fieldsAttrs.put(FIELD_J_TYPE.key(), f.getType().getJavaType());
-                    fieldsAttrs.put(FIELD_JDBC_TYPE.key(), f.getType().getJdbcType());
-                    fieldsAttrs.put(FIELD_UNDERLINE_NAME.key(), ofUlCode(f.getName()).toString());
-                    return fieldsAttrs;
-                }).collect(Collectors.toList()));
+                .addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields.values()).stream().map(this::tableFiledToMap).collect(Collectors.toList()));
+        // extract single primary key
+        String singleKey = CommonUtils.getOne(this.primaryKeys);
+        addBuiltInAttr(SINGLE_PRIMARY_KEY.key(), tableFiledToMap(fields.get(singleKey)));
         return super.extractAttrs();
     }
+
+    private Map<String, Object> tableFiledToMap(TableField f) {
+        Map<String, Object> fieldsAttrs = Maps.newHashMap();
+        fieldsAttrs.put(FIELD_CAMEL_NAME.key(), ofUlCode(f.getName()).toStyle(NamedStyle.CAMEL).toString());
+        fieldsAttrs.put(FIELD_CAPTAl_FIRST_NAME.key(), f.getCfName());
+        fieldsAttrs.put(FIELD_DESC.key(), Optional.ofNullable(f.getComment()).orElse(""));
+        fieldsAttrs.put(FIELD_J_TYPE.key(), f.getType().getJavaType());
+        fieldsAttrs.put(FIELD_JDBC_TYPE.key(), f.getType().getJdbcType());
+        fieldsAttrs.put(FIELD_UNDERLINE_NAME.key(), ofUlCode(f.getName()).toString());
+        return fieldsAttrs;
+    }
+
 }

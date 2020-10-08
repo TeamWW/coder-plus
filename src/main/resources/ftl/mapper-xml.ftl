@@ -14,6 +14,10 @@
         <#list _f as filed>
             ${filed._f_u},
         </#list>
+<#--        <#list _f as filed>-->
+<#--            ${filed?is_last?-->
+<#--            _f_u}-->
+<#--        </#list>-->
     </sql>
 
     <sql id="Table_Name">
@@ -98,13 +102,13 @@
         </if>
     </select>
 
-    <select id="select${_m_cf}ById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="select${_m_cf}ById" resultMap="BaseResultMap" parameterType="${_pk._f_jt}">
         select
         <include refid="Base_Column_List"/>
         from
         <include refid="Table_Name"/>
         where
-        id = ${r'#{id}'}
+        ${_pk._f_u} = ${r'#{'}${_pk._f_c},jdbcType=${_pk._f_jdbct}}
     </select>
 
     <select id="select${_m_cf}ListByParam" resultMap="BaseResultMap" parameterType="${_base_pk}.model.${_m_cf}">
@@ -121,10 +125,10 @@
         </#list>
     </select>
 
-    <delete id="delete${_m_cf}ById" parameterType="java.lang.Long">
+    <delete id="delete${_m_cf}ById" parameterType="${_pk._f_jt}">
         delete from
         <include refid="Table_Name"/>
-        id = ${r'#{id}'}
+        ${_pk._f_u} = ${r'#{'}${_pk._f_c},jdbcType=${_pk._f_jdbct}}
     </delete>
 
     <update id="update${_m_cf}ById" parameterType="${_base_pk}.model.${_m_cf}">
@@ -137,7 +141,7 @@
                 </if>
             </#list>
         </set>
-        id = ${r'#{id}'}
+        ${_pk._f_u} = ${r'#{'}${_pk._f_c},jdbcType=${_pk._f_jdbct}}
     </update>
 
     <insert id="insert${_m_cf}" parameterType="${_base_pk}.model.${_m_cf}" useGeneratedKeys="true" keyProperty="id">

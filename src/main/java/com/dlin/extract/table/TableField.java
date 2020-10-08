@@ -19,6 +19,8 @@ public class TableField {
 
     private String comment;
 
+    private Integer primaryKey = 0;
+
     public String getName() {
         return name;
     }
@@ -45,6 +47,14 @@ public class TableField {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Integer getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(Integer primaryKey) {
+        this.primaryKey = primaryKey;
     }
 
     @Override
