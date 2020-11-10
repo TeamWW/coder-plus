@@ -14,38 +14,42 @@ import java.util.Date;
  */
 public enum FiledType {
 
-    NUM_TINYINT(Integer.class.getSimpleName(), "TINYINT", "TINYINT"),
-    NUM_SMALLINT(Integer.class.getSimpleName(), "SMALLINT", "SMALLINT"),
-    NUM_MEDIUMINT(Integer.class.getSimpleName(), "MEDIUMINT", "INTEGER"),
-    NUM_INT(Integer.class.getSimpleName(), "INT", "INTEGER"),
-    NUM_BIGINT(Long.class.getSimpleName(), "BIGINT", "BIGINT"),
-    NUM_FLOAT(Float.class.getSimpleName(), "FLOAT", "FLOAT"),
-    NUM_DOUBLE(Double.class.getSimpleName(), "DOUBLE", "DOUBLE"),
-    NUM_DECIMAL(BigDecimal.class.getSimpleName(), "DECIMAL", "DECIMAL"),
-    TIME_DATE(Date.class.getSimpleName(), "DATE", "DATE"),
-    TIME_DATETIME(Date.class.getSimpleName(), "DATETIME", "TIMESTAMP"),
-    TIME_TIMESTAMP(Date.class.getSimpleName(), "TIMESTAMP", "TIMESTAMP"),
-    TIME_TIME(Date.class.getSimpleName(), "TIME", "TIME"),
-    STR_CHAR(String.class.getSimpleName(), "CHAR", "CHAR"),
-    STR_VARCHAR(String.class.getSimpleName(), "VARCHAR", "VARCHAR"),
-    STR_TEXT(String.class.getSimpleName(), "TEXT", "VARCHAR"),
-    LONG_TEXT(String.class.getSimpleName(), "LONGTEXT", "VARCHAR"),
-    BYTE_BLOB(Byte[].class.getSimpleName(), "BLOB", "BLOB");
+    NUM_TINYINT(Integer.class, "TINYINT", "TINYINT"),
+    NUM_SMALLINT(Integer.class, "SMALLINT", "SMALLINT"),
+    NUM_MEDIUMINT(Integer.class, "MEDIUMINT", "INTEGER"),
+    NUM_INT(Integer.class, "INT", "INTEGER"),
+    NUM_BIGINT(Long.class, "BIGINT", "BIGINT"),
+    NUM_FLOAT(Float.class, "FLOAT", "FLOAT"),
+    NUM_DOUBLE(Double.class, "DOUBLE", "DOUBLE"),
+    NUM_DECIMAL(BigDecimal.class, "DECIMAL", "DECIMAL"),
+    TIME_DATE(Date.class, "DATE", "DATE"),
+    TIME_DATETIME(Date.class, "DATETIME", "TIMESTAMP"),
+    TIME_TIMESTAMP(Date.class, "TIMESTAMP", "TIMESTAMP"),
+    TIME_TIME(Date.class, "TIME", "TIME"),
+    STR_CHAR(String.class, "CHAR", "CHAR"),
+    STR_VARCHAR(String.class, "VARCHAR", "VARCHAR"),
+    STR_TEXT(String.class, "TEXT", "VARCHAR"),
+    LONG_TEXT(String.class, "LONGTEXT", "VARCHAR"),
+    BYTE_BLOB(Byte[].class, "BLOB", "BLOB");
 
-    private final String javaType;
+    private final Class<?> javaType;
 
     private final String sqlType;
 
     private final String jdbcType;
 
-    FiledType(String javaType, String sqlType, String jdbcType) {
+    FiledType(Class<?> javaType, String sqlType, String jdbcType) {
         this.javaType = javaType;
         this.sqlType = sqlType;
         this.jdbcType = jdbcType;
     }
 
     public String getJavaType() {
-        return javaType;
+        return javaType.getSimpleName();
+    }
+    
+    public String getStandardJavaType() {
+        return javaType.getName();
     }
 
     public String getSqlType() {

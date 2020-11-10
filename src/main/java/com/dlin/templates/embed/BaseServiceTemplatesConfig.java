@@ -116,7 +116,7 @@ public class BaseServiceTemplatesConfig {
         spec.setDescription("MYBATIS_MAPPER");
         spec.setPath(MYBATIS_MAPPER_TPL_PATH);
         spec.addAttr("serviceOutSuf", "DO");
-        spec.addAttr("serviceInSuf", "Query");
+        spec.addAttr("serviceInSuf", "DO");
         spec.setFileSetting(FileSetting.ofJavaFile("/mapper/"));
         return spec;
     }

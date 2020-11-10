@@ -3,7 +3,7 @@
 
 <mapper namespace="${_base_pk}.mapper.${_m_cf}Mapper">
 
-    <resultMap id="BaseResultMap" type="${_base_pk}.model.${_m_cf}">
+    <resultMap id="BaseResultMap" type="${_m_cf}DO">
         <#list _f as filed>
             <!-- 字段含义：${filed._f_comment} -->
             <id column="${filed._f_u}" property="${filed._f_c}" jdbcType="${filed._f_jdbct}"/>
@@ -15,8 +15,7 @@
             ${filed._f_u},
         </#list>
 <#--        <#list _f as filed>-->
-<#--            ${filed?is_last?-->
-<#--            _f_u}-->
+<#--            ${filed?is_last?_f_u}-->
 <#--        </#list>-->
     </sql>
 
@@ -102,7 +101,7 @@
         </if>
     </select>
 
-    <select id="select${_m_cf}ById" resultMap="BaseResultMap" parameterType="${_pk._f_jt}">
+    <select id="select${_m_cf}ById" resultMap="BaseResultMap" parameterType="${_pk._f_jst}">
         select
         <include refid="Base_Column_List"/>
         from
@@ -111,7 +110,7 @@
         ${_pk._f_u} = ${r'#{'}${_pk._f_c},jdbcType=${_pk._f_jdbct}}
     </select>
 
-    <select id="select${_m_cf}ListByParam" resultMap="BaseResultMap" parameterType="${_base_pk}.model.${_m_cf}">
+    <select id="select${_m_cf}ListByParam" resultMap="BaseResultMap" parameterType="${_m_cf}DO">
         select
         <include refid="Base_Column_List"/>
         from
@@ -125,13 +124,13 @@
         </#list>
     </select>
 
-    <delete id="delete${_m_cf}ById" parameterType="${_pk._f_jt}">
+    <delete id="delete${_m_cf}ById" parameterType="${_pk._f_jst}">
         delete from
         <include refid="Table_Name"/>
         ${_pk._f_u} = ${r'#{'}${_pk._f_c},jdbcType=${_pk._f_jdbct}}
     </delete>
 
-    <update id="update${_m_cf}ById" parameterType="${_base_pk}.model.${_m_cf}">
+    <update id="update${_m_cf}ById" parameterType="${_m_cf}DO">
         update
         <include refid="Table_Name"/>
         <set>
@@ -144,7 +143,7 @@
         ${_pk._f_u} = ${r'#{'}${_pk._f_c},jdbcType=${_pk._f_jdbct}}
     </update>
 
-    <insert id="insert${_m_cf}" parameterType="${_base_pk}.model.${_m_cf}" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert${_m_cf}" parameterType="${_m_cf}DO" useGeneratedKeys="true" keyProperty="id">
         insert into
         <include refid="Table_Name"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -163,23 +162,21 @@
         </trim>
     </insert>
 
-    <insert id="batchInsert${_m_cf}" parameterType="${_base_pk}.model.${_m_cf}">
+    <insert id="batchInsert${_m_cf}DO" parameterType="${_m_cf}">
         insert into
         <include refid="Table_Name"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list _f as filed>
-                <if test="${filed._f_c} != null">
-                    ${filed._f_u},
-                </if>
+                ${filed._f_u},
             </#list>
         </trim>
         values
-        <foreach collection="list" item="item" separator="," open="(" close=")">
+        <foreach collection="list" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list _f as filed>
-                <if test="${filed._f_c} != null">
-                    ${r'#{'}${filed._f_c},jdbcType=${filed._f_jdbct}},
-                </if>
+                ${r'#{item.'}${filed._f_c},jdbcType=${filed._f_jdbct}},
             </#list>
+            </trim>
         </foreach>
     </insert>
 

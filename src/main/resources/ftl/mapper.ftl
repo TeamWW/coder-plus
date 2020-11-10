@@ -1,7 +1,5 @@
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import ${_base_pk}.model.${_m_cf}${serviceInSuf}
-import ${_base_pk}.model.${_m_cf}${serviceOutSuf}
 
 /**
  * Mapper FOR ${_m_comment}

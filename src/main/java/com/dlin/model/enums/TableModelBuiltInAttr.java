@@ -56,7 +56,11 @@ public enum TableModelBuiltInAttr {
      */
     FIELD_J_TYPE("_f_jt"),
     /**
-     * 属性的java类型
+     * 属性的标准java类型
+     */
+    FIELD_J_STANDARD_TYPE("_f_jst"),
+    /**
+     * 属性的jdbc类型
      */
     FIELD_JDBC_TYPE("_f_jdbct"),
     /**

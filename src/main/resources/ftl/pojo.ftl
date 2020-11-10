@@ -19,14 +19,14 @@ public class ${_m_cf}${modelType} {
 <#list _f as filed>
 
     /**
-     * 访问器【${filed._f_comment}】
+     * getter for ${filed._f_comment}
      */
     public ${filed._f_jt} get${filed._f_cf}() {
         return ${filed._f_c};
     }
 
     /**
-     * 修改器【${filed._f_comment}】
+     * setter for ${filed._f_comment}
      */
     public void set${filed._f_cf}(${filed._f_jt} ${filed._f_c}) {
         this.${filed._f_c} = ${filed._f_c};

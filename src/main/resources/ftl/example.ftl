@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -112,6 +113,7 @@ public class ${_m_cf}Example {
 
         public Criteria and${filed._f_cf}IsNull() {
             addCriterion("${filed._f_u} is null");
+            return (Criteria) this;
         }
 
         public Criteria and${filed._f_cf}IsNotNull() {
@@ -191,8 +193,10 @@ public class ${_m_cf}Example {
 
     public static class Criteria extends BaseCriteria {
 
-    protected Criteria() {
-        super();
+        protected Criteria() {
+            super();
+        }
+
     }
 
     public static class Criterion {
@@ -281,4 +285,5 @@ public class ${_m_cf}Example {
             this(condition, value, secondValue, null);
         }
     }
+
 }

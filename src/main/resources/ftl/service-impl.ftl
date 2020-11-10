@@ -1,7 +1,5 @@
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import ${_base_pk}.model.${_m_cf}${serviceInSuf}
-import ${_base_pk}.model.${_m_cf}${serviceOutSuf}
+import javax.annotation.Resource;
 
 import java.util.List;
 
@@ -15,7 +13,7 @@ import java.util.List;
 @Service
 public class ${_m_cf}${serviceType}Impl implements ${_m_cf}${serviceType} {
 
-    @Autowired
+    @Resource
     private ${_m_cf}${subServiceType} ${_m}${subServiceType};
 
     /**

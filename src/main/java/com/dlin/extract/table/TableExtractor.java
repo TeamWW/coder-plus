@@ -6,6 +6,8 @@ import com.dlin.extract.AbstractExtractor;
 import com.dlin.io.NioTextFileAccessor;
 import com.dlin.model.Model;
 
+import java.util.Optional;
+
 /**
  * 表数据提取器
  *
@@ -20,8 +22,13 @@ public class TableExtractor extends AbstractExtractor {
         String ddlPath = Joiner.on("/").join(globalContext.getConfig().getWorkspacePath(), globalContext.getConfig().getDdlName());
         String ddlStr = NioTextFileAccessor.loadFile(ddlPath);
         Model model = globalContext.calByComponent(globalContext.getConfig().getResolver(), resolver -> resolver.resolve(ddlStr));
-        loadCustomizedAttrs(model);
+        processModelBeforeUsed(model);
         return model;
+    }
+
+    protected void processModelBeforeUsed(Model model) {
+        Optional.ofNullable(globalContext.getConfig().getRemovePrefixIfExist()).ifPresent(prefix -> model.setName(model.getName().replaceAll(prefix, "")));
+        loadCustomizedAttrs(model);
     }
 
 }

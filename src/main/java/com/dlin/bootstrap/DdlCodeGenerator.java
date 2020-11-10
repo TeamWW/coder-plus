@@ -34,6 +34,11 @@ public class DdlCodeGenerator extends Bootstrap {
         return this;
     }
 
+    public DdlCodeGenerator setRemovePrefixIfExist(String removePrefixIfExist) {
+        creator.setRemovePrefixIfExist(removePrefixIfExist);
+        return this;
+    }
+
     @Override
     protected GlobalConfig configureContext() {
         return creator.setExporter(CodeExporter.class)

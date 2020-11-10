@@ -19,16 +19,18 @@ public class GlobalConfig {
     private final String ddlName;
     private final String templatesConfigScanPath;
     private final String groupsConfigScanPath;
+    private final String removePrefixIfExist;
     private final Class<? extends Resolver> resolver;
     private final Class<? extends Extractor> extractor;
     private final Class<? extends Exporter> exporter;
 
-    public GlobalConfig(String workspacePath, String outputDir, String ddlName, String templatesConfigScanPath, Class<? extends Resolver> resolver, Class<? extends Extractor> extractor, Class<? extends Exporter> exporter, String groupsConfigScanPath) {
+    public GlobalConfig(String workspacePath, String outputDir, String ddlName, String templatesConfigScanPath, Class<? extends Resolver> resolver, Class<? extends Extractor> extractor, Class<? extends Exporter> exporter, String groupsConfigScanPath, String removePrefixIfExist) {
         // 可默认的配置
         this.outputDir = Optional.ofNullable(outputDir).orElse("output");
         this.ddlName = Optional.ofNullable(outputDir).orElse("ddl.sql");
         this.templatesConfigScanPath = Optional.ofNullable(templatesConfigScanPath).orElse(null);
         this.groupsConfigScanPath = Optional.ofNullable(groupsConfigScanPath).orElse(null);
+        this.removePrefixIfExist = Optional.ofNullable(removePrefixIfExist).orElse(null);
         this.workspacePath = Optional.ofNullable(workspacePath).orElseThrow(() -> new RuntimeException("work space required！"));
         // 可扩展的配置
         this.resolver = Optional.ofNullable(resolver).orElseThrow(() -> new RuntimeException("resolver required！！"));
@@ -56,6 +58,10 @@ public class GlobalConfig {
         return groupsConfigScanPath;
     }
 
+    public String getRemovePrefixIfExist() {
+        return removePrefixIfExist;
+    }
+
     public Class<? extends Resolver> getResolver() {
         return resolver;
     }
@@ -81,6 +87,7 @@ public class GlobalConfig {
         private String ddlName;
         private String templatesPath;
         private String groupsConfigScanPath;
+        private String removePrefixIfExist;
         private Class<? extends Resolver> resolver;
         private Class<? extends Extractor> extractor;
         private Class<? extends Exporter> exporter;
@@ -120,8 +127,12 @@ public class GlobalConfig {
             this.groupsConfigScanPath = groupsConfigScanPath;
         }
 
+        public void setRemovePrefixIfExist(String removePrefixIfExist) {
+            this.removePrefixIfExist = removePrefixIfExist;
+        }
+
         public GlobalConfig init() {
-            return new GlobalConfig(workspacePath, outputDir, ddlName, templatesPath, resolver, extractor, exporter, groupsConfigScanPath);
+            return new GlobalConfig(workspacePath, outputDir, ddlName, templatesPath, resolver, extractor, exporter, groupsConfigScanPath, removePrefixIfExist);
         }
     }
 }
