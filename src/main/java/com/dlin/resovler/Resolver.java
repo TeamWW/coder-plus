@@ -3,13 +3,19 @@ package com.dlin.resovler;
 import com.dlin.model.Model;
 
 /**
- * 属性值解析工具
+ * 文本解析工具解析工具
  *
  * @author XD.Wang
  * Date 2020-7-25.
  */
 public interface Resolver {
 
-    Model resolve(String sourceCode);
+    /**
+     * 将外部文本解析成模型数据
+     *
+     * @param text 外部文本
+     * @return 模型
+     */
+    Model resolve(String text);
 
 }

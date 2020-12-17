@@ -26,7 +26,7 @@ public abstract class FreemarkerRender extends AbstractRender {
             FreemarkerTemplateManager manager = FreemarkerTemplateManager.getManager();
             Template template = manager.getTemplate(templateId);
             Map<String, Object> dataModel = Maps.newHashMap();
-            dataModel.putAll(model.extractAttrs());
+            dataModel.putAll(model.toAttrMap());
             dataModel.putAll(templateInstant.getTemplateSpec().getAttrs());
             template.process(dataModel, out);
             return out.toString();

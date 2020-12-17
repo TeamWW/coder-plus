@@ -16,7 +16,7 @@ public class GlobalConfig {
 
     private final String workspacePath;
     private final String outputDir;
-    private final String ddlName;
+    private final String inputFileName;
     private final String templatesConfigScanPath;
     private final String groupsConfigScanPath;
     private final String removePrefixIfExist;
@@ -24,10 +24,10 @@ public class GlobalConfig {
     private final Class<? extends Extractor> extractor;
     private final Class<? extends Exporter> exporter;
 
-    public GlobalConfig(String workspacePath, String outputDir, String ddlName, String templatesConfigScanPath, Class<? extends Resolver> resolver, Class<? extends Extractor> extractor, Class<? extends Exporter> exporter, String groupsConfigScanPath, String removePrefixIfExist) {
+    public GlobalConfig(String workspacePath, String outputDir, String inputFileName, String templatesConfigScanPath, Class<? extends Resolver> resolver, Class<? extends Extractor> extractor, Class<? extends Exporter> exporter, String groupsConfigScanPath, String removePrefixIfExist) {
         // 可默认的配置
         this.outputDir = Optional.ofNullable(outputDir).orElse("output");
-        this.ddlName = Optional.ofNullable(outputDir).orElse("ddl.sql");
+        this.inputFileName = Optional.ofNullable(inputFileName).orElse("ddl.sql");
         this.templatesConfigScanPath = Optional.ofNullable(templatesConfigScanPath).orElse(null);
         this.groupsConfigScanPath = Optional.ofNullable(groupsConfigScanPath).orElse(null);
         this.removePrefixIfExist = Optional.ofNullable(removePrefixIfExist).orElse(null);
@@ -46,8 +46,8 @@ public class GlobalConfig {
         return outputDir;
     }
 
-    public String getDdlName() {
-        return ddlName;
+    public String getInputFileName() {
+        return inputFileName;
     }
 
     public String getTemplatesConfigScanPath() {
@@ -84,7 +84,7 @@ public class GlobalConfig {
 
         private String workspacePath;
         private String outputDir;
-        private String ddlName;
+        private String inputFileName;
         private String templatesPath;
         private String groupsConfigScanPath;
         private String removePrefixIfExist;
@@ -100,8 +100,8 @@ public class GlobalConfig {
             this.outputDir = outputDir;
         }
 
-        public void setDdlName(String ddlName) {
-            this.ddlName = ddlName;
+        public void setInputFileName(String inputFileName) {
+            this.inputFileName = inputFileName;
         }
 
         public void setTemplatesPath(String templatesPath) {
@@ -132,7 +132,7 @@ public class GlobalConfig {
         }
 
         public GlobalConfig init() {
-            return new GlobalConfig(workspacePath, outputDir, ddlName, templatesPath, resolver, extractor, exporter, groupsConfigScanPath, removePrefixIfExist);
+            return new GlobalConfig(workspacePath, outputDir, inputFileName, templatesPath, resolver, extractor, exporter, groupsConfigScanPath, removePrefixIfExist);
         }
     }
 }

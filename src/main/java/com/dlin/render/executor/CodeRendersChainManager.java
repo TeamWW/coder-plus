@@ -6,7 +6,7 @@ import com.google.common.base.Preconditions;
 import com.dlin.container.GlobalContext;
 import com.dlin.container.GlobalContextAware;
 import com.dlin.container.ManagedBean;
-import com.dlin.render.freemarker.CodeViewRender;
+import com.dlin.render.freemarker.SourceCodeViewRender;
 import com.dlin.templates.spec.TemplateSpec;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class CodeRendersChainManager implements GlobalContextAware {
                 .filter(tId -> !templateSpecs.stream().map(TemplateSpec::getId).collect(Collectors.toSet()).contains(tId))
                 .collect(Collectors.joining(","));
         Preconditions.checkArgument(StrUtil.isBlank(missingTemplateIds), "template -> " + missingTemplateIds + " not found！");
-        return chainingNode(templateIds.stream().map(CodeViewRender::new).map(DefaultRenderWrapper::new).collect(Collectors.toList()));
+        return chainingNode(templateIds.stream().map(SourceCodeViewRender::new).map(DefaultRenderWrapper::new).collect(Collectors.toList()));
     }
 
 }

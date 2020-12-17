@@ -1,5 +1,7 @@
 package com.dlin.render.executor;
 
+import com.dlin.model.Model;
+import com.dlin.model.meta.CompoundModel;
 import com.dlin.render.Render;
 import com.dlin.render.View;
 
@@ -24,7 +26,16 @@ public class DefaultRenderWrapper extends RenderWrapper {
      */
     @Override
     protected boolean render(HandlerRequest req, HandlerResponse resp) {
-        View view = render.render(req.getModel());
+        Model model = req.getModel();
+        // get real model for render
+        if (model instanceof CompoundModel) {
+            CompoundModel compoundModel = (CompoundModel) model;
+            for (Model m : compoundModel.getMemberModels()) {
+                resp.addView(render.render(m));
+            }
+            return true;
+        }
+        View view = render.render(model);
         resp.addView(view);
         return true;
     }

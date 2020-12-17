@@ -1,4 +1,4 @@
-package com.dlin.extract.table;
+package com.dlin.model.meta;
 
 import com.dlin.common.FiledType;
 import com.dlin.utils.CodeStyle;
@@ -11,15 +11,13 @@ import java.util.Objects;
  * @author XD.Wang
  * Date 2020-7-25.
  */
-public class TableField {
+public class Field {
 
     private String name;
 
     private FiledType type;
 
     private String comment;
-
-    private Integer primaryKey = 0;
 
     public String getName() {
         return name;
@@ -49,14 +47,6 @@ public class TableField {
         this.comment = comment;
     }
 
-    public Integer getPrimaryKey() {
-        return primaryKey;
-    }
-
-    public void setPrimaryKey(Integer primaryKey) {
-        this.primaryKey = primaryKey;
-    }
-
     @Override
     public String toString() {
         return "TableField{" +
@@ -70,7 +60,7 @@ public class TableField {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TableField that = (TableField) o;
+        Field that = (Field) o;
         return Objects.equals(name, that.name) &&
                 type == that.type &&
                 Objects.equals(comment, that.comment);

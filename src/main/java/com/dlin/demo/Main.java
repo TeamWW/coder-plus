@@ -1,7 +1,6 @@
 package com.dlin.demo;
 
-import com.dlin.bootstrap.CustomizedNamedCodeGenerator;
-import com.dlin.bootstrap.DdlCodeGenerator;
+import com.dlin.bootstrap.CustomizedKeywordCodeGenerator;
 import com.dlin.templates.embed.EmbedTemplates;
 
 @SuppressWarnings("Duplicates")
@@ -14,26 +13,29 @@ public class Main {
      * @param args args
      */
     public static void main(String[] args) {
-        CustomizedNamedCodeGenerator ddlCodeGenerator = new CustomizedNamedCodeGenerator();
+        CustomizedKeywordCodeGenerator ddlCodeGenerator = new CustomizedKeywordCodeGenerator();
         ddlCodeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
         ddlCodeGenerator.execute(
                 EmbedTemplates.DTO_POJO,
                 EmbedTemplates.QUERY_POJO,
                 EmbedTemplates.BIZ_POJO,
                 EmbedTemplates.DO_POJO,
+                EmbedTemplates.EXAMPLE,
                 EmbedTemplates.SERVICE,
                 EmbedTemplates.SER_REPOSITORY,
                 EmbedTemplates.SER_MANAGER,
                 EmbedTemplates.SERVICE_IMPL,
                 EmbedTemplates.SER_IMPL_REPOSITORY,
+                EmbedTemplates.MYBATIS_XML_MAPPER,
+                EmbedTemplates.MYBATIS_MAPPER,
                 EmbedTemplates.SER_IMPL_MANAGER
         );
-        DdlCodeGenerator ddlCodeGenerator1 = new DdlCodeGenerator();
-        ddlCodeGenerator1.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
-        ddlCodeGenerator1.execute(
-                EmbedTemplates.MYBATIS_XML_MAPPER,
-                EmbedTemplates.MYBATIS_MAPPER
-        );
+//        DdlCodeGenerator ddlCodeGenerator1 = new DdlCodeGenerator();
+//        ddlCodeGenerator1.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
+//        ddlCodeGenerator1.execute(
+//                EmbedTemplates.MYBATIS_XML_MAPPER,
+//                EmbedTemplates.MYBATIS_MAPPER
+//        );
     }
 
 }

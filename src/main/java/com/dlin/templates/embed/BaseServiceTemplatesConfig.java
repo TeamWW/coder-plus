@@ -22,6 +22,8 @@ public class BaseServiceTemplatesConfig {
 
     private static final String MYBATIS_MAPPER_XML_TPL_PATH = "/ftl/mapper-xml.ftl";
 
+    private static final String THRIFT_DELEGATE_TPL_PATH = "/ftl/delegate.ftl";
+
     @Template(SERVICE)
     public TemplateSpec serviceTemplate() {
         TemplateSpec spec = new TemplateSpec();
@@ -127,6 +129,15 @@ public class BaseServiceTemplatesConfig {
         spec.setDescription("MYBATIS_XML_MAPPER");
         spec.setPath(MYBATIS_MAPPER_XML_TPL_PATH);
         spec.setFileSetting(FileSetting.ofMyBatisXmlFile("/mapper/gen/", "", "Mapper.xml"));
+        return spec;
+    }
+
+    @Template(THRIFT_DELEGATE)
+    public TemplateSpec thriftDelegateTemplate() {
+        TemplateSpec spec = new TemplateSpec();
+        spec.setDescription("THRIFT_DELEGATE_MAPPER");
+        spec.setPath(THRIFT_DELEGATE_TPL_PATH);
+        spec.setFileSetting(FileSetting.ofJavaFile("/delegate/"));
         return spec;
     }
 

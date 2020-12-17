@@ -1,5 +1,5 @@
 // Generated from F:/coder-plus/src/main/resources/g4\MySqlLexer.g4 by ANTLR 4.8
-package com.dlin.antlr;
+package com.dlin.antlr.sql;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATN;

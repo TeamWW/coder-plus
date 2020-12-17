@@ -1,5 +1,5 @@
 // Generated from F:/coder-plus/src/main/resources/g4\MySqlParser.g4 by ANTLR 4.8
-package com.dlin.antlr;
+package com.dlin.antlr.sql;
 
 import com.dlin.resovler.Resolver;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public abstract class MySqlParserBaseListener implements MySqlParserListener, Resolver {
+public abstract class MySqlParserBaseListener implements MySqlParserListener {
     /**
      * {@inheritDoc}
      *

@@ -1,9 +1,10 @@
 package com.dlin.utils;
 
 import cn.hutool.core.util.StrUtil;
+import com.dlin.common.FiledType;
 
+import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 public class EnumUtils {
 
@@ -14,9 +15,8 @@ public class EnumUtils {
      * @param extractor 枚举值提取器
      * @return 外部值对应的目标枚举
      */
-    @SafeVarargs
-    public static <E extends Enum<?>> E getByValOrThrow(String val, Function<E, String> extractor, E... enums) {
-        return Stream.of(enums).filter(t -> StrUtil.equalsAnyIgnoreCase(val, extractor.apply(t))).findAny().orElse(null);
+    public static FiledType getFieldTypeByVal(String val, Function<FiledType, String> extractor, Set<FiledType> enums) {
+        return enums.stream().filter(t -> StrUtil.equalsAnyIgnoreCase(val, extractor.apply(t))).findAny().orElse(null);
     }
 
 }

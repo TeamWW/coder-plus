@@ -5,11 +5,11 @@ import com.google.common.base.Preconditions;
 import com.dlin.model.Model;
 import com.dlin.model.TableModel;
 import com.dlin.render.View;
-import com.dlin.render.views.CodeView;
+import com.dlin.render.views.SourceCodeView;
 
-public class CodeViewRender extends FreemarkerRender {
+public class SourceCodeViewRender extends FreemarkerRender {
 
-    public CodeViewRender(String templateId) {
+    public SourceCodeViewRender(String templateId) {
         super(templateId);
     }
 
@@ -22,11 +22,11 @@ public class CodeViewRender extends FreemarkerRender {
     protected View createView(String content, Model model) {
         Preconditions.checkArgument(StrUtil.isNotBlank(content));
         Preconditions.checkArgument(model instanceof TableModel);
-        CodeView codeView = new CodeView();
-        codeView.setContent(content);
-        codeView.setFileSetting(templateInstant.getTemplateSpec().getFileSetting());
-        codeView.setName(model.getName());
-        return codeView;
+        SourceCodeView sourceCodeView = new SourceCodeView();
+        sourceCodeView.setContent(content);
+        sourceCodeView.setFileSetting(templateInstant.getTemplateSpec().getFileSetting());
+        sourceCodeView.setName(model.getKeyword());
+        return sourceCodeView;
     }
 
 }

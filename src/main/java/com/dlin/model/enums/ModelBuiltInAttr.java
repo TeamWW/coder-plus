@@ -9,7 +9,7 @@ import java.util.Objects;
  * @author created by XD.Wang
  * Date 2020/9/4.
  */
-public enum TableModelBuiltInAttr {
+public enum ModelBuiltInAttr {
 
     /**
      * 业务模型名
@@ -75,7 +75,7 @@ public enum TableModelBuiltInAttr {
 
     private final String key;
 
-    TableModelBuiltInAttr(String key) {
+    ModelBuiltInAttr(String key) {
         this.key = key;
     }
 
@@ -84,7 +84,7 @@ public enum TableModelBuiltInAttr {
     }
 
     public static boolean contain(String l) {
-        return Arrays.stream(TableModelBuiltInAttr.values()).map(TableModelBuiltInAttr::key).allMatch(it -> Objects.equals(l, it));
+        return Arrays.stream(ModelBuiltInAttr.values()).map(ModelBuiltInAttr::key).allMatch(it -> Objects.equals(l, it));
     }
 
 }

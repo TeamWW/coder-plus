@@ -10,7 +10,7 @@ import com.dlin.container.GlobalContextAware;
 import com.dlin.container.ManagedBean;
 import com.dlin.io.NioTextFileAccessor;
 import com.dlin.render.View;
-import com.dlin.render.views.CodeView;
+import com.dlin.render.views.SourceCodeView;
 import com.dlin.utils.CodeStyle;
 import com.dlin.utils.ExceptionUtils;
 
@@ -37,7 +37,7 @@ public class CodeExporter implements Exporter, GlobalContextAware {
     public void export(List<View> views) {
         checkViewType(views);
         String outPath = getOutputPath();
-        views.stream().map(view -> (CodeView) view).forEach(ExceptionUtils.ioConsumer(view -> {
+        views.stream().map(view -> (SourceCodeView) view).forEach(ExceptionUtils.ioConsumer(view -> {
             if (StrUtil.isNotBlank(view.getFileSetting().getFileDir())) {
                 Path path = Paths.get(getOutputPath() + view.getFileSetting().getFileDir());
                 if (!Files.exists(path)) {
@@ -55,10 +55,10 @@ public class CodeExporter implements Exporter, GlobalContextAware {
 
     private void checkViewType(List<View> views) {
         Preconditions.checkNotNull(views);
-        Preconditions.checkArgument(views.stream().allMatch(v -> v instanceof CodeView));
+        Preconditions.checkArgument(views.stream().allMatch(v -> v instanceof SourceCodeView));
     }
 
-    private String createFilePath(CodeView view) {
+    private String createFilePath(SourceCodeView view) {
         FileSetting fileSetting = view.getFileSetting();
         if (StrUtil.isNotBlank(fileSetting.getFileName())) {
             return fileSetting.getFileName();

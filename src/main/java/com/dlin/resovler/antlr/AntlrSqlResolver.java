@@ -1,13 +1,14 @@
 package com.dlin.resovler.antlr;
 
-import com.dlin.antlr.MySqlLexer;
-import com.dlin.antlr.MySqlParser;
-import com.dlin.antlr.MySqlParserBaseListener;
+import com.dlin.antlr.sql.MySqlLexer;
+import com.dlin.antlr.sql.MySqlParser;
+import com.dlin.antlr.sql.MySqlParserBaseListener;
 import com.dlin.common.FiledType;
 import com.dlin.container.ManagedBean;
+import com.dlin.model.meta.Field;
 import com.dlin.model.Model;
-import com.dlin.extract.table.TableField;
 import com.dlin.model.TableModel;
+import com.dlin.resovler.Resolver;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -23,14 +24,14 @@ import java.util.Optional;
  * Date 2020-7-25.
  */
 @ManagedBean
-public class AntlrResolver extends MySqlParserBaseListener {
+public class AntlrSqlResolver extends MySqlParserBaseListener implements Resolver {
 
     private TableModel tableModel;
 
-    private TableField cursor;
+    private Field cursor;
 
-    private TableField getCursor() {
-        cursor = Optional.ofNullable(cursor).orElse(new TableField());
+    private Field getCursor() {
+        cursor = Optional.ofNullable(cursor).orElse(new Field());
         return cursor;
     }
 
@@ -48,14 +49,14 @@ public class AntlrResolver extends MySqlParserBaseListener {
 
     @Override
     public void enterTableName(MySqlParser.TableNameContext ctx) {
-        tableModel.setName(extractContent(ctx));
+        tableModel.setKeyword(AntlrUtils.extractSqlContent(ctx));
     }
 
     @Override
     public void enterColumnDeclaration(MySqlParser.ColumnDeclarationContext ctx) {
-        TableField currentFiled = getCursor();
+        Field currentFiled = getCursor();
         ParseTree nameNode = ctx.getChild(MySqlParser.UidContext.class, 0);
-        currentFiled.setName(extractContent(nameNode));
+        currentFiled.setName(AntlrUtils.extractSqlContent(nameNode));
     }
 
     @Override
@@ -66,18 +67,18 @@ public class AntlrResolver extends MySqlParserBaseListener {
 
     @Override
     public void enterColumnDefinition(MySqlParser.ColumnDefinitionContext ctx) {
-        TableField currentFiled = getCursor();
+        Field currentFiled = getCursor();
         ParseTree dataTypeNode = ctx.getChild(MySqlParser.DataTypeContext.class, 0);
         ParseTree dataTypeNameNode = dataTypeNode.getChild(0);
-        Optional.ofNullable(dataTypeNameNode).ifPresent(node -> currentFiled.setType(FiledType.getBySqlType(extractContent(node))));
+        Optional.ofNullable(dataTypeNameNode).ifPresent(node -> currentFiled.setType(FiledType.getBySqlType(AntlrUtils.extractSqlContent(node))));
         ParseTree commentNode = ctx.getChild(MySqlParser.CommentColumnConstraintContext.class, 0);
-        Optional.ofNullable(commentNode).ifPresent(node -> currentFiled.setComment(extractContent(node.getChild(1))));
+        Optional.ofNullable(commentNode).ifPresent(node -> currentFiled.setComment(AntlrUtils.extractSqlContent(node.getChild(1))));
     }
 
     @Override
     public void enterTableOptionComment(MySqlParser.TableOptionCommentContext ctx) {
         ParseTree tbCommentNode = ctx.getChild(2);
-        Optional.ofNullable(tbCommentNode).ifPresent(node -> tableModel.setDesc(extractContent(node)));
+        Optional.ofNullable(tbCommentNode).ifPresent(node -> tableModel.setComment(AntlrUtils.extractSqlContent(node)));
     }
 
     @Override
@@ -88,23 +89,7 @@ public class AntlrResolver extends MySqlParserBaseListener {
     @Override
     public void enterPrimaryKeyTableConstraint(MySqlParser.PrimaryKeyTableConstraintContext ctx) {
         MySqlParser.IndexColumnNamesContext pkContext = ctx.getChild(MySqlParser.IndexColumnNamesContext.class, 0);
-        Optional.ofNullable(pkContext).ifPresent(c -> tableModel.addTablePrimaryKey(extractContent(c.getChild(MySqlParser.IndexColumnNameContext.class, 0))));
-    }
-
-    private static String extractContent(ParseTree treeNode) {
-        String field = treeNode == null ? null : treeNode.getText().toLowerCase();
-        if (field == null) {
-            return null;
-        }
-        final String fieldDef = "`";
-        final String commentDef = "'";
-        if (field.startsWith(fieldDef) || field.startsWith(commentDef)) {
-            field = field.substring(1);
-        }
-        if (field.endsWith(fieldDef) || field.endsWith(commentDef)) {
-            field = field.substring(0, field.length() - 1);
-        }
-        return field;
+        Optional.ofNullable(pkContext).ifPresent(c -> tableModel.addTablePrimaryKey(AntlrUtils.extractSqlContent(c.getChild(MySqlParser.IndexColumnNameContext.class, 0))));
     }
 
     @Override

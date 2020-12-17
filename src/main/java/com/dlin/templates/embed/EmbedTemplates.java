@@ -36,4 +36,6 @@ final public class EmbedTemplates {
 
     public static final String MYBATIS_XML_MAPPER = "mybatis_mapper_xml";
 
+    public static final String THRIFT_DELEGATE = "thrift_delegate_mapper";
+
 }

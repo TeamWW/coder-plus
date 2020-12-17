@@ -4,7 +4,7 @@ import com.dlin.common.FileSetting;
 import com.dlin.render.Render;
 import com.dlin.render.View;
 
-public class CodeView implements View {
+public class SourceCodeView implements View {
 
     private Class<? extends Render> render;
 

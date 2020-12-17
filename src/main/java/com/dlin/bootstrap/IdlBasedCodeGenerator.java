@@ -2,39 +2,40 @@ package com.dlin.bootstrap;
 
 import com.dlin.common.GlobalConfig;
 import com.dlin.exporter.CodeExporter;
-import com.dlin.extract.table.TableExtractor;
-import com.dlin.resovler.antlr.AntlrResolver;
+import com.dlin.extract.table.SourceCodeExtractor;
+import com.dlin.resovler.antlr.AntlrSqlResolver;
+import com.dlin.resovler.antlr.AntlrThriftResolver;
 
 /**
  * 预制好组件实现类型的启动器
  *
  * @author XD.Wang
  */
-public class DdlCodeGenerator extends Bootstrap {
+public class IdlBasedCodeGenerator extends Bootstrap {
 
     protected final GlobalConfig.Creator creator = new GlobalConfig.Creator();
 
-    public DdlCodeGenerator setWorkspacePath(String workspacePath) {
+    public IdlBasedCodeGenerator setWorkspacePath(String workspacePath) {
         creator.setWorkspacePath(workspacePath);
         return this;
     }
 
-    public DdlCodeGenerator setOutputDir(String outputPath) {
+    public IdlBasedCodeGenerator setOutputDir(String outputPath) {
         creator.setOutputDir(outputPath);
         return this;
     }
 
-    public DdlCodeGenerator setDdlName(String ddlName) {
-        creator.setDdlName(ddlName);
+    public IdlBasedCodeGenerator setIdlName(String idlName) {
+        creator.setInputFileName(idlName);
         return this;
     }
 
-    public DdlCodeGenerator setTemplatesPath(String templatesPath) {
+    public IdlBasedCodeGenerator setTemplatesPath(String templatesPath) {
         creator.setTemplatesPath(templatesPath);
         return this;
     }
 
-    public DdlCodeGenerator setRemovePrefixIfExist(String removePrefixIfExist) {
+    public IdlBasedCodeGenerator setRemovePrefixIfExist(String removePrefixIfExist) {
         creator.setRemovePrefixIfExist(removePrefixIfExist);
         return this;
     }
@@ -42,8 +43,8 @@ public class DdlCodeGenerator extends Bootstrap {
     @Override
     protected GlobalConfig configureContext() {
         return creator.setExporter(CodeExporter.class)
-                .setExtractor(TableExtractor.class)
-                .setResolver(AntlrResolver.class)
+                .setExtractor(SourceCodeExtractor.class)
+                .setResolver(AntlrThriftResolver.class)
                 .init();
     }
 

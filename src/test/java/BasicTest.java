@@ -1,5 +1,5 @@
-import com.dlin.bootstrap.DdlCodeGenerator;
-import com.dlin.templates.embed.BaseModelTemplatesConfig;
+import com.dlin.bootstrap.IdlBasedCodeGenerator;
+import com.dlin.bootstrap.SqlBasedCodeGenerator;
 import com.dlin.templates.embed.EmbedTemplates;
 import org.junit.Test;
 
@@ -11,10 +11,18 @@ public class BasicTest {
 
     @Test
     public void testBootstrap() {
-        DdlCodeGenerator myBootstrap = new DdlCodeGenerator();
+        SqlBasedCodeGenerator myBootstrap = new SqlBasedCodeGenerator();
         myBootstrap.setDdlName("ddl.sql")
                 .setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
         myBootstrap.execute(EmbedTemplates.MODEL);
+    }
+
+    @Test
+    public void testBootstrap1() {
+        IdlBasedCodeGenerator myBootstrap = new IdlBasedCodeGenerator();
+        myBootstrap.setIdlName("idl.thrift")
+                .setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
+        myBootstrap.execute(EmbedTemplates.THRIFT_DELEGATE);
     }
 
 }
