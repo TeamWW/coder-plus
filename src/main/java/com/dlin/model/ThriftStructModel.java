@@ -9,8 +9,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.dlin.model.enums.ModelBuiltInAttr.*;
+import static com.dlin.model.enums.BaseBuiltInAttr.*;
 import static com.dlin.utils.CodeStyle.NamedStyle;
-import static com.dlin.utils.CodeStyle.ofUlCode;
+import static com.dlin.utils.CodeStyle.*;
 
 /**
  * 存放ThriftDto模型数据
@@ -39,6 +40,7 @@ public class ThriftStructModel extends ThriftModel {
                 .addBuiltInAttr(MODEL_CAPTAl_FIRST_NAME.key(), ofUlCode(keyword).toStyle(NamedStyle.CAMEL).toStyle(NamedStyle.CAP_FIRST).toString())
                 .addBuiltInAttr(MODEL_CAMEL_NAME.key(), ofUlCode(keyword).toStyle(NamedStyle.CAMEL).toString())
                 .addBuiltInAttr(MODEL_UNDERLINE_NAME.key(), ofUlCode(keyword).toString())
+                .addBuiltInAttr(BASE_PACKAGE.key(), ofUlCode(nameSpace).toString())
                 // extract table filed attrs
                 .addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields.values()).stream().map(this::createFiledMap).collect(Collectors.toList()));
         // extract single primary key
