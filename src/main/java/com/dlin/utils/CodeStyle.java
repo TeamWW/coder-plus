@@ -84,4 +84,8 @@ public class CodeStyle {
         return source;
     }
 
+    public static void main(String[] args) {
+        System.err.println();
+    }
+
 }

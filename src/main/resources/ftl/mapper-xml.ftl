@@ -12,15 +12,12 @@
 
     <sql id="Base_Column_List">
         <#list _f as filed>
-            ${filed._f_u},
+            ${filed._f_u}<#if filed_has_next>,</#if>
         </#list>
-<#--        <#list _f as filed>-->
-<#--            ${filed?is_last?_f_u}-->
-<#--        </#list>-->
     </sql>
 
     <sql id="Table_Name">
-        ${_m_pref}${_m_u}
+        ${_m_u}
     </sql>
 
     <sql id="Example_Where_Clause">
@@ -85,7 +82,8 @@
         </where>
     </sql>
 
-    <select id="select${_m_cf}ListByExample" resultMap="BaseResultMap" parameterType="${_base_pk}.example.${_m_cf}Example">
+    <select id="select${_m_cf}ListByExample" resultMap="BaseResultMap"
+            parameterType="${_base_pk}.example.${_m_cf}Example">
         select
         <if test="distinct">
             distinct
@@ -136,7 +134,7 @@
         <set>
             <#list _f as filed>
                 <if test="${filed._f_c}!= null">
-                    ${filed._f_u} = ${r'#{'}${filed._f_c},jdbcType=${filed._f_jdbct}},
+                    ${filed._f_u} = ${r'#{'}${filed._f_c},jdbcType=${filed._f_jdbct}}<#if filed_has_next>,</#if>
                 </if>
             </#list>
         </set>
@@ -149,33 +147,33 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list _f as filed>
                 <if test="${filed._f_c} != null">
-                    ${filed._f_u},
+                    ${filed._f_u}<#if filed_has_next>,</#if>
                 </if>
             </#list>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <#list _f as filed>
                 <if test="${filed._f_c} != null">
-                    ${r'#{'}${filed._f_c},jdbcType=${filed._f_jdbct}},
+                    ${r'#{'}${filed._f_c},jdbcType=${filed._f_jdbct}}<#if filed_has_next>,</#if>
                 </if>
             </#list>
         </trim>
     </insert>
 
-    <insert id="batchInsert${_m_cf}DO" parameterType="${_m_cf}">
+    <insert id="batchInsert${_m_cf}" parameterType="${_m_cf}DO">
         insert into
         <include refid="Table_Name"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list _f as filed>
-                ${filed._f_u},
+                ${filed._f_u}<#if filed_has_next>,</#if>
             </#list>
         </trim>
         values
         <foreach collection="list" item="item" separator=",">
             <trim prefix="(" suffix=")" suffixOverrides=",">
-            <#list _f as filed>
-                ${r'#{item.'}${filed._f_c},jdbcType=${filed._f_jdbct}},
-            </#list>
+                <#list _f as filed>
+                    ${r'#{item.'}${filed._f_c},jdbcType=${filed._f_jdbct}}<#if filed_has_next>,</#if>
+                </#list>
             </trim>
         </foreach>
     </insert>
