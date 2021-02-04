@@ -42,7 +42,7 @@ public class ThriftStructModel extends ThriftModel {
                 .addBuiltInAttr(MODEL_UNDERLINE_NAME.key(), ofUlCode(keyword).toString())
                 .addBuiltInAttr(BASE_PACKAGE.key(), ofUlCode(nameSpace).toString())
                 // extract table filed attrs
-                .addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields.values()).stream().map(this::createFiledMap).collect(Collectors.toList()));
+                .addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields.values()).stream().map(this::createFiledMap).filter(Objects::nonNull).collect(Collectors.toList()));
         // extract single primary key
         return m;
     }

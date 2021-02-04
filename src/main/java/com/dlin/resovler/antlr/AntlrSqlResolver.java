@@ -5,9 +5,9 @@ import com.dlin.antlr.sql.MySqlParser;
 import com.dlin.antlr.sql.MySqlParserBaseListener;
 import com.dlin.common.FiledType;
 import com.dlin.container.ManagedBean;
-import com.dlin.model.meta.Field;
 import com.dlin.model.Model;
 import com.dlin.model.TableModel;
+import com.dlin.model.meta.Field;
 import com.dlin.resovler.Resolver;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
@@ -103,6 +103,9 @@ public class AntlrSqlResolver extends MySqlParserBaseListener implements Resolve
         TableModel model = new TableModel();
         this.setTableModel(model);
         walker.walk(this, ctDdlTree);
+        if (model.isEmpty()) {
+            throw new RuntimeException("DDL解析失败，请检查建表语句");
+        }
         return model;
     }
 

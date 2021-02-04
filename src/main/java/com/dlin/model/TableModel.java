@@ -1,5 +1,7 @@
 package com.dlin.model;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.dlin.model.meta.Field;
 import com.dlin.utils.CommonUtils;
 import com.google.common.base.Joiner;
@@ -75,12 +77,19 @@ public class TableModel extends Model {
                 .addBuiltInAttr(MODEL_CAMEL_NAME.key(), ofUlCode(keyword).toStyle(NamedStyle.CAMEL).toString())
                 .addBuiltInAttr(MODEL_UNDERLINE_NAME.key(), ofUlCode(keyword).toString())
                 // extract table filed attrs
-                .addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields.values()).stream().map(this::createFiledMap).collect(Collectors.toList()));
+                .addBuiltInAttr(FIELD.key(), Objects.requireNonNull(fields.values()).stream().map(this::createFiledMap).filter(Objects::nonNull).collect(Collectors.toList()));
         // extract single primary key
         String singleKey = CommonUtils.getOne(this.primaryKeys);
+        if (StrUtil.isBlank(singleKey)) {
+            singleKey = "id";
+        }
         addBuiltInAttr(SINGLE_PRIMARY_KEY.key(), createFiledMap(fields.get(singleKey)));
         return super.toAttrMap();
     }
 
+    @Override
+    public boolean isEmpty() {
+        return StrUtil.isBlank(comment) && StrUtil.isBlank(keyword) && CollUtil.isEmpty(fields);
+    }
 
 }

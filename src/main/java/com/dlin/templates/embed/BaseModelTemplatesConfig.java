@@ -24,7 +24,7 @@ public class BaseModelTemplatesConfig {
         spec.setDescription("MODEL");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -34,7 +34,7 @@ public class BaseModelTemplatesConfig {
         spec.setDescription("DO-POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "DO");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -43,8 +43,8 @@ public class BaseModelTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("BIZ_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
-        spec.addAttr("modelType", "BO");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/"));
+        spec.addAttr("modelType", "VO");
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -54,7 +54,7 @@ public class BaseModelTemplatesConfig {
         spec.setDescription("QUERY_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -64,7 +64,7 @@ public class BaseModelTemplatesConfig {
         spec.setDescription("DTO_POJO");
         spec.setPath(SERVICE_POJO_TPL_PATH);
         spec.addAttr("modelType", "DTO");
-        spec.setFileSetting(FileSetting.ofJavaFile("/model/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -73,7 +73,7 @@ public class BaseModelTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("EXAMPLE");
         spec.setPath(SERVICE_EXAMPLE_TPL_PATH);
-        spec.setFileSetting(FileSetting.ofJavaFile("/example/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 

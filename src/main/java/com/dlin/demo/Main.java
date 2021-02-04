@@ -1,6 +1,7 @@
 package com.dlin.demo;
 
 import com.dlin.bootstrap.CustomizedKeywordCodeGenerator;
+import com.dlin.bootstrap.SqlBasedCodeGenerator;
 import com.dlin.templates.embed.EmbedTemplates;
 
 @SuppressWarnings("Duplicates")
@@ -13,22 +14,26 @@ public class Main {
      * @param args args
      */
     public static void main(String[] args) {
-        CustomizedKeywordCodeGenerator ddlCodeGenerator = new CustomizedKeywordCodeGenerator();
-        ddlCodeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wuhuilin/Documents/gen-codes");
-        ddlCodeGenerator.execute(
-                EmbedTemplates.DO_POJO,
-                EmbedTemplates.EXAMPLE,
-                EmbedTemplates.SER_REPOSITORY,
-                EmbedTemplates.SER_IMPL_REPOSITORY,
-                EmbedTemplates.MYBATIS_XML_MAPPER,
-                EmbedTemplates.MYBATIS_MAPPER
-        );
-//        DdlCodeGenerator ddlCodeGenerator1 = new DdlCodeGenerator();
-//        ddlCodeGenerator1.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
-//        ddlCodeGenerator1.execute(
+//        CustomizedKeywordCodeGenerator ddlCodeGenerator = new CustomizedKeywordCodeGenerator();
+//        ddlCodeGenerator.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
+//        ddlCodeGenerator.execute(
+//                EmbedTemplates.BIZ_POJO,
+//                EmbedTemplates.MODEL,
+//                EmbedTemplates.EXAMPLE,
+//                EmbedTemplates.SER_REPOSITORY,
 //                EmbedTemplates.MYBATIS_XML_MAPPER,
 //                EmbedTemplates.MYBATIS_MAPPER
 //        );
+        SqlBasedCodeGenerator ddlCodeGenerator1 = new SqlBasedCodeGenerator();
+        ddlCodeGenerator1.setDdlName("ddl.sql").setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
+        ddlCodeGenerator1.execute(
+                EmbedTemplates.BIZ_POJO,
+                EmbedTemplates.MODEL,
+                EmbedTemplates.EXAMPLE,
+                EmbedTemplates.SER_REPOSITORY,
+                EmbedTemplates.MYBATIS_XML_MAPPER,
+                EmbedTemplates.MYBATIS_MAPPER
+        );
     }
 
 }

@@ -1,8 +1,8 @@
 package com.dlin.model;
 
 import cn.hutool.core.convert.Convert;
-import com.dlin.model.meta.Field;
 import com.dlin.model.enums.ModelBuiltInAttr;
+import com.dlin.model.meta.Field;
 import com.dlin.utils.CodeStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
@@ -42,15 +42,18 @@ public class Model {
     }
 
     protected Map<String, Object> createFiledMap(Field f) {
-        Map<String, Object> fieldsAttrs = Maps.newHashMap();
-        fieldsAttrs.put(FIELD_CAMEL_NAME.key(), ofUlCode(f.getName()).toStyle(CodeStyle.NamedStyle.CAMEL).toString());
-        fieldsAttrs.put(FIELD_CAPTAl_FIRST_NAME.key(), f.getCfName());
-        fieldsAttrs.put(FIELD_DESC.key(), Optional.ofNullable(f.getComment()).orElse(""));
-        fieldsAttrs.put(FIELD_J_TYPE.key(), f.getType().getJavaType());
-        fieldsAttrs.put(FIELD_J_STANDARD_TYPE.key(), f.getType().getStandardJavaType());
-        fieldsAttrs.put(FIELD_JDBC_TYPE.key(), f.getType().getJdbcType());
-        fieldsAttrs.put(FIELD_UNDERLINE_NAME.key(), ofUlCode(f.getName()).toString());
-        return fieldsAttrs;
+        if (f != null) {
+            Map<String, Object> fieldsAttrs = Maps.newHashMap();
+            fieldsAttrs.put(FIELD_CAMEL_NAME.key(), ofUlCode(f.getName()).toStyle(CodeStyle.NamedStyle.CAMEL).toString());
+            fieldsAttrs.put(FIELD_CAPTAl_FIRST_NAME.key(), f.getCfName());
+            fieldsAttrs.put(FIELD_DESC.key(), Optional.ofNullable(f.getComment()).orElse(""));
+            fieldsAttrs.put(FIELD_J_TYPE.key(), f.getType().getJavaType());
+            fieldsAttrs.put(FIELD_J_STANDARD_TYPE.key(), f.getType().getStandardJavaType());
+            fieldsAttrs.put(FIELD_JDBC_TYPE.key(), f.getType().getJdbcType());
+            fieldsAttrs.put(FIELD_UNDERLINE_NAME.key(), ofUlCode(f.getName()).toString());
+            return fieldsAttrs;
+        }
+        return null;
     }
 
     public String getKeyword() {
@@ -82,6 +85,10 @@ public class Model {
         Map<String, Object> foldAttrs = Maps.newLinkedHashMap();
         foldAttrs.putAll(attrs);
         return foldAttrs;
+    }
+
+    public boolean isEmpty() {
+        return false;
     }
 
 }

@@ -2,7 +2,6 @@ package com.dlin.exporter;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import com.google.common.base.Preconditions;
 import com.dlin.common.FileSetting;
 import com.dlin.common.FileType;
 import com.dlin.container.GlobalContext;
@@ -13,6 +12,7 @@ import com.dlin.render.View;
 import com.dlin.render.views.SourceCodeView;
 import com.dlin.utils.CodeStyle;
 import com.dlin.utils.ExceptionUtils;
+import com.google.common.base.Preconditions;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -63,14 +63,14 @@ public class CodeExporter implements Exporter, GlobalContextAware {
         if (StrUtil.isNotBlank(fileSetting.getFileName())) {
             return fileSetting.getFileName();
         }
-        String fileDir = Optional.ofNullable(view.getFileSetting().getFileDir()).orElse("");
+        String filePath = Optional.ofNullable(view.getFileSetting().getFileDir()).orElse("");
         if (Objects.equals(fileSetting.getFileType(), FileType.MYBATIS_XML)) {
             String fileName = CodeStyle.ofUlCode(view.getName()).toStyle(CodeStyle.NamedStyle.CAMEL).toStyle(CodeStyle.NamedStyle.CAP_FIRST).toString();
-            fileDir += fileSetting.getPrefix() + fileName + fileSetting.getSuffix() + fileSetting.getFileType().getExt();
+            filePath += fileSetting.getPrefix() + fileName + fileSetting.getSuffix() + fileSetting.getFileType().getExt();
         } else if (Objects.equals(fileSetting.getFileType(), FileType.JAVA)) {
-            fileDir += fileSetting.getPrefix() + getJavaClassName(view.getContent()) + fileSetting.getSuffix();
+            filePath += fileSetting.getPrefix() + getJavaClassName(view.getContent()) + fileSetting.getSuffix() + FileType.JAVA.getExt();
         }
-        return fileDir;
+        return filePath;
     }
 
     private String getJavaClassName(String codeContent) {
@@ -81,7 +81,7 @@ public class CodeExporter implements Exporter, GlobalContextAware {
         if (keywordIdx == -1 || nextBracketIdx == -1) {
             throw new RuntimeException("not a standard java file!");
         }
-        return codeContent.substring(codeContent.indexOf(" ", keywordIdx), nextBracketIdx).trim() + FileType.JAVA.getExt();
+        return codeContent.substring(codeContent.indexOf(" ", keywordIdx), nextBracketIdx).trim();
     }
 
     @Override

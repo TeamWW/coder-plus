@@ -32,7 +32,7 @@ public class BaseServiceTemplatesConfig {
         spec.addAttr("serviceType", "Service");
         spec.addAttr("serviceOutSuf", "BO");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/service/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -42,9 +42,9 @@ public class BaseServiceTemplatesConfig {
         spec.setDescription("SER_REPOSITORY");
         spec.setPath(SERVICE_TPL_PATH);
         spec.addAttr("serviceType", "Repository");
-        spec.addAttr("serviceOutSuf", "DO");
+        spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/repository/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -56,7 +56,7 @@ public class BaseServiceTemplatesConfig {
         spec.addAttr("serviceType", "Manager");
         spec.addAttr("serviceOutSuf", "DTO");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/manager/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -69,7 +69,7 @@ public class BaseServiceTemplatesConfig {
         spec.addAttr("serviceType", "Service");
         spec.addAttr("serviceOutSuf", "BO");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/service/impl/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -80,9 +80,9 @@ public class BaseServiceTemplatesConfig {
         spec.setPath(SERVICE_IMPL_TPL_PATH);
         spec.addAttr("subServiceType", "Mapper");
         spec.addAttr("serviceType", "Repository");
-        spec.addAttr("serviceOutSuf", "DO");
+        spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "Query");
-        spec.setFileSetting(FileSetting.ofJavaFile("/repository/impl/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -95,7 +95,7 @@ public class BaseServiceTemplatesConfig {
         spec.addAttr("subServiceType", "Service");
         spec.addAttr("serviceOutSuf", "DTO");
         spec.addAttr("serviceInSuf", "Req");
-        spec.setFileSetting(FileSetting.ofJavaFile("/manager/impl/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -108,7 +108,7 @@ public class BaseServiceTemplatesConfig {
         spec.addAttr("subServiceType", "Manager");
         spec.addAttr("serviceOutSuf", "");
         spec.addAttr("serviceInSuf", "");
-        spec.setFileSetting(FileSetting.ofJavaFile("/api/impl/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -117,9 +117,9 @@ public class BaseServiceTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("MYBATIS_MAPPER");
         spec.setPath(MYBATIS_MAPPER_TPL_PATH);
-        spec.addAttr("serviceOutSuf", "DO");
-        spec.addAttr("serviceInSuf", "DO");
-        spec.setFileSetting(FileSetting.ofJavaFile("/mapper/"));
+        spec.addAttr("serviceOutSuf", "");
+        spec.addAttr("serviceInSuf", "");
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 
@@ -128,7 +128,7 @@ public class BaseServiceTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("MYBATIS_XML_MAPPER");
         spec.setPath(MYBATIS_MAPPER_XML_TPL_PATH);
-        spec.setFileSetting(FileSetting.ofMyBatisXmlFile("/mapper/gen/", "", "Mapper.xml"));
+        spec.setFileSetting(FileSetting.ofMyBatisXmlFile("/", "", "Mapper"));
         return spec;
     }
 
@@ -137,7 +137,7 @@ public class BaseServiceTemplatesConfig {
         TemplateSpec spec = new TemplateSpec();
         spec.setDescription("THRIFT_DELEGATE_MAPPER");
         spec.setPath(THRIFT_DELEGATE_TPL_PATH);
-        spec.setFileSetting(FileSetting.ofJavaFile("/delegate/"));
+        spec.setFileSetting(FileSetting.ofJavaFile());
         return spec;
     }
 

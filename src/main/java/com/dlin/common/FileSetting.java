@@ -80,6 +80,10 @@ public class FileSetting {
         return setting;
     }
 
+    public static FileSetting ofJavaFile() {
+        return ofJavaFile("/");
+    }
+
     public static FileSetting ofMyBatisXmlFile(String fileDir, String prefix, String suffix) {
         FileSetting setting = new FileSetting();
         setting.setFileType(FileType.MYBATIS_XML);

@@ -14,7 +14,9 @@ public class BasicTest {
         SqlBasedCodeGenerator myBootstrap = new SqlBasedCodeGenerator();
         myBootstrap.setDdlName("ddl.sql")
                 .setWorkspacePath("/Users/wangxiandui/Documents/gen-codes");
-        myBootstrap.execute(EmbedTemplates.MODEL);
+        myBootstrap.execute(
+                EmbedTemplates.MODEL
+        );
     }
 
     @Test
